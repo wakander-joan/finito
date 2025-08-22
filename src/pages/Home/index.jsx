@@ -1,37 +1,64 @@
-import './style.css'
-import { useEffect } from 'react'
-import Logo from '../../assets/finito-logo.png'
-import google from '../../assets/google.png'
-import Face from '../../assets/f.png'
-import api from '../../services/api'
+import { useState } from 'react';
+import './style.css';
+import Logo from '../../assets/finito-logo.png';
+import google from '../../assets/google.png';
+import Face from '../../assets/f.png';
+import api from '../../services/api';
 
 function Home() {
-  let token = null 
-  async function Login() {
-    token = await api.post('/auth/login')
-  }  
+  const [email, setEmail] = useState('');
+  const [senha, setSenha] = useState('');
+  const [token, setToken] = useState(null);
+  const [mensagem, setMensagem] = useState('');
+
+  async function login() {
+    try {
+      const body = { email, senha };
+      const response = await api.post('/auth/login', body); // usando sua instância api
+
+      setToken(response.data.token); // salva o token no state
+      console.log('Token recebido:', response.data.token);
+      setMensagem('Login realizado com sucesso!');
+    } catch (error) {
+      console.error('Erro ao fazer login:', error.response?.data || error.message);
+    }
+  }
 
   return (
     <div className="container">
-      <form action="">
-        <img id="logo-principal" name='finito' src={Logo} />
+      <form onSubmit={(e) => e.preventDefault()}>
+        <img id="logo-principal" name="finito" src={Logo} />
         <div className='divider'>
           <h5>E-mail</h5>
-          <input placeholder='Digite o seu e-mail aqui...' type='email' name='email' />
+          <input
+            placeholder='Digite o seu e-mail aqui...'
+            type='email'
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
           <h5>Senha</h5>
-          <input placeholder='Digite o sua senha aqui...' type='password' name='senha' />
+          <input
+            placeholder='Digite o sua senha aqui...'
+            type='password'
+            value={senha}
+            onChange={(e) => setSenha(e.target.value)}
+          />
         </div>
-        <button type='button' onClick={Login} >Entrar</button>
+        <button type='button' onClick={login}>Entrar</button>
       </form>
+      
       <div className='googledivider'>
         <img id="logo-google" name='google' src={google} />
         <button id='botaoGoogle'>Logar com Google</button>
       </div>
+
       <div className='facedivider'>
         <img id="logo-face" name='google' src={Face} />
         <button id='botaoFace'>Logar com Facebook</button>
       </div>
+
       <button id='botaocadastro'>Cadastrar</button>
+
       <div className='rodape'>
         <div className='coluna1'>
           <h2>SOBRE</h2>
@@ -60,7 +87,7 @@ function Home() {
         </div>
       </div>
     </div>
-  )
+  );
 }
 
-export default Home
+export default Home;
