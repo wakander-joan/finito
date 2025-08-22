@@ -1,0 +1,27 @@
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Pixelify Sans', sans-serif;
+  gap: 15px;
+}
+
+body{
+  min-height: 100vh;
+  width: 100vw;
+  background: 
+    linear-gradient(180deg, #363467 0%, rgba(0, 0, 0, 0.473) 10%), /* Gradiente */
+    url('assets/gif.gif'); /* Imagem */
+  background-size: cover; /* Faz a imagem cobrir todo o fundo */
+  background-position: left; /* Centraliza a imagem */
+  background-repeat: no-repeat; /* Evita repetição */
+
+}
+
+main {
+  flex: 1; /* Faz o conteúdo crescer e empurrar o rodapé para baixo */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
