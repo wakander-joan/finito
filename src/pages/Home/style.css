@@ -155,6 +155,7 @@ h2{
 }
 
 form {
+  margin-top: 20px;
   display: flex;
   flex-direction: column;
   width: 400px;
