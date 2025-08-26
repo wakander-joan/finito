@@ -15,22 +15,34 @@ function Home() {
   const navigate = useNavigate();
 
   async function login() {
-    try {
-      setLoading(true); // começa o loading
-      const body = { email, senha };
-      const response = await api.post('/auth/login', body); // usando sua instância api
+  try {
+    setLoading(true); // mostra o loading
+    const body = { email, senha };
+    const response = await api.post('/auth/login', body);
 
-      setToken(response.data.token); // salva o token no state
-      console.log('Token recebido:', response.data.token);
-      navigate('/cadastro'); // substitua pelo caminho da sua rota
-    } catch (error) {
-      alert(`Erro ao fazer login: ${error.response?.data || error.message}`);
-      window.location.reload();
-    } finally {
-      setLoading(false); // para o loading sempre no final
+    const tokenRecebido = response.data.token;
+
+    if (!tokenRecebido) {
+      // Se não veio token, exibe erro e não navega
+      alert('Login falhou: token não recebido.');
+      return;
     }
+
+    setToken(tokenRecebido); // salva token
+    console.log('Token recebido:', tokenRecebido);
+
+    // Navegar após 5 segundos
+    setTimeout(() => {
+      setLoading(false); // esconde o loading
+      navigate('/cadastro'); // navega para a página
+    }, 3000);
+
+  } catch (error) {
+    alert(`Erro ao fazer login: ${error.response?.data || error.message}`);
+    window.location.reload();
   }
-  
+}
+
   return (
     <div className="container">
       {/* Overlay de Loading */}
