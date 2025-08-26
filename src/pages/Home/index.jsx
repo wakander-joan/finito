@@ -6,6 +6,7 @@ import google from '../../assets/google.png';
 import Face from '../../assets/f.png';
 import api from '../../services/api';
 import loadingGif from '../../assets/loading.gif'; // seu gif de loading
+import loadingGif2 from '../../assets/loading3.gif'; // seu gif de loading
 
 function Home() {
   const [email, setEmail] = useState('');
@@ -35,7 +36,7 @@ function Home() {
     setTimeout(() => {
       setLoading(false); // esconde o loading
       navigate('/cadastro'); // navega para a página
-    }, 3000);
+    }, 2000);
 
   } catch (error) {
     alert(`Erro ao fazer login: ${error.response?.data || error.message}`);
@@ -48,8 +49,8 @@ function Home() {
       {/* Overlay de Loading */}
       {loading && (
         <div className="loading-container">
-          <img src={loadingGif} alt="Carregando..." />
-          <p>Entrando...</p>
+          <img src={loadingGif2} alt="Carregando..." />
+          <p class="typing"><span class="dots"></span></p>
         </div>
       )}
       <form onSubmit={(e) => e.preventDefault()}>
@@ -74,12 +75,12 @@ function Home() {
       </form>
       <div className='googledivider'>
         <img id="logo-google" name='google' src={google} />
-        <button id='botaoGoogle'>Logar com Google</button>
+        <button onClick={() => window.open('https://www.google.com', '_blank', 'noopener,noreferrer')} id='botaoGoogle'>Logar com Google</button>
       </div>
 
       <div className='facedivider'>
         <img id="logo-face" name='google' src={Face} />
-        <button id='botaoFace'>Logar com Facebook</button>
+        <button onClick={() => window.open('https://www.facebook.com', '_blank', 'noopener,noreferrer')} id='botaoFace'>Logar com Facebook</button>
       </div>
 
       <button id='botaocadastro'>Cadastrar</button>
