@@ -1,33 +1,47 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './style.css';
 import Logo from '../../assets/finito-logo.png';
 import google from '../../assets/google.png';
 import Face from '../../assets/f.png';
 import api from '../../services/api';
+import loadingGif from '../../assets/loading.gif'; // seu gif de loading
 
 function Home() {
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
-  const [token, setToken] = useState(null);
-  const [mensagem, setMensagem] = useState('');
+  const [token, setToken] = useState(null); //Lebrar de usar o Token
+  const [loading, setLoading] = useState(false); // novo estado
+  const navigate = useNavigate();
 
   async function login() {
     try {
+      setLoading(true); // começa o loading
       const body = { email, senha };
       const response = await api.post('/auth/login', body); // usando sua instância api
 
       setToken(response.data.token); // salva o token no state
       console.log('Token recebido:', response.data.token);
-      setMensagem('Login realizado com sucesso!');
+      navigate('/cadastro'); // substitua pelo caminho da sua rota
     } catch (error) {
-      console.error('Erro ao fazer login:', error.response?.data || error.message);
+      alert(`Erro ao fazer login: ${error.response?.data || error.message}`);
+      window.location.reload();
+    } finally {
+      setLoading(false); // para o loading sempre no final
     }
   }
-
+  
   return (
     <div className="container">
+      {/* Overlay de Loading */}
+      {loading && (
+        <div className="loading-container">
+          <img src={loadingGif} alt="Carregando..." />
+          <p>Entrando...</p>
+        </div>
+      )}
       <form onSubmit={(e) => e.preventDefault()}>
-        <img id="logo-principal" name="finito" src={Logo} />
+        <img id="logo-principal" src={Logo} alt="Finito" />
         <div className='divider'>
           <h5>E-mail</h5>
           <input
@@ -46,7 +60,6 @@ function Home() {
         </div>
         <button type='button' onClick={login}>Entrar</button>
       </form>
-      
       <div className='googledivider'>
         <img id="logo-google" name='google' src={google} />
         <button id='botaoGoogle'>Logar com Google</button>
@@ -86,6 +99,7 @@ function Home() {
           <h3>Metas e Orçamentos</h3>
         </div>
       </div>
+
     </div>
   );
 }
