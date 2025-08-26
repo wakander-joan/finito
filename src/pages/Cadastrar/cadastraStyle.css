@@ -1,0 +1,227 @@
+.container-cadastro {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 30px;
+    min-height: 100vh;
+}
+
+.Form {
+    display: flex;
+    width: auto;
+    height: 650px;
+    background-color: aliceblue;
+}
+.div-boas-vindas{
+    text-align: center;
+    padding-top: 25%;
+    padding: 0 30px;
+    background-color: #197E31;
+    color: white;
+    width: 500px;
+}
+
+#Bem-vindos{
+    margin-top: 50%;
+    font-family: 'Jersey 15', sans-serif;
+}
+#palavras-boas{
+    font-family: 'Pixelify Sans', monospace;
+    font-weight: lighter;
+    font-size: 19px;
+}
+
+.div-inputs{
+    align-items: center;
+    padding-top: 25%;
+    padding: 0 30px;
+}
+
+.Logo-Text-Finito{
+    display: flex;
+    justify-content: center; /* centraliza horizontalmente */
+    align-items: center;     /* centraliza verticalmente */
+    margin-top: 10%;
+    padding: 0 30px;
+    width: 450px;
+}
+
+#Logo{
+    width: 80px;
+    height: 80px;
+    margin-bottom: 10px;
+}
+
+#Text-finito{
+    font-size: 60px;
+}
+
+.titulo{
+    margin-top: 5%;
+    font-family: 'Jersey 15', inherit;
+    font-weight: bold;
+    justify-content: center;
+    text-align: center;
+    font-size: 45px;
+}
+
+.inputs{
+    display: flex;
+    flex-direction: column;
+}
+
+#descricao{
+    margin-bottom: -3%;
+    margin-left: 1%;
+}
+
+input{
+    width: 95%;
+    height: 40px;
+    border-radius: 9px;
+    border: 1px solid #ccc;
+    padding: 10px;
+    font-size: 16px;
+    &:focus {
+    outline: none;
+    border-color: #197E31;
+  }
+}
+
+.icon-button{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 10%;
+}
+
+.rounded-lg{
+    border-radius: 10px;
+    width: 60%;
+    height: 50px;
+    font-size: 20px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    cursor: pointer;
+    text-align: center;
+}
+
+option{
+    background-color: #197E31;
+}
+
+#Cadastrar-button{
+    width: 200px;
+    height: 50px;
+    background-color: #197E31;
+    color: white;
+    font-size: 25px;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    margin-top: 1%;
+
+    &:hover {
+        background-color: #000000;
+    }
+}
+
+select {
+  appearance: none;        /* remove a seta padrão */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  padding: 8px 30px 8px 10px; /* espaço para a seta personalizada */
+  border: 1px solid #ccc;
+  border-radius: 1px;
+  background-color: white;
+  background-image: url('../../assets/seta-baixo.png'); /* sua seta personalizada */
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 14% 65%; /* tamanho da seta */
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+    
+  &:hover {
+
+        background-size: 14% 66%; /* tamanho da seta */
+    }
+
+  &:focus {
+    outline: none;
+    border-color: #197E31;
+  }
+}
+
+.linha-horizontal-final{
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    border-radius: 19px;
+    background-color: #ffffff;
+}
+
+.texto-login{
+    font-family: 'Jersey 15', inherit;
+    font-weight: bold;
+    font-size: 30px;
+    color: rgb(75, 75, 75);
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+    padding-left: 20px;
+}
+
+#Logar{
+    width: 150px;
+    height: 35px;
+    background-color: #197E31;
+    color: white;
+    font-size: 25px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    margin: 5px;
+
+    &:hover {
+        background-color: #000000;
+    }
+}
+
+#saindo{
+    transform: scaleX(-1);
+}
+
+.typng{
+  color: rgb(255, 255, 255);
+  font-size: 40px;
+  margin-top: 0px;
+  font-weight: bold;
+  text-shadow: 2px 2px 4px #000000;
+}
+
+.dotes::after {
+  content: "";
+  display: inline-block;
+  animation: dotes 2s steps(3, end) infinite;
+}
+
+@keyframes typng {
+  from { width: 0; }
+  to { width: 8ch; } /* "Entrando" = 8 caracteres */
+}
+
+@keyframes blink {
+  50% { border-color: transparent; }
+}
+
+@keyframes dotes {
+    0%   { content: ""; }
+    9%   { content: "S"; }
+    18%  { content: "Sa"; }
+    27%  { content: "Sai"; }
+    36%  { content: "Sair"; }
+    45%  { content: "Saind"; }
+    54%  { content: "Saindo"; }
+    63%  { content: "Saindo."; }
+    72%  { content: "Saindo.."; }
+    81%  { content: "Saindo..."; }
+    90%  { content: "Saindo..."; }
+    100% { content: "Saindo..."; }
+}

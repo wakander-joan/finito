@@ -5,7 +5,6 @@ import Logo from '../../assets/finito-logo.png';
 import google from '../../assets/google.png';
 import Face from '../../assets/f.png';
 import api from '../../services/api';
-import loadingGif from '../../assets/loading.gif'; // seu gif de loading
 import loadingGif2 from '../../assets/loading3.gif'; // seu gif de loading
 
 function Home() {
@@ -44,6 +43,15 @@ function Home() {
   }
 }
 
+async function loadingAnimation() {
+  setLoading(true); // mostra o loading
+  // Simula um tempo de carregamento
+  setTimeout(() => {
+    setLoading(false); // esconde o loading
+    navigate('/cadastrar')
+  }, 1700); // 3 segundos
+}
+
   return (
     <div className="container">
       {/* Overlay de Loading */}
@@ -53,7 +61,7 @@ function Home() {
           <p class="typing"><span class="dots"></span></p>
         </div>
       )}
-      <form onSubmit={(e) => e.preventDefault()}>
+      <form className='form' onSubmit={(e) => e.preventDefault()}>
         <img id="logo-principal" src={Logo} alt="Finito" />
         <div className='divider'>
           <h5>E-mail</h5>
@@ -83,7 +91,7 @@ function Home() {
         <button onClick={() => window.open('https://www.facebook.com', '_blank', 'noopener,noreferrer')} id='botaoFace'>Logar com Facebook</button>
       </div>
 
-      <button id='botaocadastro'>Cadastrar</button>
+      <button onClick={loadingAnimation} id='botaocadastro'>Cadastrar</button>
 
       <div className='rodape'>
         <div className='coluna1'>
