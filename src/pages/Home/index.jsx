@@ -6,6 +6,7 @@ import google from '../../assets/google.png';
 import Face from '../../assets/f.png';
 import api from '../../services/api';
 import loadingGif2 from '../../assets/loading3.gif'; // seu gif de loading
+import { jwtDecode } from "jwt-decode";
 
 function Home() {
   const [email, setEmail] = useState('');
@@ -15,42 +16,46 @@ function Home() {
   const navigate = useNavigate();
 
   async function login() {
-  try {
-    setLoading(true); // mostra o loading
-    const body = { email, senha };
-    const response = await api.post('/auth/login', body);
+    try {
+      setLoading(true); // mostra o loading
+      const body = { email, senha };
+      const response = await api.post('/auth/login', body);
+      localStorage.setItem('token', response.data.token);
+      const tokenRecebido = response.data.token;
 
-    const tokenRecebido = response.data.token;
+      if (!tokenRecebido) {
+        // Se não veio token, exibe erro e não navega
+        alert('Login falhou: token não recebido.');
+        return;
+      }
 
-    if (!tokenRecebido) {
-      // Se não veio token, exibe erro e não navega
-      alert('Login falhou: token não recebido.');
-      return;
+      setToken(tokenRecebido); // salva token
+      console.log('Token recebido:', tokenRecebido);
+      const decoded = jwtDecode(tokenRecebido);
+      console.log(decoded);
+      const { nomePessoa, perfil } = decoded;
+      localStorage.setItem('nomePessoa', nomePessoa);
+      localStorage.setItem('perfil', perfil);
+
+      setTimeout(() => {
+        setLoading(false); // esconde o loading
+        navigate('/cadastro'); // navega para a página
+      }, 2000);
+
+    } catch (error) {
+      alert(`Erro ao fazer login: ${error.response?.data || error.message}`);
+      window.location.reload();
     }
+  }
 
-    setToken(tokenRecebido); // salva token
-    console.log('Token recebido:', tokenRecebido);
-
-    // Navegar após 5 segundos
+  async function loadingAnimation() {
+    setLoading(true); // mostra o loading
+    // Simula um tempo de carregamento
     setTimeout(() => {
       setLoading(false); // esconde o loading
-      navigate('/cadastro'); // navega para a página
-    }, 2000);
-
-  } catch (error) {
-    alert(`Erro ao fazer login: ${error.response?.data || error.message}`);
-    window.location.reload();
+      navigate('/cadastrar')
+    }, 1700); // 3 segundos
   }
-}
-
-async function loadingAnimation() {
-  setLoading(true); // mostra o loading
-  // Simula um tempo de carregamento
-  setTimeout(() => {
-    setLoading(false); // esconde o loading
-    navigate('/cadastrar')
-  }, 1700); // 3 segundos
-}
 
   return (
     <div className="container">
@@ -61,6 +66,7 @@ async function loadingAnimation() {
           <p class="typing"><span class="dots"></span></p>
         </div>
       )}
+      
       <form className='form' onSubmit={(e) => e.preventDefault()}>
         <img id="logo-principal" src={Logo} alt="Finito" />
         <div className='divider'>
@@ -81,6 +87,7 @@ async function loadingAnimation() {
         </div>
         <button type='button' onClick={login}>Entrar</button>
       </form>
+
       <div className='googledivider'>
         <img id="logo-google" name='google' src={google} />
         <button onClick={() => window.open('https://www.google.com', '_blank', 'noopener,noreferrer')} id='botaoGoogle'>Logar com Google</button>
@@ -90,7 +97,6 @@ async function loadingAnimation() {
         <img id="logo-face" name='google' src={Face} />
         <button onClick={() => window.open('https://www.facebook.com', '_blank', 'noopener,noreferrer')} id='botaoFace'>Logar com Facebook</button>
       </div>
-
       <button onClick={loadingAnimation} id='botaocadastro'>Cadastrar</button>
 
       <div className='rodape'>
@@ -104,20 +110,20 @@ async function loadingAnimation() {
           <h2>RECURSOS</h2>
           <h3>Dashboard Financeiro</h3>
           <h3>Planejamento Mensal</h3>
-          <h3>Metas e Orçamentos</h3>
+          <h3>Metas</h3>
         </div>
         <img id="logo-rodape" name='finito' src={Logo} />
         <div className='coluna1'>
           <h2>RECURSOS</h2>
           <h3>Dashboard Financeiro</h3>
           <h3>Planejamento Mensal</h3>
-          <h3>Metas e Orçamentos</h3>
+          <h3>Metas</h3>
         </div>
         <div className='coluna1'>
           <h2>RECURSOS</h2>
           <h3>Dashboard Financeiro</h3>
           <h3>Planejamento Mensal</h3>
-          <h3>Metas e Orçamentos</h3>
+          <h3>Metas</h3>
         </div>
       </div>
 

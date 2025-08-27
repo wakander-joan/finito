@@ -3,8 +3,10 @@
   flex-direction: column;
   align-items: center;
   padding-top: 30px;
-  min-height: 100vh; /* Faz a altura mínima ocupar a tela toda */
+  min-height: 100vh;
+  /* Faz a altura mínima ocupar a tela toda */
 }
+
 
 .googledivider {
   display: flex;
@@ -14,6 +16,7 @@
   background-color: white;
   border-radius: 5px;
   width: 400px;
+  margin-bottom: 15px;
 }
 
 .facedivider {
@@ -56,33 +59,38 @@
 
 
 #logo-google {
-    width: 25px;
-    height: 25px;
-    margin-left: 10px;
-    cursor: pointer;
-  }
+  width: 25px;
+  height: 25px;
+  margin-left: 10px;
+  cursor: pointer;
+}
 
 #logo-face {
-    width: 30px;
-    height: 30px;
-    margin-left: 10px;
-    cursor: pointer;
-  }
+  width: 30px;
+  height: 30px;
+  margin-left: 10px;
+  cursor: pointer;
+}
 
 & .googledivider:hover {
+  background-color: #8b8b8bc2;
+
+  & #botaoGoogle {
     background-color: #8b8b8bc2;
-    & #botaoGoogle {
-      background-color: #8b8b8bc2;
-    }
   }
+}
 
 & .facedivider:hover {
-    background-color: #8b8b8bc2;
-    & #botaoFace {
-      background-color: #8b8b8bc2;
-    }
-  }
+  background-color: #8b8b8bc2;
 
+  & #botaoFace {
+    background-color: #8b8b8bc2;
+  }
+}
+
+h3 {
+  font-size: 80%;
+}
 
 h1 {
   text-align: center;
@@ -99,12 +107,13 @@ h5 {
   margin-left: 10px;
 }
 
-h2{
-  font-size: 30px;
+h2 {
+  font-size: 130%;
 }
 
 .rodape {
-  margin-top: auto; /* Empurra o rodapé para o final da tela */
+  margin-top: auto;
+  /* Empurra o rodapé para o final da tela */
   height: 10%;
   width: 100%;
   background-color: #413929;
@@ -113,8 +122,8 @@ h2{
 
   & #logo-rodape {
     padding: 10px;
-    width: 120px;
-    height: 100px;
+    width: 8%;
+    height: auto;
     margin-top: 20px;
     margin: auto;
   }
@@ -123,8 +132,8 @@ h2{
 
 .coluna1 {
   color: #D0D0D0;
-  padding-left: 70px;
-  padding-right: 70px;
+  padding-left: 2vw;
+  padding-right: 2vh;
   padding-bottom: 8px;
   padding-top: 10px;
   width: 20%;
@@ -147,15 +156,17 @@ h2{
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(194, 194, 194, 0.7); /* fundo escuro */
+  background-color: rgba(194, 194, 194, 0.7);
+  /* fundo escuro */
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  z-index: 9999; /* fica acima de tudo */
+  z-index: 9999;
+  /* fica acima de tudo */
 }
 
-.typing{
+.typing {
   color: rgb(255, 255, 255);
   font-size: 40px;
   margin-top: 0px;
@@ -171,40 +182,87 @@ h2{
 }
 
 @keyframes typing {
-  from { width: 0; }
-  to { width: 8ch; } /* "Entrando" = 8 caracteres */
+  from {
+    width: 0;
+  }
+
+  to {
+    width: 8ch;
+  }
+
+  /* "Entrando" = 8 caracteres */
 }
 
 @keyframes blink {
-  50% { border-color: transparent; }
+  50% {
+    border-color: transparent;
+  }
 }
 
 @keyframes dots {
-  0%   { content: ""; }
-  9%   { content: "E"; }
-  18%  { content: "En"; }
-  27%  { content: "Ent"; }
-  36%  { content: "Entr"; }
-  45%  { content: "Entra"; }
-  54%  { content: "Entran"; }
-  63%  { content: "Entrand"; }
-  72%  { content: "Entrando"; }
-  81%  { content: "Entrando."; }
-  90%  { content: "Entrando.."; }
-  100% { content: "Entrando..."; }
+  0% {
+    content: "";
+  }
+
+  9% {
+    content: "E";
+  }
+
+  18% {
+    content: "En";
+  }
+
+  27% {
+    content: "Ent";
+  }
+
+  36% {
+    content: "Entr";
+  }
+
+  45% {
+    content: "Entra";
+  }
+
+  54% {
+    content: "Entran";
+  }
+
+  63% {
+    content: "Entrand";
+  }
+
+  72% {
+    content: "Entrando";
+  }
+
+  81% {
+    content: "Entrando.";
+  }
+
+  90% {
+    content: "Entrando..";
+  }
+
+  100% {
+    content: "Entrando...";
+  }
 }
 
 .form {
   margin-top: 20px;
+  margin-bottom: 15px;
   display: flex;
   flex-direction: column;
-  width: 400px;
+  width: 450px;
   max-width: 50%;
   background-color: #f0f0f0;
   padding: 20px;
   border-radius: 15px;
-  gap: 30px; /* Defini espaço entre os elementos da <div> */
-  padding-bottom: 30px; /* Defini espaço na parte inferior da <div> */
+  gap: 30px;
+  /* Defini espaço entre os elementos da <div> */
+  padding-bottom: 30px;
+  /* Defini espaço na parte inferior da <div> */
   box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.849);
 
   & button {
@@ -252,23 +310,23 @@ h2{
 }
 
 #botaocadastro {
-    border-radius: 7px;
-    background-color: #5300C8;
-    border: 1px solid #5300C8;
-    color: white;
-    padding: 8px;
-    cursor: pointer;
-    font-size: 20px;
-    font-weight: semibold;
-    cursor: pointer;
-    width: 10%;
-    margin: 20px auto;
-    box-shadow: 2px 2px 5px #494949;
+  border-radius: 7px;
+  background-color: #5300C8;
+  border: 1px solid #5300C8;
+  color: white;
+  padding: 8px;
+  cursor: pointer;
+  font-size: 20px;
+  font-weight: semibold;
+  cursor: pointer;
+  width: 10%;
+  margin: 20px auto;
+  box-shadow: 2px 2px 5px #494949;
 
 }
 
 & #botaocadastro:hover {
-    background-color: #4e00bb;
-    width: 12%;
-    font-size: 22px;
-  }
+  background-color: #4e00bb;
+  width: 12%;
+  font-size: 22px;
+}

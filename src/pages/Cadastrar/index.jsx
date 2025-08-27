@@ -3,10 +3,19 @@ import Logo from '../../assets/logo.png';
 import { useNavigate } from 'react-router-dom';
 import React, { useMemo, useRef, useState } from "react";
 import loadingGif2 from '../../assets/loading3.gif';
+import goku from '../../assets/goku.gif';
+import ok from '../../assets/ok.png';
+import api from '../../services/api';
 
 function Cadastrar() {
+  const [nome, setNome] = useState('');
+  const [email, setEmail] = useState('');
+  const [senha, setSenha] = useState('');
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false); // novo estado
+  const [loadingSave, setLoadingSave] = useState(false); // novo estado
+  const [loadingSaveOK, setloadingSaveOK] = useState(false); // novo estado
+  const token = localStorage.getItem('token');
 
   const EMOJIS = [
     { ch: "🕎", name: "Fariseu" },
@@ -36,6 +45,39 @@ function Cadastrar() {
     });
   }
 
+  const [emogi, setEmogi] = useState("");
+
+  async function cadastrar() {
+    try {
+      if (emogi === "") {
+        alert("Selecione um perfil antes de cadastrar!");
+        return;
+      }
+      setLoadingSave(true); // Mostra o loading
+      const indice = parseInt(emogi, 10);
+      const body = { nomePessoa: nome, email, senha, perfil: indice };
+
+      const response = await api.post('/usuario/criaUsuario', body);
+
+      if (response.status === 201) {
+        setLoadingSave(false);
+        setloadingSaveOK(true);
+        setTimeout(() => {
+          navigate('/'); // Vai para login
+        }, 3000); // Tempo para mostrar o OK
+      } else {
+        alert(`⚠ Algo deu errado! Código: ${response.status}`);
+        console.log('Algo deu errado!', response);
+      }
+    } catch (error) {
+      const mensagemErro = error.response?.data?.message || error.message;
+      alert(`❌ Erro ao cadastrar usuário: ${mensagemErro}`);
+      console.error('Erro ao cadastrar usuário:', error);
+    } finally {
+      setLoadingSave(false); // Sempre esconde o loading
+    }
+  }
+
   async function loadingAnimation() {
     setLoading(true);
     setTimeout(() => {
@@ -53,6 +95,19 @@ function Cadastrar() {
           <p class="typng"><span class="dotes"></span></p>
         </div>
       )}
+      {/* Overlay de Loading */}
+      {loadingSave && (
+        <div className="loading-container">
+          <img id='saindo' src={goku} alt="Cadastrando..." />
+          <p class="typn"><span class="doteSave"></span></p>
+        </div>
+      )}
+      {loadingSaveOK && (
+        <div className="loading-containerr">
+          <img id='cadastrando' src={ok} alt="Cadastrando..." />
+          <p class="typng"><span class="dotes"></span></p>
+        </div>
+      )}
       <div className='Form'>
         <div className='div-boas-vindas'>
           <h2 id='Bem-vindos'>🎉 Bem-vindo!</h2>
@@ -66,31 +121,48 @@ function Cadastrar() {
           </div>
           <h2 className='titulo'>CADASTRO</h2>
           <div className='inputs'>
+
             <h5 id='descricao'>Nome</h5>
-            <input type="text" placeholder='Digite o seu nome aqui...' className='input-cadastro' />
+            <input
+              type="text"
+              maxLength={10}
+              placeholder='Como deseja ser chamado?  {10 caracteres...}'
+              className='input-cadastro'
+              value={nome}
+              onChange={(e) => setNome(e.target.value)} />
+
             <h5 id='descricao'>Email</h5>
-            <input type="email" placeholder='Digite o seu email aqui...' className='input-cadastro' />
+            <input
+              type="email"
+              placeholder='Digite o seu email aqui...'
+              className='input-cadastro'
+              value={email}
+              onChange={(e) => setEmail(e.target.value)} />
+
             <h5 id='descricao'>Senha</h5>
-            <input type="password" placeholder='Digite o sua senha aqui...' className='input-cadastro' />
-            <h5 id='descricao'>Repetir Senha</h5>
-            <input type="password" placeholder='Digite o sua senha aqui...' className='input-cadastro' />
+            <input
+              type="password"
+              placeholder='Digite o sua senha aqui...'
+              className='input-cadastro'
+              value={senha}
+              onChange={(e) => setSenha(e.target.value)} />
+
           </div>
           <div className='icon-button'>
             <select
+              id="select-perfil"
               className="rounded-lg border border-slate-300 bg-white p-2"
-              onChange={(e) => insertEmoji(e.target.value)}
-              defaultValue=""
+              value={emogi}
+              onChange={(e) => setEmogi(e.target.value)}
             >
-              <option id='Text-selecao' value="" disabled>
-                Perfis 😎
-              </option>
-              {EMOJIS.map((e) => (
-                <option key={e.ch} value={e.ch}>
+              <option value="" disabled>Perfis 😎</option>
+              {EMOJIS.map((e, index) => (
+                <option key={e.ch} value={index}>
                   {e.ch} {e.name}
                 </option>
               ))}
             </select>
-            <button id='Cadastrar-button'>START</button>
+            <button onClick={cadastrar} id='Cadastrar-button'>START</button>
           </div>
         </div>
       </div>
