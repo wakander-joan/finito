@@ -45,6 +45,18 @@
     gap: 0px;
 }
 
+.Areadash2 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px; /* um espaço leve entre os itens */
+    white-space: nowrap; /* impede quebra de linha */
+}
+
+.Areadash2 h5 {
+    margin: 0; /* remove margens padrão do h5 */
+}
+
 #logo-exit-dash {
     width: 80px;
     height: 55px;
@@ -96,3 +108,100 @@
         color: chocolate;
     }
 }
+
+/* Variaveis de width: do Dashboard Geral */
+
+:root {
+  --largura-principal: 70vw;
+}
+
+/* Dashboard Pricipal */
+
+.Caixa-dados{
+    width: var(--largura-principal);
+    height: 85vh;
+    background-color: #0700ca;
+}
+
+h4{
+    text-align: center;
+}
+
+.Valores{
+    justify-content: center;
+    gap: 5%;
+    display: flex;
+    margin-top: 1vh;
+    width: var(--largura-principal);
+    height: 20vh;
+    background-color: #cabc00;
+    padding-left: 1%;
+    padding-right: 1%;
+}
+
+.Imputs-Lancamentos{
+    display: flex;
+    margin-top: 1vh;
+    width: var(--largura-principal);
+    height: 62vh;
+    background-color: #28ca00;
+    gap: 1%;
+}
+
+.Inputs{
+    width: 30%;
+    background-color: #8f008f;
+}
+
+.Lancamentos-grafico-IA{
+    width: 70%;
+    background-color: #8f0000;
+}
+
+#Resultados{
+    border-radius: 7px;
+    background-color: rgb(255, 255, 255);
+    padding-left: 1%;
+    padding-top: 1%;
+    width: 20%;
+}
+
+#iconseta{
+    width: 2.6vw;
+    background-color: rgb(208, 252, 237);
+    border-radius: 5px;
+    padding: 1.5%;
+}
+
+#icons{
+    width: 2.6vw;
+    border-radius: 5px;
+}
+
+.Valores-nomes{
+    font-size: 140%;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-weight: bold;
+}
+
+.Valores-numeros{
+    font-size: 170%;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+#Valor-receitas{
+    color: #28ca00;
+}
+
+#Valor-depesas{
+    color: crimson;
+}
+
+#Valor-media{
+    color: darkorange;
+}
+
+#Valor-atual{
+    color: dodgerblue;
+}
+

@@ -54,7 +54,7 @@ function Cadastro() {
     setLoadingOpen(true)
     const response = await api.get(`/lancamento/buscaLancamentosPorMesEAno/${mes}/${anoSelecionado}`);
     console.log('Resultado:', response);
-    localStorage.setItem('body-response-array', response.data)
+    localStorage.setItem('body-response-array', JSON.stringify(response.data) )
     localStorage.setItem('mes-selecionado', mes)
     localStorage.setItem('ano-selecionado', anoSelecionado)
     setTimeout(() => {
