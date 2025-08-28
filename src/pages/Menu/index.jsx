@@ -7,11 +7,13 @@ import Exit from '../../assets/exit.png';
 import { useNavigate } from 'react-router-dom';
 import React from "react";
 import loadingGif2 from '../../assets/loading3.gif';
+import loadingGif4 from '../../assets/loading4.gif';
 import api from '../../services/api';
 
 function Cadastro() {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+  const [loadingOpen, setLoadingOpen] = useState(false);
   const [anoSelecionado, setAnoSelecionado] = useState('2025');
   const nomePessoa = localStorage.getItem("nomePessoa");
   const perfil = localStorage.getItem("perfil");
@@ -49,8 +51,17 @@ function Cadastro() {
   const perfilEmoji = getPerfilEmoji();
 
   async function get_next(mes) {
+    setLoadingOpen(true)
     const response = await api.get(`/lancamento/buscaLancamentosPorMesEAno/${mes}/${anoSelecionado}`);
     console.log('Resultado:', response);
+    localStorage.setItem('body-response-array', response.data)
+    localStorage.setItem('mes-selecionado', mes)
+    localStorage.setItem('ano-selecionado', anoSelecionado)
+    setTimeout(() => {
+      setLoadingOpen(false); // esconde o loading
+      navigate('/dashboard')
+    }, 2000); // 3 segundos
+
     return;
   }
 
@@ -61,6 +72,12 @@ function Cadastro() {
         <div className="loading-container">
           <img id='saindo' src={loadingGif2} alt="Carregando..." />
           <p class="typng"><span class="dotes"></span></p>
+        </div>
+      )}
+      {loadingOpen && (
+        <div className="loading-container-dash">
+          <img src={loadingGif4} alt="Carregando..." />
+          <p class="typng"><span class="dots"></span></p>
         </div>
       )}
       <div className='Cabecalho'>

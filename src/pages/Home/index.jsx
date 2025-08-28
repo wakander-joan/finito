@@ -36,11 +36,9 @@ function Home() {
       const { nomePessoa, perfil } = decoded;
       localStorage.setItem('nomePessoa', nomePessoa);
       localStorage.setItem('perfil', perfil);
+      setLoading(false); // esconde o loading
+      navigate('/cadastro'); // navega para a página
 
-      setTimeout(() => {
-        setLoading(false); // esconde o loading
-        navigate('/cadastro'); // navega para a página
-      }, 2000);
 
     } catch (error) {
       alert(`Erro ao fazer login: ${error.response?.data || error.message}`);
@@ -66,7 +64,7 @@ function Home() {
           <p class="typing"><span class="dots"></span></p>
         </div>
       )}
-      
+
       <form className='form1' onSubmit={(e) => e.preventDefault()}>
         <img id="logo-principal" src={Logo} alt="Finito" />
         <div className='divider'>
