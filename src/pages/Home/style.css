@@ -249,18 +249,17 @@ h2 {
   }
 }
 
-.form {
+.form1 {
+  width: 400px;
   margin-top: 20px;
   margin-bottom: 15px;
   display: flex;
   flex-direction: column;
-  width: 450px;
   max-width: 50%;
   background-color: #f0f0f0;
   padding: 20px;
   border-radius: 15px;
   gap: 30px;
-  /* Defini espaço entre os elementos da <div> */
   padding-bottom: 30px;
   /* Defini espaço na parte inferior da <div> */
   box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.849);

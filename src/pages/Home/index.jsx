@@ -67,7 +67,7 @@ function Home() {
         </div>
       )}
       
-      <form className='form' onSubmit={(e) => e.preventDefault()}>
+      <form className='form1' onSubmit={(e) => e.preventDefault()}>
         <img id="logo-principal" src={Logo} alt="Finito" />
         <div className='divider'>
           <h5>E-mail</h5>
