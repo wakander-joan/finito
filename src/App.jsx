@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import Cadastro from './pages/Cadastro';
+import Menu from './pages/Menu';
 import Home from './pages/Home';
 import Cadastrar from './pages/Cadastrar';
 
@@ -8,7 +8,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/cadastro" element={<Cadastro />} />
+        <Route path="/cadastro" element={<Menu />} />
         <Route path="/cadastrar" element={<Cadastrar />} />
       </Routes>
     </BrowserRouter>
