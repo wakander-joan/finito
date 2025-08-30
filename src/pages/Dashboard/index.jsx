@@ -9,13 +9,56 @@ import setadespesas from '../../assets/seta-despesas.png';
 import calendarioicon from '../../assets/calendarioicon.png';
 import carteiraicon from '../../assets/carteiraicon.png';
 import api from '../../services/api';
+import React, { useEffect } from 'react';
 
 function Dashboard() {
+  const [tipoSelecionado, setTipoSelecionado] = useState("RECEITA");
+  const [statusSelecionado, setStatusSelecionado] = useState("PENDENTE");
+  const anoSelecionado = localStorage.getItem('ano-selecionado');
+  const messelecionado = localStorage.getItem('mes-selecionado');
+  const [categoria, setCategoria] = useState("");
+  const [descricaoSelecionada, setDescricaoSelecionada] = useState("");
+  const [valorSelecionado, setValorSelecionado] = useState("");
+  const [dataSelecionada, setDataSelecionada] = useState("");
+
   const nomePessoa = localStorage.getItem("nomePessoa");
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
-  const anoSelecionado = localStorage.getItem('ano-selecionado');
-  const messelecionado = localStorage.getItem('mes-selecionado');
+  const [display, setDisplay] = useState("R$ 0,00");
+  const [raw, setRaw] = useState(0); // em centavos
+  const fmt = new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" });
+  const [data, setData] = useState('');
+  const categoriasDespesa = [
+    "MORADIA", "TRANSPORTE", "ALIMENTACAO", "SAUDE", "EDUCACAO",
+    "LAZER", "VESTUARIO", "SERVICOS", "PETS", "IMPOSTOS", "OUTRAS_DESPESAS"
+  ];
+
+  const categoriasReceita = [
+    "SALARIO", "FREELANCE", "ALUGUEL_RECEBIDO", "INVESTIMENTOS",
+    "REEMBOLSOS", "PREMIOS", "VENDAS", "AJUDAS", "OUTRAS_RECEITAS"
+  ];
+
+  const handleTipoChange = (e) => {
+    setTipo(e.target.value);
+    setCategoria(""); // reseta categoria ao mudar tipo
+  };
+  const handleChange = (e) => {
+    setData(e.target.value); // já vem no formato yyyy-mm-dd
+  };
+
+  const handleEnviar = () => {
+    console.log('Data selecionada:', data);
+    alert(`Data selecionada: ${data}`);
+  };
+
+
+  function onChange(e) {
+    const digits = e.target.value.replace(/\D/g, "") || "0";
+    const cents = parseInt(digits, 10);
+    setRaw(cents);
+    setDisplay(fmt.format(cents / 100));
+  }
+
   let body_response = [];
 
   try {
@@ -63,7 +106,7 @@ function Dashboard() {
     }).format(totalPreco);
   }
 
-  
+
 
   function somarReceitas(bodyArray) {
     if (!Array.isArray(bodyArray)) return 0;
@@ -120,7 +163,7 @@ function Dashboard() {
       currency: 'BRL'
     }).format(saldo);
   }
-  
+
   const totalFormatadoReceitas = somarReceitasFormatadas(body_response);
   const totalFormatadoDespesas = somarDespesasFormatadas(body_response);
   const saldoFormatado = calcularSaldo(body_response);
@@ -175,6 +218,17 @@ function Dashboard() {
     return;
   }
 
+  async function get_next_reload(mes) {
+    const response = await api.get(`/lancamento/buscaLancamentosPorMesEAno/${mes}/${anoSelecionado}`);
+    console.log('Resultado:', response);
+    localStorage.setItem('body-response-array', JSON.stringify(response.data))
+    localStorage.setItem('mes-selecionado', mes)
+    localStorage.setItem('ano-selecionado', anoSelecionado)
+    navigate('/dashboard')
+    window.location.reload();
+    return;
+  }
+
   function handleSetaClick(direcao) {
     // Pega o índice do mês atualmente selecionado
     const indiceAtual = meses.indexOf(messelecionado); // mesSelecionado deve estar no estado
@@ -191,6 +245,62 @@ function Dashboard() {
     const novoMes = meses[novoIndice];
     get_next(novoMes); // chama sua função
   }
+
+  async function cadastraLancamento() {
+    try {
+      const body = {
+        descricao: descricaoSelecionada,
+        preco: valorSelecionado,
+        dataVencimento: dataSelecionada,
+        status: statusSelecionado,
+        tipo: tipoSelecionado,
+        categoriaLancamento: categoria
+      };
+
+      // Validações individuais
+      if (!body.descricao || body.descricao.trim() === "") {
+        alert("⚠ Preencha a descrição antes de cadastrar!");
+        return;
+      }
+      if (!body.preco || body.preco <= 0) {
+        alert("⚠ Informe um valor válido!");
+        return;
+      }
+      if (!body.dataVencimento) {
+        alert("⚠ Selecione uma data de vencimento!");
+        return;
+      }
+      if (!body.status) {
+        alert("⚠ Selecione um status!");
+        return;
+      }
+      if (!body.tipo) {
+        alert("⚠ Selecione um tipo (Receita ou Despesa)!");
+        return;
+      }
+      if (!body.categoriaLancamento) {
+        alert("⚠ Selecione uma categoria!");
+        return;
+      }
+
+      console.log(body);
+
+      const response = await api.post(`/lancamento/cadastraLancamento/${messelecionado}/${anoSelecionado}`, body);
+
+      if (response.status === 201) {
+        alert(`Lançamento cadastrado com sucesso ✅: ${response.status}`);
+        get_next_reload(messelecionado)
+      } else {
+        alert(`⚠ Algo deu errado! Código: ${response.status}`);
+        console.log('Algo deu errado!', response);
+      }
+    } catch (error) {
+      const mensagemErro = error.response?.data?.message || error.message;
+      alert(`❌ Erro ao cadastrar Lancamento: ${mensagemErro}`);
+      console.error('Erro ao cadastrar Lancamento:', error);
+    }
+  }
+
 
   return (
     <div className="container-dash">
@@ -217,13 +327,14 @@ function Dashboard() {
         </div>
 
         <div className='Area3'>
-          <h2 id='USUARIO-TEXT'>{nomePessoa}</h2>
-          <h2 id='PERFIL-EMOGI'>{perfilEmoji}</h2>
+          <h2 id='USUARIO-TEXT2'>{nomePessoa}</h2>
+          <h2 id='PERFIL-EMOGI2'>{perfilEmoji}</h2>
         </div>
       </div>
 
       {/* Dashboard Principal */}
       <div className='Caixa-dados'>
+        {/* Valores de amostragem */}
         <div className='Valores'>
           <div id='Resultados' className='Resulato-Receitas'>
             <img id='iconseta' src={setareceitas} alt="" />
@@ -237,7 +348,7 @@ function Dashboard() {
           </div>
           <div id='Resultados' className='Resulato-Despesas'>
             <img id='icons' src={calendarioicon} alt="" />
-            <p className='Valores-nomes'>Média do mês</p>
+            <p className='Valores-nomes'>Média</p>
             <p id='Valor-media' className='Valores-numeros'>{mediaTotalFormatado}</p>
           </div>
           <div id='Resultados' className='Resulato-Despesas'>
@@ -246,10 +357,123 @@ function Dashboard() {
             <p id='Valor-atual' className='Valores-numeros'>{saldoFormatado}</p>
           </div>
         </div>
-
+        {/* Imputs-Lancamentos */}
         <div className='Imputs-Lancamentos'>
+          {/* Imputs */}
           <div className='Inputs'>
-            <h4>Inputs</h4>
+            <p id='Novo-lancamento'>Novo Lancamento</p>
+            {/* Tipo-status */}
+            <div className='Tipo-status-div'>
+              {/* Escolha de Tipos */}
+              <div className='Bloquinhos'>
+                <p id='Descricao-text-inputs'>Tipo</p>
+                <select
+                  id='Tipo-status-select'
+                  value={tipoSelecionado}
+                  onChange={(e) => setTipoSelecionado(e.target.value)}
+                  className="TipoSelect"
+                >
+                  <option id='Tipo-status-options-receita' value="RECEITA">RECEITA</option>
+                  <option id='Tipo-status-options-despesa' value="DESPESA">DESPESA</option>
+                </select>
+              </div>
+
+              {/* Escolha de Status ---------------------------------------*/}
+              <div className='Bloquinhos'>
+                <p id='Descricao-text-inputs'>Status</p>
+                <select
+                  id='Tipo-status-select'
+                  value={statusSelecionado}
+                  onChange={(e) => setStatusSelecionado(e.target.value)}
+                  className="StatusSelect"
+                >
+                  <option id='Tipo-status-options' value="PENDENTE">PENDENTE</option>
+                  <option id='Tipo-status-options' value="PAGO">PAGO</option>
+                </select>
+              </div>
+            </div>
+
+            {/* Descrição ------------------------------------------------*/}
+            <div className='Tipo-status-div'>
+              <div className='Bloquinho-input-descricao'>
+                <p id='Descricao-text-inputs'>Descrição</p>
+                <input
+                  placeholder='Ex: Salário, Conta de luz...'
+                  id='Descricao-input'
+                  onChange={(e) => setDescricaoSelecionada(e.target.value)}
+                  type="text" />
+              </div>
+            </div>
+
+            {/* Valor e Data de Vencimento ------------------------------------------------*/}
+            <div className='Tipo-status-div'>
+              {/* Escolha de Tipos */}
+              <div className='Bloquinhos'>
+                <p id='Descricao-text-inputs'>Valor</p>
+                <input
+                  id='input-valor'
+                  type="text"
+                  inputMode="decimal"
+                  value={display} // "R$ 12,34"
+                  onChange={(e) => {
+                    onChange(e); // continua formatando o display
+                    const somenteNumeros = e.target.value.replace(/\D/g, ''); // remove tudo que não é número
+                    const valorNumerico = parseFloat(somenteNumeros) / 100; // converte para reais
+                    setValorSelecionado(valorNumerico); // agora salva 12.34 (número real)
+                  }}
+                  placeholder="R$ 0,00"
+                  autoComplete="off"
+                />
+                {/* campo oculto envia valor numérico para backend */}
+                <input
+                  type="hidden"
+                  name="valor"
+                  value={(raw / 100).toFixed(2)} // "12.34"
+                />
+              </div>
+
+              {/* Escolha de Status ---------------------------------------*/}
+              <div className='Bloquinhos'>
+                <p id='Descricao-text-inputs'>Vencimento</p>
+                <input
+                  type="date"
+                  id="data"
+                  value={data}
+                  onChange={(e) => {
+                    handleChange(e);
+                    setDataSelecionada(e.target.value);
+                  }}
+                />
+              </div>
+            </div>
+            {/* Tipo-status */}
+            <div className='Tipo-status-div'>
+              {/* Escolha de Tipos */}
+              <div className='Bloquinhos'>
+                <p id='Descricao-text-inputs'>Categoria</p>
+                <select
+                  id='Tipo-status-select-categoria'
+                  value={categoria}
+                  onChange={(e) => setCategoria(e.target.value)}
+                  disabled={!tipoSelecionado} // desabilita se não escolheu tipo
+                >
+                  <option id='Tipo-status-options-receita' value="">Selecione a categoria</option>
+                  {tipoSelecionado === "DESPESA" &&
+                    categoriasDespesa.map((cat) => (
+                      <option id='Tipo-status-options-receita' key={cat} value={cat}>{cat}</option>
+                    ))
+                  }
+                  {tipoSelecionado === "RECEITA" &&
+                    categoriasReceita.map((cat) => (
+                      <option id='Tipo-status-options-receita' key={cat} value={cat}>{cat}</option>
+                    ))
+                  }
+                </select>
+              </div>
+            </div>
+            <div className='div-botao-cadastro'>
+              <button onClick={cadastraLancamento} id='Botao-cadastra-lancamento'>CADASTRAR</button>
+            </div>
           </div>
           <div className='Lancamentos-grafico-IA'>
             <h4>Lancamentos-grafico-IA</h4>

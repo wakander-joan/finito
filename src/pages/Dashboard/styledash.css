@@ -49,12 +49,15 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 8px; /* um espaço leve entre os itens */
-    white-space: nowrap; /* impede quebra de linha */
+    gap: 8px;
+    /* um espaço leve entre os itens */
+    white-space: nowrap;
+    /* impede quebra de linha */
 }
 
 .Areadash2 h5 {
-    margin: 0; /* remove margens padrão do h5 */
+    margin: 0;
+    /* remove margens padrão do h5 */
 }
 
 #logo-exit-dash {
@@ -87,12 +90,26 @@
 }
 
 #ano-cabecalho {
+    font-family: 'Jersey 10', sans-serif;
     text-align: center;
     font-size: 35px;
     color: darkgreen;
 }
 
+#USUARIO-TEXT2 {
+    font-size: 2.7vw;
+    font-weight: bold;
+    color: #000000;
+    padding-top: 9px;
+}
+
+#PERFIL-EMOGI2 {
+    font-size: 2.8vw;
+    padding-top: 0px;
+}
+
 #de-cabecalho {
+    font-family: 'Jersey 10', sans-serif;
     text-align: center;
     font-size: 35px;
 }
@@ -109,25 +126,29 @@
     }
 }
 
+
+
+
+
 /* Variaveis de width: do Dashboard Geral */
 
 :root {
-  --largura-principal: 70vw;
+    --largura-principal: 70vw;
 }
 
 /* Dashboard Pricipal */
 
-.Caixa-dados{
+.Caixa-dados {
     width: var(--largura-principal);
     height: 85vh;
     background-color: #0700ca;
 }
 
-h4{
+h4 {
     text-align: center;
 }
 
-.Valores{
+.Valores {
     justify-content: center;
     gap: 5%;
     display: flex;
@@ -139,7 +160,7 @@ h4{
     padding-right: 1%;
 }
 
-.Imputs-Lancamentos{
+.Imputs-Lancamentos {
     display: flex;
     margin-top: 1vh;
     width: var(--largura-principal);
@@ -148,17 +169,13 @@ h4{
     gap: 1%;
 }
 
-.Inputs{
-    width: 30%;
-    background-color: #8f008f;
-}
 
-.Lancamentos-grafico-IA{
+.Lancamentos-grafico-IA {
     width: 70%;
     background-color: #8f0000;
 }
 
-#Resultados{
+#Resultados {
     border-radius: 7px;
     background-color: rgb(255, 255, 255);
     padding-left: 1%;
@@ -166,42 +183,159 @@ h4{
     width: 20%;
 }
 
-#iconseta{
+#iconseta {
     width: 2.6vw;
     background-color: rgb(208, 252, 237);
     border-radius: 5px;
     padding: 1.5%;
 }
 
-#icons{
+#icons {
     width: 2.6vw;
     border-radius: 5px;
 }
 
-.Valores-nomes{
-    font-size: 140%;
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    font-weight: bold;
+.Valores-nomes {
+    font-size: 2vw;
+    font-family: 'Jersey 10', sans-serif;
 }
 
-.Valores-numeros{
-    font-size: 170%;
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+.Valores-numeros {
+    font-size: 2.3vw;
+    font-family: 'Jersey 10', sans-serif;
 }
 
-#Valor-receitas{
+#Valor-receitas {
     color: #28ca00;
 }
 
-#Valor-depesas{
+#Valor-depesas {
     color: crimson;
 }
 
-#Valor-media{
+#Valor-media {
     color: darkorange;
 }
 
-#Valor-atual{
+#Valor-atual {
     color: dodgerblue;
 }
 
+/* Tela de Inputs */
+
+.Inputs {
+    width: 30%;
+    background-color: #ffffff;
+    border-radius: 10px;
+    padding-top: 10px;
+}
+
+#Novo-lancamento {
+    margin-left: 3px;
+    font-size: 2vw;
+    font-family: 'Jersey 10', sans-serif;
+    color: rgb(0, 0, 0);
+    padding-left: 3%;
+}
+
+.Tipo-status-div {
+    padding: 0%;
+    gap: 5px;
+    display: flex;
+    padding-left: 2.5%;
+    justify-content: baseline;
+}
+
+#Descricao-text-inputs {
+    font-size: 1.3vw;
+    font-family: inherit;
+    color: rgb(49, 49, 49);
+    font-weight: bold;
+    padding-left: 3%;
+}
+
+
+#Tipo-status-select {
+    width: 9.5vw;
+    border-radius: 10px;
+    font-size: 1.2vw;
+    cursor: pointer;
+    font-family: unset;
+}
+
+#Tipo-status-options-receita {
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    background-color: #ffffff;
+    color: #23af00;
+}
+
+#Tipo-status-options-despesa {
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    background-color: #ffffff;
+    color: #ff0000;
+}
+
+#Tipo-status-options {
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    background-color: #ffffff;
+}
+
+.Bloquinho-input-descricao {
+    padding-top: 1.5vh;
+}
+
+#Descricao-input {
+    font-size: 1.35vw;
+    width: 19.5vw;
+    height: 5vh;
+}
+
+#input-valor {
+    font-family: 'Jersey 10', sans-serif;
+    font-size: 1.5vw;
+    color: rgb(48, 48, 48);
+    width: 7.5vw;
+}
+
+#data {
+    font-family: 'Jersey 10', sans-serif;
+    font-size: 1.6vw;
+    color: rgb(48, 48, 48);
+    cursor: pointer;
+}
+
+#Tipo-status-select-categoria {
+    width: 16.5vw;
+    border-radius: 10px;
+    font-size: 1.2vw;
+    cursor: pointer;
+    font-family: unset;
+}
+
+.div-botao-cadastro {
+    padding-top: 5%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#Botao-cadastra-lancamento {
+  border-radius: 7px;
+  background-color: #5300C8;
+  border: 1px solid #5300C8;
+  color: white;
+  cursor: pointer;
+  font-size: 4vh;
+  cursor: pointer;
+  width: 11vw;
+  height: 6vh;
+  box-shadow: 2px 2px 5px #494949;
+
+}
+
+& #Botao-cadastra-lancamento:hover {
+  background-color: #4e00bb;
+  width: 11.5vw;
+  height: 6.5vh;
+  font-size: 4.3vh;
+}
