@@ -169,18 +169,14 @@ h4 {
     gap: 1%;
 }
 
-
-.Lancamentos-grafico-IA {
-    width: 70%;
-    background-color: #8f0000;
-}
-
 #Resultados {
     border-radius: 7px;
     background-color: rgb(255, 255, 255);
     padding-left: 1%;
     padding-top: 1%;
     width: 20%;
+    box-shadow: 3px 3px 10px 0px #000000;
+    /* sombra preta */
 }
 
 #iconseta {
@@ -228,6 +224,7 @@ h4 {
     background-color: #ffffff;
     border-radius: 10px;
     padding-top: 10px;
+    box-shadow: 3px 3px 10px 0px #000000;
 }
 
 #Novo-lancamento {
@@ -320,22 +317,245 @@ h4 {
 }
 
 #Botao-cadastra-lancamento {
-  border-radius: 7px;
-  background-color: #5300C8;
-  border: 1px solid #5300C8;
-  color: white;
-  cursor: pointer;
-  font-size: 4vh;
-  cursor: pointer;
-  width: 11vw;
-  height: 6vh;
-  box-shadow: 2px 2px 5px #494949;
+    border-radius: 7px;
+    background-color: #5300C8;
+    border: 1px solid #5300C8;
+    color: white;
+    cursor: pointer;
+    font-size: 4vh;
+    cursor: pointer;
+    width: 11vw;
+    height: 6vh;
+    box-shadow: 2px 2px 5px #494949;
 
 }
 
 & #Botao-cadastra-lancamento:hover {
-  background-color: #4e00bb;
-  width: 11.5vw;
-  height: 6.5vh;
-  font-size: 4.3vh;
+    background-color: #4e00bb;
+    width: 11.5vw;
+    height: 6.5vh;
+    font-size: 4.3vh;
+}
+
+.Lancamentos-grafico-IA {
+    width: 70%;
+    background-color: #ffffff;
+    border-radius: 7px;
+    box-shadow: 3px 3px 10px 0px #000000;
+}
+
+.cabecalho-lancamentos {
+    justify-content: space-between;
+    display: flex;
+    align-items: center;
+}
+
+.caixa-filtro-busca {
+    display: flex;
+    align-items: center;
+}
+
+#Lancamentos {
+    margin-left: 3px;
+    font-size: 2vw;
+    font-family: 'Jersey 10', sans-serif;
+    color: rgb(0, 0, 0);
+    padding-left: 5%;
+}
+
+#botao-dashboard {
+    width: 8vw;
+    height: 5vh;
+    border-radius: 5px;
+    font-size: 1vw;
+    cursor: pointer;
+    margin-top: 0.7vh;
+
+    &:hover {
+        background-color: rgb(143, 0, 245);
+    }
+}
+
+#filtro-img {
+    width: 2vw;
+    height: 4.5vh;
+    cursor: pointer;
+}
+
+.search-box {
+    position: relative;
+    width: 18vw;
+    padding-top: 1vh;
+    padding-right: 1vw;
+}
+
+.search-box input {
+    width: 100%;
+    height: 5.5vh;
+    padding: 8px 8px 8px 32px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.search-box .icon {
+    position: absolute;
+    left: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+
+    &:hover {
+        width: 18px;
+        height: 18px;
+    }
+}
+
+.Indicador-nomes-lancamentos {
+    align-items: center;
+    margin-top: 1vh;
+    justify-content: space-between;
+    display: flex;
+    gap: 0%;
+    background-color: #c2c2c2;
+}
+
+#Indicador {
+    font-size: 1.2vw;
+    width: 9vw;
+    text-align: center;
+}
+
+#Indicador-edita {
+    font-size: 1.3vw;
+    width: 5vw;
+    text-align: center;
+}
+
+.edita-lancamento{
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+#edita-img {
+    padding-top: 5%;
+    width: 1.6vw;
+    cursor: pointer;
+}
+
+#exclui-img{
+    padding-top: 5%;
+    width: 1.5vw;
+    cursor: pointer;
+}
+
+.Grupo-de-Lancamentos {
+    height: 55.5vh;
+    border-bottom-left-radius: 7px;
+    border-bottom-right-radius: 7px;
+    padding-left: 1%;
+    padding-right: 1%;
+    padding-top: 1.5%;
+    overflow-y: auto;    /* rolagem vertical */
+    overflow-x: hidden;  /* esconde rolagem horizontal */
+}
+
+.lancamento-block{
+    margin-top: 2.5%;
+    border: 1px solid rgb(105, 105, 105);
+    border-radius: 7px;
+    padding: 0%;
+}
+
+.descricao-lancamento-block{
+    padding-left: 0.3vw;
+}
+
+.descricao-edit-exclui{
+    justify-content: space-between;
+    display: flex;
+    padding-right: 1vw;
+  
+}
+#descricao-lancamento{
+    padding-left: 1vh;
+    border: 1px solid black;
+    width: 35vw;
+    height: 4.5vh;
+    border-radius: 5px;
+    font-size: 1.3vw;
+    overflow-x: auto;
+}
+#descricao-lancamento-label{
+    font-size: 1.6vw;
+    font-family: 'Jersey 10', sans-serif;
+}
+
+.tipo-valor-vencimento-etc{
+    justify-content: space-between;
+    display: flex;
+    padding-right: 0.5vw;
+    padding-left: 0.5vw;
+    padding-bottom: 0.5vh;
+    padding-top: 1%;
+}
+
+.Tipo-lancamento-block{
+    text-align: center;
+}
+
+#Div-tipo-lancamento{
+    display: flex;
+    border: 1px solid black;
+    border-radius: 5px;
+    gap: 0px;
+}
+
+#Iconseta-tipo{
+    width: 2.6vw;
+    height: 3.6vh;
+    border-radius: 5px;
+    padding-top: 3%;
+    padding-left: 1.5vh;
+}
+
+#Tipo-lancamento{
+    padding-top: 2%;
+    width: 6vw;
+    height: 4.5vh;
+    font-size: 1.3vw;
+}
+
+#Valor-lancamento{
+    color: #ff0000;
+    padding-top: 3%;
+    width: 7vw;
+    border-radius: 5px;
+    font-size: 1.7vw;
+    font-family: 'Jersey 10', sans-serif;
+}
+
+#Vencimento-lancamento{
+    padding-top: 6%;
+    font-size: 1.5vw;
+    font-family: 'Jersey 10', sans-serif;
+}
+
+#Status-select-lancamento{
+    border: 1px solid rgb(126, 126, 126);
+    background-color: #ffffff00;
+    border-radius: 10px;
+    width: 8vw;
+    cursor: pointer;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+#Categoria-lancamento{
+    padding-top: 1vh;
+    font-size: 1.2vw;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-weight: bold;
 }
