@@ -13,7 +13,7 @@ import icon_filtro from '../../assets/filtro.png';
 import icon_lupa from '../../assets/lupa.png';
 import edita from '../../assets/edita.png';
 import apaga from '../../assets/apaga.png';
-
+import madara from '../../assets/madara.gif';
 
 function Dashboard() {
   const [tipoSelecionado, setTipoSelecionado] = useState("RECEITA");
@@ -25,6 +25,18 @@ function Dashboard() {
   const [valorSelecionado, setValorSelecionado] = useState("");
   const [dataSelecionada, setDataSelecionada] = useState("");
   const [inputValue, setInputValue] = useState("");
+  const [overlayVisivel, setOverlayVisivel] = useState(false);
+  const [lancamentoSelecionado, setLancamentoSelecionado] = useState(null);
+
+  const abrirOverlay = (lancamento) => {
+    setLancamentoSelecionado(lancamento);
+    setOverlayVisivel(true);
+  };
+
+  const fecharOverlay = () => {
+    setOverlayVisivel(false);
+    setLancamentoSelecionado(null);
+  };
 
   const nomePessoa = localStorage.getItem("nomePessoa");
   const navigate = useNavigate();
@@ -109,6 +121,13 @@ function Dashboard() {
       style: 'currency',
       currency: 'BRL'
     }).format(totalPreco);
+  }
+
+  function formatador(valor) {
+    return new Intl.NumberFormat('pt-BR', {
+      style: 'currency',
+      currency: 'BRL'
+    }).format(valor);
   }
 
 
@@ -306,6 +325,14 @@ function Dashboard() {
     }
   }
 
+  function verificaSeta(tipo) {
+    if (tipo === "RECEITA") {
+      return setareceitas;
+    } else if (tipo === "DESPESA") {
+      return setadespesas;
+    }
+    return "";
+  }
 
   return (
     <div className="container-dash">
@@ -479,6 +506,7 @@ function Dashboard() {
             <div className='div-botao-cadastro'>
               <button onClick={cadastraLancamento} id='Botao-cadastra-lancamento'>CADASTRAR</button>
             </div>
+
           </div>
           {/* Lancamentos-grafico-IA */}
           <div className='Lancamentos-grafico-IA'>
@@ -489,7 +517,7 @@ function Dashboard() {
               <div className='caixa-filtro-busca'>
                 <button id='botao-dashboard' onClick={() => alert("Ainda não implementado!")}>🖥️ DASHBOARD</button>
                 <img id='filtro-img' onClick={() => alert("Ainda não implementado!")} src={icon_filtro} alt="Carregando..." />
-                <div class="search-box">
+                <div className="search-box">
                   <img
                     src={icon_lupa}
                     className="icon"
@@ -505,64 +533,82 @@ function Dashboard() {
               </div>
             </div>
             <div className='Grupo-de-Lancamentos'>
-              <div className='lancamento-block'>
-                <div className='descricao-edit-exclui'>
-                  <div className='descricao-lancamento-block'>
-                    <label id='descricao-lancamento-label' htmlFor="text">DESCRIÇÃO</label>
-                    <p id='descricao-lancamento'>Aluguel de imovel em outra cidade perto desta aqui</p>
-                  </div>
-                  <div className='edita-lancamento'>
-                    <label id='descricao-lancamento-label' htmlFor="text">EDITAR</label>
-                    <img id='edita-img' src={edita} className="icon" onClick={() => alert("falta implementar")} />
-                  </div>
-                  <div className='edita-lancamento'>
-                    <label id='descricao-lancamento-label' htmlFor="text">EXCLUIR</label>
-                    <img id='exclui-img' src={apaga} className="icon" onClick={() => alert("falta implementar")} />
-                  </div>
-                </div>
-                <div className='tipo-valor-vencimento-etc'>
-                  <div className='Tipo-lancamento-block'>
-                    <label id='descricao-lancamento-label' htmlFor="text">TIPO</label>
-                    <div id='Div-tipo-lancamento'>
-                      <img id='Iconseta-tipo' src={setareceitas} alt="" />
-                      <p id='Tipo-lancamento'>DESPESA</p>
-                    </div>
-                  </div>
-                  <div className='edita-lancamento'>
-                    <label id='descricao-lancamento-label' htmlFor="text">VALOR</label>
-                    <p id='Valor-lancamento'>R$ 10.520,00</p>
-                  </div>
-                  <div className='edita-lancamento'>
-                    <label id='descricao-lancamento-label' htmlFor="text">VENCIMENTO</label>
-                    <p id='Vencimento-lancamento'>31/09/2025</p>
-                  </div>
-                  <div className='edita-lancamento'>
-                    <label id='descricao-lancamento-label' htmlFor="text">STATUS</label>
-                    <div id='Div-status-lancamento'>
-                      <select
-                        id="Status-select-lancamento"
-                        value={statusSelecionado}
-                        onChange={(e) => {
-                          setStatusSelecionado(e.target.value);
-                          alert(`Status alterado para: ${e.target.value}`);
-                        }}
-                        className="Status-Select"
-                      >
-                        <option value="PAGO">PAGO</option>
-                        <option value="PENDENTE">PENDENTE</option>
-                      </select>
-                    </div>
-                  </div>
-                  <div className='edita-lancamento'>
-                    <label id='descricao-lancamento-label' htmlFor="text">CATEGORIA</label>
-                    <p id='Categoria-lancamento'>OUTRAS_DESPESAS</p>
-                  </div>
-                </div>
-                <div className='tipo-valor-etc'>
 
+              {/* Lancamentos-AQUI.............................................. */}
+              {body_response.map((lancamento) => (
+                <div key={lancamento.idLancamento} className='lancamento-block'>
+                  <div className='descricao-edit-exclui'>
+                    <div className='descricao-lancamento-block'>
+                      <label id='descricao-lancamento-label' htmlFor="text">DESCRIÇÃO</label>
+                      <p id='descricao-lancamento'>{lancamento.descricao}</p>
+                    </div>
+                    <div className='edita-lancamento'>
+                      <label id='descricao-lancamento-label' htmlFor="text">EDITAR</label>
+                      <img id='edita-img' src={edita} className="icon" onClick={() => abrirOverlay(lancamento)} />
+                      {overlayVisivel && (
+                        <div className='overlay'>
+                          <div className='modal'>
+                            <p>{lancamentoSelecionado?.idLancamento}</p>
+                            <p>{lancamentoSelecionado?.descricao}</p>
+                            <p>{formatador(lancamentoSelecionado?.preco)}</p>
+                            <p>{lancamentoSelecionado?.tipo}</p>
+                            <button id='Fechar-editar' onClick={fecharOverlay}>Fechar</button>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                    <div className='edita-lancamento'>
+                      <label id='descricao-lancamento-label' htmlFor="text">EXCLUIR</label>
+                      <img id='exclui-img' src={apaga} className="icon" onClick={() => alert("Excluir: " + lancamento.idLancamento)} />
+                    </div>
+                  </div>
+                  <div className='tipo-valor-vencimento-etc'>
+                    <div className='Tipo-lancamento-block'>
+                      <label id='descricao-lancamento-label' htmlFor="text">TIPO</label>
+                      <div style={{
+                        backgroundColor: lancamento.tipo === "RECEITA" ? "#5EBB48" : "#dc3545"
+                      }} id='Div-tipo-lancamento'>
+                        <img
+                          id="Iconseta-tipo" src={verificaSeta(lancamento.tipo)}
+                          alt=""
+                        />
+                        <p id='Tipo-lancamento'>{lancamento.tipo}</p>
+                      </div>
+                    </div>
+                    <div className='edita-lancamento'>
+                      <label id='descricao-lancamento-label' htmlFor="text">VALOR</label>
+                      <p id='Valor-lancamento'>{formatador(lancamento.preco)}</p>
+                    </div>
+                    <div className='edita-lancamento'>
+                      <label id='descricao-lancamento-label' htmlFor="text">VENCIMENTO</label>
+                      <p id='Vencimento-lancamento'>{lancamento.dataVencimento}</p>
+                    </div>
+                    <div className='edita-lancamento'>
+                      <label id='descricao-lancamento-label' htmlFor="text">STATUS</label>
+                      <div id='Div-status-lancamento'>
+                        <select
+                          id="Status-select-lancamento"
+                          value={lancamento.status}
+                          onChange={(e) => {
+                            alert(`Status alterado para: ${e.target.value}`);
+                            //Aqui colocar a function de alterar status no Back-End
+                          }}
+                          className="Status-Select"
+                        >
+                          <option value="PAGO">PAGO</option>
+                          <option value="PENDENTE">PENDENTE</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div className='Categoria-lancamento'>
+                      <label id='descricao-lancamento-label' htmlFor="text">CATEGORIA</label>
+                      <p id='Categoria-lancamento'>{lancamento.categoriaLancamento}</p>
+                    </div>
+                  </div>
                 </div>
-              </div>
+              ))}
             </div>
+
           </div>
           {/* Final div Lancamentos*/}
         </div>

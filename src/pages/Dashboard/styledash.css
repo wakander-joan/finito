@@ -141,7 +141,7 @@
 .Caixa-dados {
     width: var(--largura-principal);
     height: 85vh;
-    background-color: #0700ca;
+    
 }
 
 h4 {
@@ -155,7 +155,6 @@ h4 {
     margin-top: 1vh;
     width: var(--largura-principal);
     height: 20vh;
-    background-color: #cabc00;
     padding-left: 0;
     padding-right: 0;
 }
@@ -165,7 +164,6 @@ h4 {
     margin-top: 1vh;
     width: var(--largura-principal);
     height: 62vh;
-    background-color: #28ca00;
     gap: 1%;
 }
 
@@ -175,7 +173,7 @@ h4 {
     padding-left: 1%;
     padding-top: 1%;
     width: 20%;
-    box-shadow: 3px 3px 10px 0px #000000;
+    box-shadow: 3px 3px 6px 0px #000000;
     /* sombra preta */
 }
 
@@ -314,6 +312,7 @@ h4 {
     display: flex;
     justify-content: center;
     align-items: center;
+    gap: 0px;
 }
 
 #Botao-cadastra-lancamento {
@@ -347,7 +346,9 @@ h4 {
 .cabecalho-lancamentos {
     justify-content: space-between;
     display: flex;
+    border-radius: 7px;
     align-items: center;
+    background-color: #f1f1f1;
 }
 
 .caixa-filtro-busca {
@@ -434,7 +435,7 @@ h4 {
     text-align: center;
 }
 
-.edita-lancamento{
+.edita-lancamento {
     justify-content: center;
     align-items: center;
     text-align: center;
@@ -442,11 +443,12 @@ h4 {
 
 #edita-img {
     padding-top: 5%;
-    width: 1.6vw;
+    width: 1.7vw;
     cursor: pointer;
+    filter: grayscale(100%);
 }
 
-#exclui-img{
+#exclui-img {
     padding-top: 5%;
     width: 1.5vw;
     cursor: pointer;
@@ -459,42 +461,51 @@ h4 {
     padding-left: 1%;
     padding-right: 1%;
     padding-top: 1.5%;
-    overflow-y: auto;    /* rolagem vertical */
-    overflow-x: hidden;  /* esconde rolagem horizontal */
+    overflow-y: auto;
+    overflow-x: hidden;
+    background-color: #f1f1f1;
 }
 
-.lancamento-block{
+.lancamento-block {
     margin-top: 2.5%;
-    border: 1px solid rgb(105, 105, 105);
+    border: 1px solid rgb(156, 156, 156);
     border-radius: 7px;
+    background-color: #ffffff;
     padding: 0%;
 }
 
-.descricao-lancamento-block{
+.descricao-lancamento-block {
     padding-left: 0.3vw;
 }
 
-.descricao-edit-exclui{
+.descricao-edit-exclui {
     justify-content: space-between;
     display: flex;
     padding-right: 1vw;
-  
+
 }
-#descricao-lancamento{
+
+#descricao-lancamento {
     padding-left: 1vh;
-    border: 1px solid black;
+    padding-top: 0.5vh;
+    border: 1px solid rgb(161, 161, 161);
     width: 35vw;
     height: 4.5vh;
     border-radius: 5px;
-    font-size: 1.3vw;
+    font-size: 1.2vw;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: bolder;
     overflow-x: auto;
-}
-#descricao-lancamento-label{
-    font-size: 1.6vw;
-    font-family: 'Jersey 10', sans-serif;
+    color: #000000;
 }
 
-.tipo-valor-vencimento-etc{
+#descricao-lancamento-label {
+    font-size: 1.5vw;
+    font-family: 'Jersey 10', sans-serif;
+    color: #727272;
+}
+
+.tipo-valor-vencimento-etc {
     justify-content: space-between;
     display: flex;
     padding-right: 0.5vw;
@@ -503,33 +514,37 @@ h4 {
     padding-top: 1%;
 }
 
-.Tipo-lancamento-block{
+.Tipo-lancamento-block {
     text-align: center;
 }
 
-#Div-tipo-lancamento{
+#Div-tipo-lancamento {
     display: flex;
-    border: 1px solid black;
-    border-radius: 5px;
+    border-radius: 10px;
     gap: 0px;
+    align-items: center;
+    padding-left: 3%;
 }
 
-#Iconseta-tipo{
-    width: 2.6vw;
+#Iconseta-tipo {
+    background-color: #ffffff;
+    width: 2.1vw;
     height: 3.6vh;
-    border-radius: 5px;
-    padding-top: 3%;
-    padding-left: 1.5vh;
+    border-radius: 10px;
+    padding: 3%;
 }
 
-#Tipo-lancamento{
+#Tipo-lancamento {
     padding-top: 2%;
     width: 6vw;
     height: 4.5vh;
     font-size: 1.3vw;
+    color: #ffffff;
+    font-size: 1.7vw;
+    font-family: 'Jersey 10', sans-serif;
 }
 
-#Valor-lancamento{
+#Valor-lancamento {
     color: #ff0000;
     padding-top: 3%;
     width: 7vw;
@@ -538,13 +553,13 @@ h4 {
     font-family: 'Jersey 10', sans-serif;
 }
 
-#Vencimento-lancamento{
+#Vencimento-lancamento {
     padding-top: 6%;
     font-size: 1.5vw;
     font-family: 'Jersey 10', sans-serif;
 }
 
-#Status-select-lancamento{
+#Status-select-lancamento {
     border: 1px solid rgb(126, 126, 126);
     background-color: #ffffff00;
     border-radius: 10px;
@@ -553,9 +568,45 @@ h4 {
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
 
-#Categoria-lancamento{
-    padding-top: 1vh;
-    font-size: 1.2vw;
+#Categoria-lancamento {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 4vh;
+    font-size: 1.1vw;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     font-weight: bold;
+    color: #004196;
+    border: 1px solid rgb(126, 126, 126);
+    border-radius: 5px;
+    padding: 0 8px;
+}
+
+.Categoria-lancamento{
+    text-align: center;
+}
+
+.overlay {
+  position: fixed;
+  inset: 0;                 /* top/right/bottom/left: 0 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.151);
+  z-index: 9999;
+}
+
+.modal {
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  min-width: 300px;
+  text-align: center;
+}
+
+#Fechar-editar{
+    cursor: pointer;
+    border-radius: 5px;
+    width: 5vw;
+    font-size: 1vw;
 }
