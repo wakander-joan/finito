@@ -1,83 +1,34 @@
+{/* Import's Geral.................*/ }
+import { useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 import './styledash.css';
+import api from '../../services/api';
+
+{/* Import's Cabecalho.............*/ }
 import Logo from '../../assets/logo.png';
 import Exit from '../../assets/back.png';
-import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
 import loadingGif4 from '../../assets/loading4.gif';
+
+{/* Import's Input's...............*/ }
+
+{/* Import's Lancamentos...........*/ }
 import setareceitas from '../../assets/seta-receitas.png';
 import setadespesas from '../../assets/seta-despesas.png';
-import calendarioicon from '../../assets/calendarioicon.png';
-import carteiraicon from '../../assets/carteiraicon.png';
-import api from '../../services/api';
 import icon_filtro from '../../assets/filtro.png';
 import icon_lupa from '../../assets/lupa.png';
 import edita from '../../assets/edita.png';
 import apaga from '../../assets/apaga.png';
-import madara from '../../assets/madara.gif';
+
+{/* Import's Valores...............*/ }
+import calendarioicon from '../../assets/calendarioicon.png';
+import carteiraicon from '../../assets/carteiraicon.png';
+
 
 function Dashboard() {
-  const [tipoSelecionado, setTipoSelecionado] = useState("RECEITA");
-  const [statusSelecionado, setStatusSelecionado] = useState("PENDENTE");
-  const anoSelecionado = localStorage.getItem('ano-selecionado');
-  const messelecionado = localStorage.getItem('mes-selecionado');
-  const [categoria, setCategoria] = useState("");
-  const [descricaoSelecionada, setDescricaoSelecionada] = useState("");
-  const [valorSelecionado, setValorSelecionado] = useState("");
-  const [dataSelecionada, setDataSelecionada] = useState("");
-  const [inputValue, setInputValue] = useState("");
-  const [overlayVisivel, setOverlayVisivel] = useState(false);
-  const [lancamentoSelecionado, setLancamentoSelecionado] = useState(null);
 
-  const abrirOverlay = (lancamento) => {
-    setLancamentoSelecionado(lancamento);
-    setOverlayVisivel(true);
-  };
-
-  const fecharOverlay = () => {
-    setOverlayVisivel(false);
-    setLancamentoSelecionado(null);
-  };
-
-  const nomePessoa = localStorage.getItem("nomePessoa");
-  const navigate = useNavigate();
-  const [loading, setLoading] = useState(false);
-  const [display, setDisplay] = useState("R$ 0,00");
-  const [raw, setRaw] = useState(0); // em centavos
-  const fmt = new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" });
-  const [data, setData] = useState('');
-  const categoriasDespesa = [
-    "MORADIA", "TRANSPORTE", "ALIMENTACAO", "SAUDE", "EDUCACAO",
-    "LAZER", "VESTUARIO", "SERVICOS", "PETS", "IMPOSTOS", "OUTRAS_DESPESAS"
-  ];
-
-  const categoriasReceita = [
-    "SALARIO", "FREELANCE", "ALUGUEL_RECEBIDO", "INVESTIMENTOS",
-    "REEMBOLSOS", "PREMIOS", "VENDAS", "AJUDAS", "OUTRAS_RECEITAS"
-  ];
-
-  const handleTipoChange = (e) => {
-    setTipo(e.target.value);
-    setCategoria(""); // reseta categoria ao mudar tipo
-  };
-  const handleChange = (e) => {
-    setData(e.target.value); // já vem no formato yyyy-mm-dd
-  };
-
-  const handleEnviar = () => {
-    console.log('Data selecionada:', data);
-    alert(`Data selecionada: ${data}`);
-  };
-
-
-  function onChange(e) {
-    const digits = e.target.value.replace(/\D/g, "") || "0";
-    const cents = parseInt(digits, 10);
-    setRaw(cents);
-    setDisplay(fmt.format(cents / 100));
-  }
-
+  {/* Body-response-Geral.................................................................*/ }
+  {/* Body iniciado antes das constantes para carregamento dos, VALORES & LANCAMENTOS.....*/ }
   let body_response = [];
-
   try {
     const stored = localStorage.getItem('body-response-array');
     if (stored) {
@@ -90,7 +41,160 @@ function Dashboard() {
     console.error("Erro ao ler body-response-array:", err);
     body_response = [];
   }
+  {/* Body-response-Geral.................*/ }
 
+  {/* Const's Input's.................*/ }
+  const [display, setDisplay] = useState("R$ 0,00");
+  const [displayEdita, setDisplayEdita] = useState("R$ 0,00");
+  const [raw, setRaw] = useState(0); // em centavos
+  const fmt = new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" });
+  const [data, setData] = useState('');
+  const [tipoSelecionado, setTipoSelecionado] = useState("RECEITA");
+  const [statusSelecionado, setStatusSelecionado] = useState("PENDENTE");
+  const [dataSelecionada, setDataSelecionada] = useState("");
+  const [valorSelecionado, setValorSelecionado] = useState("");
+  const [categoria, setCategoria] = useState("");
+  const [descricaoSelecionada, setDescricaoSelecionada] = useState("");
+  const categoriasDespesa = [
+    "MORADIA", "TRANSPORTE", "ALIMENTACAO", "SAUDE", "EDUCACAO",
+    "LAZER", "VESTUARIO", "SERVICOS", "PETS", "IMPOSTOS", "OUTRAS_DESPESAS"
+  ];
+  const categoriasReceita = [
+    "SALARIO", "FREELANCE", "ALUGUEL_RECEBIDO", "INVESTIMENTOS",
+    "REEMBOLSOS", "PREMIOS", "VENDAS", "AJUDAS", "OUTRAS_RECEITAS"
+  ];
+  const formata_data = (e) => {
+    setData(e.target.value); // já vem no formato yyyy-mm-dd
+  };
+
+
+  {/* Const's Cabecalho.................*/ }
+  const nomePessoa = localStorage.getItem("nomePessoa");
+  const [loading, setLoading] = useState(false);
+  const setlaD = "--->"
+  const setlaE = "<---"
+  const EMOJIS = [
+    "🕎", // 0
+    "💀", // 1
+    "💸", // 2
+    "😬", // 3
+    "😐", // 4
+    "🙂", // 5
+    "😎", // 6
+    "🤑", // 7
+    "💰", // 8
+    "🏦", // 9
+    "🌟"  // 10
+  ];
+  const meses = [
+    "JANEIRO", "FEVEREIRO", "MARCO", "ABRIL",
+    "MAIO", "JUNHO", "JULHO", "AGOSTO",
+    "SETEMBRO", "OUTUBRO", "NOVEMBRO", "DEZEMBRO"
+  ];
+  const perfilEmoji = getPerfilEmoji();
+
+  {/* Const's Valores.................*/ }
+  const totalReceitas = somarReceitas(body_response);
+  const totalDespesas = somarDespesas(body_response);
+  const mediaTotal = totalReceitas - totalDespesas;
+  const mediaTotalFormatado = new Intl.NumberFormat('pt-BR', {
+    style: 'currency',
+    currency: 'BRL'
+  }).format(mediaTotal);
+  const totalFormatadoReceitas = somarReceitasFormatadas(body_response);
+  const totalFormatadoDespesas = somarDespesasFormatadas(body_response);
+  const saldoFormatado = calcularSaldo(body_response);
+
+  {/* Edita .................*/ }
+  const [overlayVisivel, setOverlayVisivel] = useState(false);
+  const [dataSelecionadaEdita, setDataSelecionadaEdita] = useState("");
+  const [categoriaEdita, setCategoriaEdita] = useState("SALARIO");
+  const [lancamentoSelecionado, setLancamentoSelecionado] = useState(null);
+  const [opcaoTipo, setOpcao] = useState("RECEITA");
+  const [descricaoEditada, setDescricaoEditada] = useState("");
+  const [valorEditado, setValorEditado] = useState();
+
+  const abrirOverlay = (lancamento) => {
+    setDescricaoEditada(lancamento.descricao)
+    setCategoriaEdita(lancamento.categoriaLancamento)
+    setValorEditado(lancamento.preco)
+    setLancamentoSelecionado(lancamento);
+    setOverlayVisivel(true);
+  };
+
+  const fecharOverlay = () => {
+    setOverlayVisivel(false);
+    setLancamentoSelecionado(null);
+  };
+
+  const categoriasDespesaEdita = [
+    "MORADIA", "TRANSPORTE", "ALIMENTACAO", "SAUDE", "EDUCACAO",
+    "LAZER", "VESTUARIO", "SERVICOS", "PETS", "IMPOSTOS", "OUTRAS_DESPESAS"
+  ];
+  const categoriasReceitaEdita = [
+    "SALARIO", "FREELANCE", "ALUGUEL_RECEBIDO", "INVESTIMENTOS",
+    "REEMBOLSOS", "PREMIOS", "VENDAS", "AJUDAS", "OUTRAS_RECEITAS"
+  ];
+
+  {/* Const's Lancamentos.................*/ }
+  const [inputValue, setInputValue] = useState("");
+
+  {/* Const's Geral.................*/ }
+  const navigate = useNavigate();
+  const anoSelecionado = localStorage.getItem('ano-selecionado');
+  const messelecionado = localStorage.getItem('mes-selecionado');
+
+
+  {/* Inicio das Functions ----------------------------------- */ }
+
+
+  {/* Cabecalhooooooooooooooooooooooo.................*/ }
+  function getPerfilEmoji() {
+    const perfil = localStorage.getItem("perfil"); // Ex.: "3"
+    const perfilIndex = parseInt(perfil, 10); // Converte para número
+
+    if (!isNaN(perfilIndex) && perfilIndex >= 0 && perfilIndex < EMOJIS.length) {
+      return EMOJIS[perfilIndex];
+    }
+    return "❓"; // Caso não exista
+  }
+
+  async function voltar_menu_animacao() {
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+      navigate('/cadastro')
+    }, 1700);
+  }
+
+  async function get_next(mes) {
+    const response = await api.get(`/lancamento/buscaLancamentosPorMesEAno/${mes}/${anoSelecionado}`);
+    console.log('Resultado:', response);
+    localStorage.setItem('body-response-array', JSON.stringify(response.data))
+    localStorage.setItem('mes-selecionado', mes)
+    localStorage.setItem('ano-selecionado', anoSelecionado)
+    navigate('/dashboard')
+    return;
+  }
+
+  function direcaoSetaClicada(direcao) {
+    // Pega o índice do mês atualmente selecionado
+    const indiceAtual = meses.indexOf(messelecionado); // mesSelecionado deve estar no estado
+
+    let novoIndice;
+    if (direcao === "proximo") {
+      // próximo mês (loop no final)
+      novoIndice = (indiceAtual + 1) % meses.length;
+    } else if (direcao === "anterior") {
+      // mês anterior (loop no começo)
+      novoIndice = (indiceAtual - 1 + meses.length) % meses.length;
+    }
+
+    const novoMes = meses[novoIndice];
+    get_next(novoMes); // chama sua função
+  }
+
+  {/* Valoressssssssssssss.................*/ }
   function somarReceitasFormatadas(bodyArray) {
     if (!Array.isArray(bodyArray)) return "R$ 0,00";
 
@@ -123,15 +227,6 @@ function Dashboard() {
     }).format(totalPreco);
   }
 
-  function formatador(valor) {
-    return new Intl.NumberFormat('pt-BR', {
-      style: 'currency',
-      currency: 'BRL'
-    }).format(valor);
-  }
-
-
-
   function somarReceitas(bodyArray) {
     if (!Array.isArray(bodyArray)) return 0;
     return bodyArray.reduce((acc, item) => {
@@ -152,35 +247,23 @@ function Dashboard() {
     }, 0);
   }
 
-  const totalReceitas = somarReceitas(body_response);
-  const totalDespesas = somarDespesas(body_response);
-
-  // Agora você pode subtrair
-  const mediaTotal = totalReceitas - totalDespesas;
-
-  // Para exibir formatado
-  const mediaTotalFormatado = new Intl.NumberFormat('pt-BR', {
-    style: 'currency',
-    currency: 'BRL'
-  }).format(mediaTotal);
-
   function calcularSaldo(bodyArray) {
     if (!Array.isArray(bodyArray)) return "R$ 0,00";
 
-    let totalReceitas = 0;
-    let totalDespesas = 0;
+    let totalReceitasPagos = 0;
+    let totalDespesasPagos = 0;
 
     bodyArray.forEach(item => {
       if (item.preco != null) {
         if (item.tipo === 'RECEITA' && item.status === 'PAGO') {
-          totalReceitas += Number(item.preco);
+          totalReceitasPagos += Number(item.preco);
         } else if (item.tipo === 'DESPESA' && item.status === 'PAGO') {
-          totalDespesas += Number(item.preco);
+          totalDespesasPagos += Number(item.preco);
         }
       }
     });
 
-    const saldo = totalReceitas - totalDespesas;
+    const saldo = totalReceitasPagos - totalDespesasPagos;
 
     return new Intl.NumberFormat('pt-BR', {
       style: 'currency',
@@ -188,61 +271,15 @@ function Dashboard() {
     }).format(saldo);
   }
 
-  const totalFormatadoReceitas = somarReceitasFormatadas(body_response);
-  const totalFormatadoDespesas = somarDespesasFormatadas(body_response);
-  const saldoFormatado = calcularSaldo(body_response);
-
-  const setlaD = "--->"
-  const setlaE = "<---"
-  const EMOJIS = [
-    "🕎", // 0
-    "💀", // 1
-    "💸", // 2
-    "😬", // 3
-    "😐", // 4
-    "🙂", // 5
-    "😎", // 6
-    "🤑", // 7
-    "💰", // 8
-    "🏦", // 9
-    "🌟"  // 10
-  ];
-  const meses = [
-    "JANEIRO", "FEVEREIRO", "MARCO", "ABRIL",
-    "MAIO", "JUNHO", "JULHO", "AGOSTO",
-    "SETEMBRO", "OUTUBRO", "NOVEMBRO", "DEZEMBRO"
-  ];
-
-  function getPerfilEmoji() {
-    const perfil = localStorage.getItem("perfil"); // Ex.: "3"
-    const perfilIndex = parseInt(perfil, 10); // Converte para número
-
-    if (!isNaN(perfilIndex) && perfilIndex >= 0 && perfilIndex < EMOJIS.length) {
-      return EMOJIS[perfilIndex];
-    }
-    return "❓"; // Caso não exista
-  }
-  const perfilEmoji = getPerfilEmoji();
-
-  async function loadingAnimation() {
-    setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-      navigate('/cadastro')
-    }, 1700);
+  {/* Inputtttttttttttttt.................*/ }
+  function formata_display_input(e) {
+    const digits = e.target.value.replace(/\D/g, "") || "0";
+    const cents = parseInt(digits, 10);
+    setRaw(cents);
+    setDisplay(fmt.format(cents / 100));
   }
 
-  async function get_next(mes) {
-    const response = await api.get(`/lancamento/buscaLancamentosPorMesEAno/${mes}/${anoSelecionado}`);
-    console.log('Resultado:', response);
-    localStorage.setItem('body-response-array', JSON.stringify(response.data))
-    localStorage.setItem('mes-selecionado', mes)
-    localStorage.setItem('ano-selecionado', anoSelecionado)
-    navigate('/dashboard')
-    return;
-  }
-
-  async function get_next_reload(mes) {
+  async function recarrega_pagina_apos_cadastrar(mes) {
     const response = await api.get(`/lancamento/buscaLancamentosPorMesEAno/${mes}/${anoSelecionado}`);
     console.log('Resultado:', response);
     localStorage.setItem('body-response-array', JSON.stringify(response.data))
@@ -251,23 +288,6 @@ function Dashboard() {
     navigate('/dashboard')
     window.location.reload();
     return;
-  }
-
-  function handleSetaClick(direcao) {
-    // Pega o índice do mês atualmente selecionado
-    const indiceAtual = meses.indexOf(messelecionado); // mesSelecionado deve estar no estado
-
-    let novoIndice;
-    if (direcao === "proximo") {
-      // próximo mês (loop no final)
-      novoIndice = (indiceAtual + 1) % meses.length;
-    } else if (direcao === "anterior") {
-      // mês anterior (loop no começo)
-      novoIndice = (indiceAtual - 1 + meses.length) % meses.length;
-    }
-
-    const novoMes = meses[novoIndice];
-    get_next(novoMes); // chama sua função
   }
 
   async function cadastraLancamento() {
@@ -313,7 +333,7 @@ function Dashboard() {
 
       if (response.status === 201) {
         alert(`Lançamento cadastrado com sucesso ✅: ${response.status}`);
-        get_next_reload(messelecionado)
+        recarrega_pagina_apos_cadastrar(messelecionado)
       } else {
         alert(`⚠ Algo deu errado! Código: ${response.status}`);
         console.log('Algo deu errado!', response);
@@ -325,13 +345,39 @@ function Dashboard() {
     }
   }
 
-  function verificaSeta(tipo) {
+  {/* Lancamentos.................*/ }
+  function verificaSetaLancamento(tipo) {
     if (tipo === "RECEITA") {
       return setareceitas;
     } else if (tipo === "DESPESA") {
       return setadespesas;
     }
     return "";
+  }
+
+  {/* Lancamento / Edita .................*/ }
+  useEffect(() => {
+    if (lancamentoSelecionado?.dataVencimento) {
+      // garante o formato YYYY-MM-DD
+      const dataFormatada = new Date(lancamentoSelecionado.dataVencimento)
+        .toISOString()
+        .split("T")[0];
+      setDataSelecionadaEdita(dataFormatada);
+    }
+  }, [lancamentoSelecionado]);
+
+  useEffect(() => {
+    if (lancamentoSelecionado) {
+      setOpcao(lancamentoSelecionado.tipo || "RECEITA");
+      setCategoria(lancamentoSelecionado.categoria || "");
+    }
+  }, [lancamentoSelecionado]);
+
+  function formatador(valor) {
+    return new Intl.NumberFormat('pt-BR', {
+      style: 'currency',
+      currency: 'BRL'
+    }).format(valor);
   }
 
   return (
@@ -345,17 +391,17 @@ function Dashboard() {
       )}
       <div className='Cabecalho'>
         <div className='Areadash1'>
-          <img onClick={loadingAnimation} id="logo-exit-dash" src={Exit} alt="Finito" />
+          <img onClick={voltar_menu_animacao} id="logo-exit-dash" src={Exit} alt="Finito" />
           <img id="logo-finito-cabecalho-dash" src={Logo} alt="Finito" />
           <h2 id='FINITO-TEXT-DASH'>FINITO</h2>
         </div>
 
         <div className='Areadash2'>
-          <h5 id='seta' onClick={() => handleSetaClick("anterior")}>{setlaE}</h5>
+          <h5 id='seta' onClick={() => direcaoSetaClicada("anterior")}>{setlaE}</h5>
           <h5 id='ano-cabecalho'>{messelecionado}</h5>
           <h5 id='de-cabecalho'>de</h5>
           <h5 id='ano-cabecalho'>{anoSelecionado}</h5>
-          <h5 id='seta' onClick={() => handleSetaClick("proximo")}>{setlaD}</h5>
+          <h5 id='seta' onClick={() => direcaoSetaClicada("proximo")}>{setlaD}</h5>
         </div>
 
         <div className='Area3'>
@@ -448,7 +494,7 @@ function Dashboard() {
                   inputMode="decimal"
                   value={display} // "R$ 12,34"
                   onChange={(e) => {
-                    onChange(e); // continua formatando o display
+                    formata_display_input(e); // continua formatando o display
                     const somenteNumeros = e.target.value.replace(/\D/g, ''); // remove tudo que não é número
                     const valorNumerico = parseFloat(somenteNumeros) / 100; // converte para reais
                     setValorSelecionado(valorNumerico); // agora salva 12.34 (número real)
@@ -464,7 +510,7 @@ function Dashboard() {
                 />
               </div>
 
-              {/* Escolha de Status ---------------------------------------*/}
+              {/* Escolha de Data ---------------------------------------*/}
               <div className='Bloquinhos'>
                 <p id='Descricao-text-inputs'>Vencimento</p>
                 <input
@@ -472,7 +518,7 @@ function Dashboard() {
                   id="data"
                   value={data}
                   onChange={(e) => {
-                    handleChange(e);
+                    formata_data(e);
                     setDataSelecionada(e.target.value);
                   }}
                 />
@@ -545,17 +591,91 @@ function Dashboard() {
                     <div className='edita-lancamento'>
                       <label id='descricao-lancamento-label' htmlFor="text">EDITAR</label>
                       <img id='edita-img' src={edita} className="icon" onClick={() => abrirOverlay(lancamento)} />
+                      {/* Overlay do editar ---------------------------------------------------- */}
+
                       {overlayVisivel && (
                         <div className='overlay'>
                           <div className='modal'>
-                            <p>{lancamentoSelecionado?.idLancamento}</p>
-                            <p>{lancamentoSelecionado?.descricao}</p>
-                            <p>{formatador(lancamentoSelecionado?.preco)}</p>
-                            <p>{lancamentoSelecionado?.tipo}</p>
+                            <div>
+                              <label id='Edita-label' htmlFor="text">Edita Lancamento</label>
+                              <img id='edita-img' src={edita} className="icon" />
+                            </div>
+                            <label id='Edita-descricao' htmlFor="text">Descrição</label>
+                            <input
+                              placeholder='Descrição...'
+                              type="text" name="nome"
+                              defaultValue={descricaoEditada}
+                              onChange={(e) => setDescricaoEditada(e.target.value)} />
+                            <div id='Tipo-data-edita'>
+                              <select value={opcaoTipo} onChange={(e) => setOpcao(e.target.value)}>
+                                <option value="RECEITA">RECEITA</option>
+                                <option value="DESPESA">DESPESA</option>
+                              </select>
+                              <input
+                                type="date"
+                                id="data"
+                                value={dataSelecionadaEdita}
+                                onChange={(e) => {
+                                  formata_data(e);
+                                  setDataSelecionadaEdita(e.target.value);
+                                }}
+                              />
+                            </div>
+                            <div id='Valor-categoria'>
+
+                              <input
+                                id='input-valor'
+                                type="number"
+                                inputMode="decimal"
+                                defaultValue={lancamentoSelecionado?.preco} // "R$ 12,34"
+                                onChange={(e) => {
+                                  const valor = e.target.value;
+                                  setValorEditado(valor === "" ? lancamentoSelecionado?.preco : valor);
+                                }}
+                                placeholder="R$ 0,00"
+                                autoComplete="off"
+                              />
+                              <select
+                                id='Tipo-status-select-categoria'
+                                defaultValue={categoriaEdita}
+                                onChange={(e) => setCategoriaEdita(e.target.value)}
+                                disabled={!opcaoTipo} // desabilita se não escolheu tipo
+                              >
+                                <option value="">Selecione a categoria</option>
+
+                                {opcaoTipo === "DESPESA" &&
+                                  categoriasDespesaEdita.map((cat) => (
+                                    <option key={cat} value={cat}>{cat}</option>
+                                  ))
+                                }
+
+                                {opcaoTipo === "RECEITA" &&
+                                  categoriasReceitaEdita.map((cat) => (
+                                    <option key={cat} value={cat}>{cat}</option>
+                                  ))
+                                }
+                              </select>
+                            </div>
+                            <button id='Atualizar-editar'
+                              onClick={() => alert('Atualiza id ->: '
+                                + lancamentoSelecionado?.idLancamento
+                                + ' Descrição: '
+                                + descricaoEditada
+                                + ' Categoria: '
+                                + categoriaEdita
+                                + ' Tipo: '
+                                + opcaoTipo
+                                + ' Data: '
+                                + dataSelecionadaEdita
+                                + ' Valor: '
+                                + valorEditado
+                              )}>Atualizar Lançamento</button>
+                            <br></br>
                             <button id='Fechar-editar' onClick={fecharOverlay}>Fechar</button>
                           </div>
                         </div>
                       )}
+
                     </div>
                     <div className='edita-lancamento'>
                       <label id='descricao-lancamento-label' htmlFor="text">EXCLUIR</label>
@@ -569,7 +689,7 @@ function Dashboard() {
                         backgroundColor: lancamento.tipo === "RECEITA" ? "#5EBB48" : "#dc3545"
                       }} id='Div-tipo-lancamento'>
                         <img
-                          id="Iconseta-tipo" src={verificaSeta(lancamento.tipo)}
+                          id="Iconseta-tipo" src={verificaSetaLancamento(lancamento.tipo)}
                           alt=""
                         />
                         <p id='Tipo-lancamento'>{lancamento.tipo}</p>

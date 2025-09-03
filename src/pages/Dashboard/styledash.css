@@ -610,3 +610,20 @@ h4 {
     width: 5vw;
     font-size: 1vw;
 }
+
+#Edita-label{
+    font-size: 4vw;
+    font-family: 'Jersey 10', sans-serif;
+}
+
+#Tipo-data-edita{
+    display: flex;
+}
+
+#Valor-categoria{
+    display: flex;
+}
+
+#Atualizar-editar{
+    cursor: pointer;
+}
