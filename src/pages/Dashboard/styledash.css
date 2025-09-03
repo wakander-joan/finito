@@ -592,38 +592,159 @@ h4 {
   display: flex;
   justify-content: center;
   align-items: center;
-  background: rgba(0, 0, 0, 0.151);
+  background: rgba(36, 36, 36, 0.089);
   z-index: 9999;
 }
 
 .modal {
   background: #fff;
-  padding: 20px;
+  padding: 15px;
   border-radius: 10px;
   min-width: 300px;
-  text-align: center;
+  text-align: left;
 }
 
-#Fechar-editar{
-    cursor: pointer;
-    border-radius: 5px;
-    width: 5vw;
-    font-size: 1vw;
+.cabecalho-edita{
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+    display: flex;
 }
 
 #Edita-label{
-    font-size: 4vw;
+    font-size: 3vw;
     font-family: 'Jersey 10', sans-serif;
 }
 
+#edita-img-edita{
+    width: 5vw;
+}
+
+.Bloquinho-edita-descricao{
+    text-align: start;
+    padding-bottom: 2%;
+}
+
+#Edita-descricao{
+    color: #727272;
+    padding-right: 59%;
+    font-size: 1.4vw;
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: bold;
+}
+
+#Edita-input-descricao{
+    font-size: 1.3vw;
+    font-weight: bold;
+    width: 100%;
+    font-family: 'JetBrains Mono', monospace;
+}
+
+
 #Tipo-data-edita{
     display: flex;
+    justify-content: space-between;
+}
+
+#Label-tipo{
+    color: #727272;
+    padding-left: 0.5vw;
+    font-size: 1.4vw;
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: bold;
+}
+
+#Label-data{
+    color: #727272;
+    padding-left: 0.5vw;
+    font-size: 1.4vw;
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: bold;
+    padding-left: 12.5vw;
+}
+
+#Label-categoria{
+    color: #727272;
+    padding-left: 0.5vw;
+    font-size: 1.4vw;
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: bold;
+    padding-left: 7vw;
+}
+
+.Tipo-edita{
+    border-radius: 7px;
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: bold;
+    width: 12vw;
+    cursor: pointer;
+}
+
+#opção-edita{
+    background-color: #c2c2c2;
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: bold;
+}
+
+#data-edita{
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: bold;
+    width: 13vw;
+    cursor: pointer;
+}
+
+#Input-valor{
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: bold;
+    font-size: 1.3vw;
+    width: 10vw;
+    color: rgb(255, 38, 0);
 }
 
 #Valor-categoria{
     display: flex;
+    justify-content: space-between;
 }
 
-#Atualizar-editar{
+#Tipo-status-select-categoria{
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: bold;
+    font-size: 1vw;
+}
+
+.Botoes{
+    padding-top: 2%;
+    text-align: start;
+    justify-content: space-between;
+}
+
+#Botao-atualizar-editar{
     cursor: pointer;
+    border-radius: 7px;
+    background-color: #5300c8a9;
+    color: #ffffff;
+    width: 14vw;
+    height: 5.5vh;
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: bold;
+    font-size: 1vw;
+    border: 1px solid rgb(255, 255, 255);
+    &:hover{
+        background-color: #5300C8;
+    }
+}
+
+#Fechar-editar{
+    border: 1px solid rgb(255, 255, 255);
+    cursor: pointer;
+    border-radius: 5px;
+    width: 6vw;
+    height: 4.5vh;
+    font-size: 1.3vw;
+    color: #ffffff;
+    background-color: rgba(255, 145, 49, 0.699);
+    margin-left: 8vw;
+    &:hover{
+        background-color: rgb(255, 49, 49);
+    }
 }

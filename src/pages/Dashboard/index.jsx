@@ -535,15 +535,15 @@ function Dashboard() {
                   onChange={(e) => setCategoria(e.target.value)}
                   disabled={!tipoSelecionado} // desabilita se não escolheu tipo
                 >
-                  <option id='Tipo-status-options-receita' value="">Selecione a categoria</option>
+                  <option id='opção-edita' value="">SELECIONAR CATEGORIA</option>
                   {tipoSelecionado === "DESPESA" &&
                     categoriasDespesa.map((cat) => (
-                      <option id='Tipo-status-options-receita' key={cat} value={cat}>{cat}</option>
+                      <option id='opção-edita' key={cat} value={cat}>{cat}</option>
                     ))
                   }
                   {tipoSelecionado === "RECEITA" &&
                     categoriasReceita.map((cat) => (
-                      <option id='Tipo-status-options-receita' key={cat} value={cat}>{cat}</option>
+                      <option id='opção-edita' key={cat} value={cat}>{cat}</option>
                     ))
                   }
                 </select>
@@ -596,24 +596,29 @@ function Dashboard() {
                       {overlayVisivel && (
                         <div className='overlay'>
                           <div className='modal'>
-                            <div>
+                            <div className='cabecalho-edita'>
                               <label id='Edita-label' htmlFor="text">Edita Lancamento</label>
-                              <img id='edita-img' src={edita} className="icon" />
+                              <img id='edita-img-edita' src={edita} className="icon" />
                             </div>
-                            <label id='Edita-descricao' htmlFor="text">Descrição</label>
-                            <input
-                              placeholder='Descrição...'
-                              type="text" name="nome"
-                              defaultValue={descricaoEditada}
-                              onChange={(e) => setDescricaoEditada(e.target.value)} />
+                            <div className='Bloquinho-edita-descricao'>
+                              <label id='Edita-descricao' htmlFor="text">Descrição</label>
+                              <input
+                                id='Edita-input-descricao'
+                                placeholder='Descrição...'
+                                type="text" name="nome"
+                                defaultValue={descricaoEditada}
+                                onChange={(e) => setDescricaoEditada(e.target.value)} />
+                            </div>
+                            <label id='Label-tipo' htmlFor="text">Tipo</label>
+                            <label id='Label-data' htmlFor="text">Data</label>
                             <div id='Tipo-data-edita'>
-                              <select value={opcaoTipo} onChange={(e) => setOpcao(e.target.value)}>
-                                <option value="RECEITA">RECEITA</option>
-                                <option value="DESPESA">DESPESA</option>
+                              <select className='Tipo-edita' value={opcaoTipo} onChange={(e) => setOpcao(e.target.value)}>
+                                <option id='opção-edita' value="RECEITA">RECEITA</option>
+                                <option id='opção-edita' value="DESPESA">DESPESA</option>
                               </select>
                               <input
                                 type="date"
-                                id="data"
+                                id="data-edita"
                                 value={dataSelecionadaEdita}
                                 onChange={(e) => {
                                   formata_data(e);
@@ -621,11 +626,14 @@ function Dashboard() {
                                 }}
                               />
                             </div>
+                            <label id='Label-tipo' htmlFor="text">Valor</label>
+                            <label id='Label-categoria' htmlFor="text">Categoria</label>
                             <div id='Valor-categoria'>
-
                               <input
-                                id='input-valor'
+                                id='Input-valor'
                                 type="number"
+                                step="0.01"
+                                min="0"
                                 inputMode="decimal"
                                 defaultValue={lancamentoSelecionado?.preco} // "R$ 12,34"
                                 onChange={(e) => {
@@ -641,37 +649,40 @@ function Dashboard() {
                                 onChange={(e) => setCategoriaEdita(e.target.value)}
                                 disabled={!opcaoTipo} // desabilita se não escolheu tipo
                               >
-                                <option value="">Selecione a categoria</option>
+                                <option id='opção-edita' value="">SELECIONAR CATEGORIA</option>
 
                                 {opcaoTipo === "DESPESA" &&
                                   categoriasDespesaEdita.map((cat) => (
-                                    <option key={cat} value={cat}>{cat}</option>
+                                    <option id='opção-edita' key={cat} value={cat}>{cat}</option>
                                   ))
                                 }
 
                                 {opcaoTipo === "RECEITA" &&
                                   categoriasReceitaEdita.map((cat) => (
-                                    <option key={cat} value={cat}>{cat}</option>
+                                    <option id='opção-edita' key={cat} value={cat}>{cat}</option>
                                   ))
                                 }
                               </select>
                             </div>
-                            <button id='Atualizar-editar'
-                              onClick={() => alert('Atualiza id ->: '
-                                + lancamentoSelecionado?.idLancamento
-                                + ' Descrição: '
-                                + descricaoEditada
-                                + ' Categoria: '
-                                + categoriaEdita
-                                + ' Tipo: '
-                                + opcaoTipo
-                                + ' Data: '
-                                + dataSelecionadaEdita
-                                + ' Valor: '
-                                + valorEditado
-                              )}>Atualizar Lançamento</button>
-                            <br></br>
-                            <button id='Fechar-editar' onClick={fecharOverlay}>Fechar</button>
+                            <div className='Botoes'>
+                              <button
+                                id="Botao-atualizar-editar"
+                                onClick={() =>
+                                  alert(
+                                    'Atualizando od id: ' + lancamentoSelecionado?.idLancamento + '\n' +
+                                    'Descrição: ' + descricaoEditada + '\n' +
+                                    'Categoria: ' + categoriaEdita + '\n' +
+                                    'Tipo: ' + opcaoTipo + '\n' +
+                                    'Data: ' + dataSelecionadaEdita + '\n' +
+                                    'Valor: ' + valorEditado
+                                  )
+                                }
+                              >
+                                Atualizar Lançamento
+                              </button>
+
+                              <button id='Fechar-editar' onClick={fecharOverlay}>Fechar</button>
+                            </div>
                           </div>
                         </div>
                       )}
