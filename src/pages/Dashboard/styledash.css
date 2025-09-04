@@ -377,6 +377,23 @@ h4 {
     }
 }
 
+#botao-replica {
+    width: 8vw;
+    height: 5vh;
+    border-radius: 5px;
+    font-size: 1vw;
+    cursor: pointer;
+    margin-top: 0.7vh;
+    background-color: rgb(143, 0, 245);
+    color: #ffffff;
+    font-family: 'JetBrains Mono', monospace;
+    border: 1px solid rgb(255, 255, 255);
+    
+    &:hover {
+        background-color: rgba(143, 0, 245, 0.651);
+    }
+}
+
 #filtro-img {
     width: 2vw;
     height: 4.5vh;
@@ -818,4 +835,18 @@ h4 {
   border-radius: 10px;
   min-width: 300px;
   text-align: left;
+}
+
+#Select-replica-ano-mes{
+    width: 9vw;
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: bold;
+    font-size: 1vw;
+    border-radius: 7px;
+}
+
+.Botoes-replica{
+    padding-top: 2%;
+    text-align: center;
+    gap: 10%;
 }

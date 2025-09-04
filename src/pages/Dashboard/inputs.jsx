@@ -94,7 +94,7 @@ function Imputs() {
             const response = await api.post(`/lancamento/cadastraLancamento/${messelecionado}/${anoSelecionado}`, body);
 
             if (response.status === 201) {
-                alert(`Lançamento cadastrado com sucesso ✅: ${response.status}`);
+                //alert(`Lançamento cadastrado com sucesso ✅`);
                 recarrega_pagina_apos_cadastrar(messelecionado)
             } else {
                 alert(`⚠ Algo deu errado! Código: ${response.status}`);

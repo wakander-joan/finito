@@ -3,6 +3,7 @@ import Menu from './pages/Menu';
 import Home from './pages/Home';
 import Cadastrar from './pages/Cadastrar';
 import Dashboard from './pages/Dashboard';
+import Graficos from './pages/Graficos';
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
         <Route path="/cadastro" element={<Menu />} />
         <Route path="/cadastrar" element={<Cadastrar />} />
         <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/graficos" element={<Graficos />} />
       </Routes>
     </BrowserRouter>
   );

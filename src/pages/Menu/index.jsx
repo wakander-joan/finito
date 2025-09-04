@@ -32,11 +32,11 @@ function Cadastro() {
   ];
 
   async function loadingAnimation() {
-    setLoading(true);
+    navigate('/')
+    /* setLoading(true);
     setTimeout(() => {
       setLoading(false);
-      navigate('/')
-    }, 1700);
+    }, 1700); */
   }
 
   function getPerfilEmoji() {
@@ -51,17 +51,18 @@ function Cadastro() {
   const perfilEmoji = getPerfilEmoji();
 
   async function get_next(mes) {
-    setLoadingOpen(true)
+    //setLoadingOpen(true)
     const response = await api.get(`/lancamento/buscaLancamentosPorMesEAno/${mes}/${anoSelecionado}`);
     console.log('Resultado:', response);
     localStorage.setItem('body-response-array', JSON.stringify(response.data) )
     localStorage.setItem('mes-selecionado', mes)
     localStorage.setItem('ano-selecionado', anoSelecionado)
-    setTimeout(() => {
+    navigate('/dashboard')
+    
+    /*setTimeout(() => {
       setLoadingOpen(false); // esconde o loading
       navigate('/dashboard')
-    }, 2000); // 3 segundos
-
+    }, 2000); // 3 segundos */
     return;
   }
 

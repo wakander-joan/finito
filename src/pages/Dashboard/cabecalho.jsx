@@ -39,7 +39,7 @@ function Cabecalho() {
     function getPerfilEmoji() {
         const perfil = localStorage.getItem("perfil"); // Ex.: "3"
         const perfilIndex = parseInt(perfil, 10); // Converte para número
-
+        
         if (!isNaN(perfilIndex) && perfilIndex >= 0 && perfilIndex < EMOJIS.length) {
             return EMOJIS[perfilIndex];
         }
@@ -47,11 +47,13 @@ function Cabecalho() {
     }
 
     async function voltar_menu_animacao() {
-        setLoading(true);
+        navigate('/cadastro')
+        
+        /*setLoading(true);
         setTimeout(() => {
             setLoading(false);
             navigate('/cadastro')
-        }, 1700);
+        }, 1700); */
     }
 
     async function get_next(mes) {

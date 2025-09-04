@@ -36,10 +36,11 @@ function Home() {
       const { nomePessoa, perfil } = decoded;
       localStorage.setItem('nomePessoa', nomePessoa);
       localStorage.setItem('perfil', perfil);
+      setTimeout(() => {
       setLoading(false); // esconde o loading
       navigate('/cadastro'); // navega para a página
-
-
+    }, 1700);
+    
     } catch (error) {
       alert(`Erro ao fazer login: ${error.response?.data || error.message}`);
       window.location.reload();
