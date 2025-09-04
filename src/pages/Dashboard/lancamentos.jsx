@@ -40,12 +40,14 @@ function Lancamentos() {
 
     {/* Edita .................*/ }
     const [overlayVisivel, setOverlayVisivel] = useState(false);
+    const [overlayExclui, setOverlayExclui] = useState(false);
     const [dataSelecionadaEdita, setDataSelecionadaEdita] = useState("");
     const [categoriaEdita, setCategoriaEdita] = useState("SALARIO");
     const [lancamentoSelecionado, setLancamentoSelecionado] = useState(null);
     const [opcaoTipo, setOpcao] = useState("RECEITA");
     const [descricaoEditada, setDescricaoEditada] = useState("");
     const [valorEditado, setValorEditado] = useState();
+    const [categoria, setCategoria] = useState("");
 
     const abrirOverlay = (lancamento) => {
         setDescricaoEditada(lancamento.descricao)
@@ -68,6 +70,22 @@ function Lancamentos() {
         "SALARIO", "FREELANCE", "ALUGUEL_RECEBIDO", "INVESTIMENTOS",
         "REEMBOLSOS", "PREMIOS", "VENDAS", "AJUDAS", "OUTRAS_RECEITAS"
     ];
+
+    const abrirOverlayExclui = (lancamento) => {
+        setLancamentoSelecionado(lancamento);
+        setOverlayExclui(true);
+    };
+
+    const fecharOverlayExclui = () => {
+        setOverlayExclui(false);
+        setLancamentoSelecionado(null);
+    };
+
+    const confirmarExclusao = () => {
+        alert("Excluindo lançamento ID: " + lancamentoSelecionado?.idLancamento);
+        // Aqui você chama sua função de exclusão no backend
+        fecharOverlayExclui();
+    };
 
 
     {/* Lancamentos.................*/ }
@@ -107,6 +125,30 @@ function Lancamentos() {
 
     return (
         <div className='Lancamentos-grafico-IA'>
+            {overlayExclui && (
+                <div className='overlayExclui'>
+                    <div className='modalExclui'>
+                        <p id='Descricao-exclui' style={{ margin: "20px 0" }}>
+                            Excluir o lançamento
+                            <strong id='Descricao-id-exclui'> "{lancamentoSelecionado?.descricao}"</strong>?
+                        </p>
+                        <div className='Botoes-exclui'>
+                            <button
+                                id="Botao-excluir-sim"
+                                onClick={confirmarExclusao}
+                            >
+                                Sim
+                            </button>
+                            <button
+                                id="Botao-excluir-nao"
+                                onClick={fecharOverlayExclui}
+                            >
+                                Não
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
             <div className='cabecalho-lancamentos'>
                 <div className='caixa-lancamentos'>
                     <p id='Lancamentos'>Lancamentos</p>
@@ -196,7 +238,7 @@ function Lancamentos() {
                                                 />
                                                 <select
                                                     id='Tipo-status-select-categoria'
-                                                    defaultValue={categoriaEdita}
+                                                    defaultValue={categoria}
                                                     onChange={(e) => setCategoriaEdita(e.target.value)}
                                                     disabled={!opcaoTipo} // desabilita se não escolheu tipo
                                                 >
@@ -241,7 +283,7 @@ function Lancamentos() {
                             </div>
                             <div className='edita-lancamento'>
                                 <label id='descricao-lancamento-label' htmlFor="text">EXCLUIR</label>
-                                <img id='exclui-img' src={apaga} className="icon" onClick={() => alert("Excluir: " + lancamento.idLancamento)} />
+                                <img id='exclui-img' src={apaga} className="icon" onClick={() => abrirOverlayExclui(lancamento)} />
                             </div>
                         </div>
                         <div className='tipo-valor-vencimento-etc'>
@@ -290,7 +332,6 @@ function Lancamentos() {
                     </div>
                 ))}
             </div>
-
         </div>
     );
 }
