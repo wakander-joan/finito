@@ -14,7 +14,8 @@ function Cadastro() {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [loadingOpen, setLoadingOpen] = useState(false);
-  const [anoSelecionado, setAnoSelecionado] = useState('2025');
+  const anoEmchache = localStorage.getItem('ano-selecionado');
+  const [anoSelecionado, setAnoSelecionado] = useState(anoEmchache);
   const nomePessoa = localStorage.getItem("nomePessoa");
   const perfil = localStorage.getItem("perfil");
   const EMOJIS = [
@@ -54,11 +55,11 @@ function Cadastro() {
     //setLoadingOpen(true)
     const response = await api.get(`/lancamento/buscaLancamentosPorMesEAno/${mes}/${anoSelecionado}`);
     console.log('Resultado:', response);
-    localStorage.setItem('body-response-array', JSON.stringify(response.data) )
+    localStorage.setItem('body-response-array', JSON.stringify(response.data))
     localStorage.setItem('mes-selecionado', mes)
     localStorage.setItem('ano-selecionado', anoSelecionado)
     navigate('/dashboard')
-    
+
     /*setTimeout(() => {
       setLoadingOpen(false); // esconde o loading
       navigate('/dashboard')
@@ -91,12 +92,16 @@ function Cadastro() {
           <h2 id='ANO-TEXT'>ANO</h2>
           <select
             id='select-perfil2'
+            defaultValue={anoEmchache}
             value={anoSelecionado}
-            onChange={(e) => setAnoSelecionado(e.target.value)}
+            onChange={(e) => {
+              const novoAno = e.target.value;
+              setAnoSelecionado(novoAno);
+              localStorage.setItem("ano-selecionado", novoAno);
+            }}
             className="select-ano"
+            title="Selecione o ano"
           >
-            <option id='lista-select' value="2023">2023</option>
-            <option id='lista-select' value="2024">2024</option>
             <option id='lista-select' value="2025">2025</option>
             <option id='lista-select' value="2026">2026</option>
             <option id='lista-select' value="2027">2027</option>
@@ -104,10 +109,11 @@ function Cadastro() {
         </div>
 
         <div className='Area3'>
-          <img onClick={() => alert("Funcionalidade em implementação...")} id="logo-edita" src={Edita} alt="Finito" />
+            <button id='botao-plano' onClick={() => navigate('/graficos')}  title="Organize seus Planos Anuais">📊​​</button>
+          <img onClick={() => alert("Funcionalidade em implementação...")} id="logo-edita" src={Edita} alt="Finito"  title="Edite seu Perfil" />
           <h2 id='USUARIO-TEXT'>{nomePessoa}</h2>
           <h2 id='PERFIL-EMOGI'>{perfilEmoji}</h2>
-          <img onClick={loadingAnimation} id="logo-exit" src={Exit} alt="Finito" />
+          <img onClick={loadingAnimation} id="logo-exit" src={Exit} alt="Finito" title="Sair para Login"/>
         </div>
       </div>
 

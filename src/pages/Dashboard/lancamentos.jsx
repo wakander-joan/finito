@@ -260,7 +260,6 @@ function Lancamentos() {
             console.log('Algo deu errado!', response);
         }
     }
-
     return (
         <div className='Lancamentos-grafico-IA'>
             {overlayExclui && (

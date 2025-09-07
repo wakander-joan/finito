@@ -48,12 +48,6 @@ function Cabecalho() {
 
     async function voltar_menu_animacao() {
         navigate('/cadastro')
-        
-        /*setLoading(true);
-        setTimeout(() => {
-            setLoading(false);
-            navigate('/cadastro')
-        }, 1700); */
     }
 
     async function get_next(mes) {

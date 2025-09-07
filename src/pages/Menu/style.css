@@ -298,3 +298,18 @@ h1 {
     cursor: pointer;
   }
 }
+
+#botao-plano{
+  border: 0px solid rgba(255, 255, 255, 0);
+  font-size: 2.7vw;
+  background-color: #00000000;
+  margin-top: 0vh;
+  cursor: pointer;
+  height: auto;
+  font-family: 'Jersey 10', sans-serif;
+  border-radius: 7px; 
+  &:hover{
+    transform: scale(1.1);
+    transition: transform 0.3s ease;
+  }
+}
