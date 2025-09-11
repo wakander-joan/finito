@@ -300,16 +300,76 @@ h1 {
 }
 
 #botao-plano{
-  border: 0px solid rgba(255, 255, 255, 0);
-  font-size: 2.7vw;
-  background-color: #00000000;
+  border: none;
+  background-color: #36a39b;
   margin-top: 0vh;
+  width: 7vw;
   cursor: pointer;
-  height: auto;
+  height: 6vh;
   font-family: 'Jersey 10', sans-serif;
   border-radius: 7px; 
+  margin-top: 1.5vw;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  gap: 0px;
+  box-shadow: 
+    /* Borda inferior "escura" */
+    0 4px 0 0 #2a817b, /* Sombra inferior sólida para a "profundidade" */
+    /* Borda esquerda e direita "escuras" (opcional, para um look mais 3D) */
+    -2px 0 0 0 #2a817b,
+    2px 0 0 0 #2a817b,
+    /* Borda superior "clara" (opcional) */
+    inset 0 2px 0 0 #52c5bc; /* "Luz" no topo para o efeito 3D */
+
+  animation: glow-pulse 2s infinite alternate ease-in-out;
+
   &:hover{
     transform: scale(1.1);
     transition: transform 0.3s ease;
+  }
+  :active {
+  background-color: #2a817b; /* Cor mais escura no click */
+  box-shadow: 
+    0 2px 0 0 #2a817b, /* "Afunda" o botão no click */
+    inset 0 2px 0 0 #52c5bc;
+  transform: translateY(2px); /* Efeito de "afundar" */
+}
+}
+
+
+
+#logo-metas{
+  padding-top: 2%;
+  width: 2vw;
+  height: 1.8vw;
+}
+
+#metas{
+  padding-left: 5%;
+  color: white;
+  font-family: 'Jersey 10', sans-serif;
+  font-size: 1.5vw;
+}
+
+@keyframes glow-pulse {
+  0% {
+    box-shadow: 
+      0 4px 0 0 #2a817b, /* Sombra base */
+      inset 0 2px 0 0 #52c5bc, /* Luz base */
+      0 0 5px 0 rgba(255, 255, 0, 0); /* Sem brilho no início */
+  }
+  50% {
+    box-shadow: 
+      0 4px 0 0 #2a817b, 
+      inset 0 2px 0 0 #52c5bc, 
+      0 0 15px 5px rgba(255, 255, 0, 0.7), /* Brilho máximo (amarelo semi-transparente) */
+      0 0 25px 10px rgba(255, 255, 0, 0.5); /* Segundo anel de brilho */
+  }
+  100% {
+    box-shadow: 
+      0 4px 0 0 #2a817b, 
+      inset 0 2px 0 0 #52c5bc, 
+      0 0 5px 0 rgba(255, 255, 0, 0); /* Retorna ao estado sem brilho */
   }
 }

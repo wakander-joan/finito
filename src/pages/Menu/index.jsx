@@ -1,10 +1,11 @@
+import { useState, useEffect } from "react";
+import { useNavigate } from 'react-router-dom';
 import './style.css';
 import calender from '../../assets/calendario.png';
 import Logo from '../../assets/logo.png';
+import Metas from '../../assets/Trofeu.png';
 import Edita from '../../assets/edita.png';
-import { useState } from 'react';
 import Exit from '../../assets/exit.png';
-import { useNavigate } from 'react-router-dom';
 import React from "react";
 import loadingGif2 from '../../assets/loading3.gif';
 import loadingGif4 from '../../assets/loading4.gif';
@@ -14,10 +15,24 @@ function Cadastro() {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [loadingOpen, setLoadingOpen] = useState(false);
-  const anoEmchache = localStorage.getItem('ano-selecionado');
-  const [anoSelecionado, setAnoSelecionado] = useState(anoEmchache);
   const nomePessoa = localStorage.getItem("nomePessoa");
   const perfil = localStorage.getItem("perfil");
+
+  const [anoSelecionado, setAnoSelecionado] = useState("");
+
+  useEffect(() => {
+    const anoEmCache = localStorage.getItem("ano-selecionado");
+    if (anoEmCache) {
+      setAnoSelecionado(anoEmCache);
+    } else {
+      // se não tiver nada salvo, coloca o ano atual como padrão
+      const anoAtual = new Date().getFullYear();
+      setAnoSelecionado(anoAtual.toString());
+      localStorage.setItem("ano-selecionado", anoAtual);
+    }
+  }, []);
+
+
   const EMOJIS = [
     "🕎", // 0
     "💀", // 1
@@ -86,13 +101,24 @@ function Cadastro() {
         <div className='Area1'>
           <img id="logo-finito-cabecalho" src={Logo} alt="Finito" />
           <h2 id='FINITO-TEXT'>FINITO</h2>
+          <button
+            id='botao-plano'
+            onClick={(e) => {
+              localStorage.setItem("ano-selecionado", anoSelecionado);
+              navigate('/graficos')
+            }
+            }
+            title="Organize seus Planos Anuais"
+          >
+            <img id="logo-metas" src={Metas} alt="Finito" />
+            <p id="metas">METAS</p>
+          </button>
         </div>
 
         <div className='Area2'>
           <h2 id='ANO-TEXT'>ANO</h2>
           <select
             id='select-perfil2'
-            defaultValue={anoEmchache}
             value={anoSelecionado}
             onChange={(e) => {
               const novoAno = e.target.value;
@@ -109,11 +135,11 @@ function Cadastro() {
         </div>
 
         <div className='Area3'>
-            <button id='botao-plano' onClick={() => navigate('/graficos')}  title="Organize seus Planos Anuais">📊​​</button>
-          <img onClick={() => alert("Funcionalidade em implementação...")} id="logo-edita" src={Edita} alt="Finito"  title="Edite seu Perfil" />
+
+          <img onClick={() => alert("Funcionalidade em implementação...")} id="logo-edita" src={Edita} alt="Finito" title="Edite seu Perfil" />
           <h2 id='USUARIO-TEXT'>{nomePessoa}</h2>
           <h2 id='PERFIL-EMOGI'>{perfilEmoji}</h2>
-          <img onClick={loadingAnimation} id="logo-exit" src={Exit} alt="Finito" title="Sair para Login"/>
+          <img onClick={loadingAnimation} id="logo-exit" src={Exit} alt="Finito" title="Sair para Login" />
         </div>
       </div>
 

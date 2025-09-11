@@ -9,6 +9,8 @@ import loadingGif2 from '../../assets/loading3.gif'; // seu gif de loading
 import { jwtDecode } from "jwt-decode";
 
 function Home() {
+  const anoAtual = new Date().getFullYear();
+  localStorage.setItem('ano-selecionado', anoAtual);
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
   const [token, setToken] = useState(null); //Lebrar de usar o Token
@@ -37,10 +39,10 @@ function Home() {
       localStorage.setItem('nomePessoa', nomePessoa);
       localStorage.setItem('perfil', perfil);
       setTimeout(() => {
-      setLoading(false); // esconde o loading
-      navigate('/cadastro'); // navega para a página
-    }, 1700);
-    
+        setLoading(false); // esconde o loading
+        navigate('/cadastro'); // navega para a página
+      }, 1700);
+
     } catch (error) {
       alert(`Erro ao fazer login: ${error.response?.data || error.message}`);
       window.location.reload();

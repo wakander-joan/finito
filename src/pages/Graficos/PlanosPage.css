@@ -96,10 +96,14 @@
 
 #excluir{
   background-color: rgb(0, 0, 0);
+  width: 7vw;
+  height: 6vh;
 }
 
 #editar{
   background-color: dodgerblue;
+  width: 7vw;
+  height: 6vh;
 }
 
 #status{
@@ -122,6 +126,7 @@
   border-radius: 10px;
   max-width: 400px;
   text-align: left;
+  width: 27vw;
 }
 
 .Ceck-div{
@@ -169,4 +174,42 @@
   &:hover{
     background-color: rgb(31, 0, 209);
   }
+}
+
+.Titulo-New{
+  font-family: "Jersey 20", sans-serif;
+  font-weight: 400;
+  font-size:3vw;
+  font-style: normal;
+  padding-left: 2%;
+  text-align: center;
+}
+
+.caixinhas{
+  display: flex;
+  justify-content: space-between;
+  padding-top: 2%;
+  align-items: center;
+  font-size: 140%;
+}
+
+.inputs-new-meta{
+  font-family: "Jersey 20", sans-serif;
+  width: 12vw;
+  font-size: 70%;
+  font-weight: lighter;
+}
+
+label{
+  padding-left: 1%;
+  font-family: "Jersey 20", sans-serif;
+}
+
+#descricao{
+  font-size: 140%;
+}
+
+.input-descricao{
+  width: 100%;
+  margin: 0px;
 }
