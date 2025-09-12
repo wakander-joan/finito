@@ -70,9 +70,9 @@
 
 #logo-exit-planing {
   cursor: pointer;
-  margin-top: 0.8%;
-  width: 4vw;
-  height: 5vh;
+  margin-top: 0.5%;
+  width: 6vw;
+  height: 6.5vh;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
@@ -120,6 +120,16 @@
   z-index: 9999;
 }
 
+.overlay2 {
+  position: fixed;
+  inset: 0;                 /* top/right/bottom/left: 0 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(36, 36, 36, 0.301);
+  z-index: 9999;
+}
+
 .modal {
   background: #fff;
   padding: 15px;
@@ -127,6 +137,57 @@
   max-width: 400px;
   text-align: left;
   width: 27vw;
+}
+
+.modal2{
+  background: #e0e0e0;
+  padding: 15px;
+  border-radius: 10px;
+  text-align: left;
+  width: 57vw;
+}
+
+.P-fechar{
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 2%;
+}
+
+#Botao-fechar{
+  font-family: 'JetBrains Mono', monospace;
+  border-radius: 7px;
+  padding: 0.7%;
+  background-color: tomato;
+  color: white;
+  border: none;
+  cursor: pointer;
+
+}
+
+.opcao-card{
+  background-color: white;
+  display: block;
+  margin-bottom: 1.5%;
+  padding: 0.5%;
+  border-radius: 5px;
+  border: #111827 1px solid;
+}
+
+.opcoes-card{
+  display: block;
+  max-height: 75vh; /* Limita a altura do modal */
+  overflow-y: auto;  /* Ativa barra de rolagem vertical se necessário */
+}
+
+#selecionar{
+  margin-top: 1%;
+  border-radius: 5px;
+  padding: 0.4%;
+  border: solid 0.5px;
+  background-color: royalblue;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
 }
 
 .Ceck-div{
@@ -159,14 +220,14 @@
 #criar{
   margin-top: 0.5%;
   text-align: center;
-  font-size: 1.5vw;
+  font-size: 1.8vw;
   padding-left: 0.4%;
   padding-right: 0.4%;
   height: 6vh;
   border-radius: 5px;
   border: 0px solid rgb(255, 255, 255);
   color: rgb(255, 255, 255);
-
+  font-family: "Jersey 20", sans-serif;
   font-weight: bold;
   cursor: pointer;
   background-color: blueviolet;

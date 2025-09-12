@@ -1,0 +1,38 @@
+A partir das informações da:
+
+Meta escolhida, exemplo:
+
+{"description":"Comprar moto","dataInicial":"2025-09-12","dataAlvo":"2026-04-24","valorInicial":0,"valorAlvo":10000,"idUsuario":"fc243ecc-e03b-4af3-8d7b-5c2725e7cf03"}
+
+E da opção escolhida, exemplo:
+
+{
+    "numeroDaOpcao": 1,
+    "MotivoDaOpcao": "Parcelas fixas mensais, fácil de planejar o orçamento",
+    "numeroDeParcelasEValoresDelas": "1ª parcela R$ 1250,00, 2ª parcela R$ 1250,00, 3ª parcela R$ 1250,00, 4ª parcela R$ 1250,00, 5ª parcela R$ 1250,00, 6ª parcela R$ 1250,00, 7ª parcela R$ 1250,00, 8ª parcela R$ 1250,00"
+  }
+
+A partir da dataInicial crie um ARRAY de lancamentos em Json's relativos ao numero de poarcelas correspondente a opção escolhida! Ou seja um lancamento para cada parcela a partir da dataInicial da meta!
+Exemplo de lancamento:
+
+[
+	{
+  		"descricao": "description da Meta",
+  		"preco": preço da parcela,
+  		"dataVencimento": "escolha uma dentro do mês",
+  		"status": "PENDENTE",
+  		"tipo": "DESPESA",
+  		"categoriaLancamento": "OUTRAS_DESPESAS"
+	},
+	{
+  		"descricao": "description da Meta",
+  		"preco": preço da parcela,
+  		"dataVencimento": "escolha uma dentro do mês",
+  		"status": "PENDENTE",
+  		"tipo": "DESPESA",
+  		"categoriaLancamento": "OUTRAS_DESPESAS"
+	}
+]
+
+Não quero que me responda mais nada além do Json com as opções!
+Json a a ser analisado a seguir:

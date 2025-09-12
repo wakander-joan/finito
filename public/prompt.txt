@@ -1,0 +1,11 @@
+De acordo com o Json analise as datas e os valores,e me dê opções tabém em Json seguindo a estrutura a baixo:
+Use esse Json a baixo apénas como exmplo!
+{
+	"numeroDaOpcao": 1
+	"MotivoDaOpcao":"Guardar dinheiro de maneira progressiva, não impacta no inicio!",
+	"numeroDeParcelasEValoresDelas": "1ª parcela R$ 100, 2ª parcela R$ 200, 3ª parcela 300 etc..."
+}
+
+Não quero que me responda mais nada além do Json com as opções!
+Json a a ser analisado a seguir:
+

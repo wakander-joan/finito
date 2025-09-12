@@ -35,7 +35,8 @@ function Home() {
       console.log('Token recebido:', tokenRecebido);
       const decoded = jwtDecode(tokenRecebido);
       console.log(decoded);
-      const { nomePessoa, perfil } = decoded;
+      const {id, nomePessoa, perfil } = decoded;
+      localStorage.setItem('idPessoa', id);
       localStorage.setItem('nomePessoa', nomePessoa);
       localStorage.setItem('perfil', perfil);
       setTimeout(() => {
