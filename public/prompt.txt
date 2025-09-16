@@ -7,5 +7,9 @@ Use esse Json a baixo apénas como exmplo!
 }
 
 Não quero que me responda mais nada além do Json com as opções!
+Também, me dê opções diferênciadas mas matenha o formato indicando o numero de parcelas e valores!
+Me dê o maximo de opções possiveis!
+Não esqueça de inseir o numero das parcelas como no exemplo (1ª parcela R$ 100)
+No MotivoDaOpcao insira algo sobre o nome da meta!
 Json a a ser analisado a seguir:
 

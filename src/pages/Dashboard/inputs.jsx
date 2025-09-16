@@ -15,7 +15,7 @@ function Imputs() {
     const [raw, setRaw] = useState(0); // em centavos
     const fmt = new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" });
     const [data, setData] = useState('');
-    const [tipoSelecionado, setTipoSelecionado] = useState("RECEITA");
+    const [tipoSelecionado, setTipoSelecionado] = useState("DESPESA");
     const [statusSelecionado, setStatusSelecionado] = useState("PENDENTE");
     const [dataSelecionada, setDataSelecionada] = useState("");
     const [valorSelecionado, setValorSelecionado] = useState("");

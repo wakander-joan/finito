@@ -19,6 +19,7 @@
 
 .Area1{
   display: flex;
+  align-items: center;
 }
 
 .Area2{
@@ -302,13 +303,11 @@ h1 {
 #botao-plano{
   border: none;
   background-color: #36a39b;
-  margin-top: 0vh;
   width: 7vw;
   cursor: pointer;
-  height: 6vh;
+  height: 5vh;
   font-family: 'Jersey 10', sans-serif;
   border-radius: 7px; 
-  margin-top: 1.5vw;
   align-items: center;
   justify-content: center;
   display: flex;
