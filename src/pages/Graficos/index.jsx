@@ -1,24 +1,30 @@
 import React, { useEffect, useState } from "react";
 import api from "../../services/api";
 import "./PlanosPage.css";
-import Exit from '../../assets/back.png';
+import Exit from '../../assets/back.gif';
 import { useNavigate } from 'react-router-dom';
+import loadingGif2 from '../../assets/loading5.gif'; // seu gif de loading
+import loadingGif3 from '../../assets/load-loading7.gif'; // seu gif de loading
 
 export default function PlanosPage() {
+
   const [resposta, setRespostaDeep] = useState('');
   const API_KEY = 'sk-74cf215326ba4a9c901dd9966d7a3572';
-  const [progressValue, setProgressValue] = useState(0);
-  const [textoFinal, setTextoFinal] = useState("");
   const [showOverlay, setShowOverlay] = useState(false);
   const [opcoesOverlay, setOpcoesOverlay] = useState([]);
+  const [loadingIA, setLoadingIA] = useState(false); 
+  const [loadingIASave, setloadingIASave] = useState(false); 
 
   // exemplo de dado vindo da API: "13/30"
-  useEffect(() => {
-    const backendValue = "0/30";
+  function calculaProgressValue(parcelasPagas,parcelastotais){
+    console.log(`${parcelasPagas}/${parcelastotais}`)
+    const backendValue = `${parcelasPagas}/${parcelastotais}`;
     const [num, total] = backendValue.split("/").map(Number);
     const percentage = Math.round((num / total) * 100);
-    setProgressValue(percentage);
-  }, []);
+    return percentage;
+  }
+
+
   const [planos, setPlanos] = useState([]);
   const [loading, setLoading] = useState(true);
   const anoSelecionado = localStorage.getItem("ano-selecionado");
@@ -33,6 +39,55 @@ export default function PlanosPage() {
   const [dataInicial, setDataInicio] = useState("");
   const [dataAlvo, setDataAlvo] = useState("");
   const idPessoa = localStorage.getItem("idPessoa");
+  const [planoJsonText, setPlanoJson] = useState();
+  const [idMetaCriada, setIdMetaCriada] = useState("");
+
+  async function criaLancamentosMetas(opcao) {
+
+    const responseTxt2 = await fetch("/prompt2.txt");
+    const prompt = await responseTxt2.text();
+
+    const opcaoMandar = {
+      opcao: opcao.numeroDaOpcao,
+      motivo: opcao.MotivoDaOpcao,
+      numeroParcelas: opcao.numeroDeParcelasEValoresDelas
+    }
+
+    const opcaoJson = JSON.stringify(opcaoMandar);
+    console.log(`${planoJsonText}\n\n${opcaoJson}\n\n${prompt}`);
+
+    //alert('pausa')
+    console.clear();
+    setloadingIASave(true)
+    const respostaDeepSeek = await chamarAPI(`${planoJsonText}\n\n${opcaoJson}\n\n${prompt}`);
+
+    //Aqui Chamar a API para salvar a resposta do Deepseek + idMeta e idPessoa
+    const respostaDeepSeekJson = JSON.parse(respostaDeepSeek);
+    const idMeta = idMetaCriada;
+    
+
+    console.log(`${respostaDeepSeek} \n\n ${idMeta}`)
+
+    alert('Continuar?')
+    console.clear();
+    try {
+      const response = await api.post(`/lancamento/cadastraLancamentoEmLote/${idMeta}`, respostaDeepSeekJson);
+      setloadingIASave(false)
+      if (response.status === 201) {
+        alert('Lancamentos cadastrados com sucesso!');
+        window.location.reload();
+      } else {
+        alert(`⚠ Algo deu errado! Código: ${response.status}`);
+      }
+
+    } catch (error) {
+      console.error("Erro na API:", error);
+      alert("⚠ Erro ao buscar planos!");
+    }
+      
+  }
+
+  //Adicionar uma animação de overlayer!
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -46,38 +101,46 @@ export default function PlanosPage() {
       idUsuario: idPessoa,
     };
 
-
+    const planoJson = JSON.stringify(plano);
+    setPlanoJson(planoJson)
     const responseTxt = await fetch("/prompt.txt");
     const txtConteudo = await responseTxt.text();
 
-    const planoJson = JSON.stringify(plano);
 
     try {
       console.log("✅ Dados do plano:", plano);
 
       console.log(`${txtConteudo} ${planoJson}`);
+      setShowForm(false)
+      setLoadingIA(true)
       const respostaDeepSeek = await chamarAPI(`${txtConteudo} ${planoJson}`);
+      setLoadingIA(false)
       console.log(respostaDeepSeek);
-      alert('pause')
       const arrayDeJson = JSON.parse(respostaDeepSeek);
+      setShowOverlay
       abrirOverlayComOpcoes(arrayDeJson)
+      
 
-      /*const response = await api.post(`/meta/createMeta`, plano);
-      if (response.status === 201) {
-        setPlanos(response.data);
+      const responseDeep = await api.post(`/meta/createMeta`, plano);
+      if (responseDeep.status === 201) {
+        //setPlanos(responseDeep.data);
+        const id = responseDeep.data.id;
+        setIdMetaCriada(id)
+        console.log(idMetaCriada);
       } else {
         alert(`⚠ Algo deu errado! Código: ${response.status}`);
-      } */
-     
+      }
+
     } catch (error) {
       console.error("Erro na API:", error);
       alert("⚠ Erro ao buscar planos!");
     }
 
-
     //window.location.reload();
     //setShowForm(false);
   };
+
+
   const idUsuario = idPessoa;
 
   async function buscaPlanos() {
@@ -183,6 +246,7 @@ export default function PlanosPage() {
   // Função que recebe o array e abre o modal
   const abrirOverlayComOpcoes = (arrayDeOpcoes) => {
     setOpcoesOverlay(arrayDeOpcoes); // define os dados a serem exibidos
+    setShowForm(false)
     setShowOverlay(true);            // abre o modal
   };
 
@@ -193,6 +257,21 @@ export default function PlanosPage() {
         <p className="page-title">  METAS  </p>
         <button className="criar" id="criar" onClick={() => setShowForm(true)} title="Criar novo Plano!">CRIAR NOVA META</button>
       </div>
+      {/* Overlay de Loading */}
+      {loadingIA && (
+        <div className="loading-container">
+          <img id="img_loading" src={loadingGif2} alt="Carregando..." />
+          <p class="typing">Criando opções de Parcelamento...</p>
+        </div>
+      )}
+      
+      {loadingIASave && (
+        <div className="loading-container">
+          <img id="img_loading" src={loadingGif3} alt="Carregando..." />
+          <p class="typing">Salvando Lançamentos...</p>
+        </div>
+      )}
+
       {showOverlay && (
         <div className="overlay">
           <div className="modal2">
@@ -206,7 +285,7 @@ export default function PlanosPage() {
                   <h2>Opção {opcao.numeroDaOpcao}</h2>
                   <p><strong>Motivo:</strong> {opcao.MotivoDaOpcao}</p>
                   <p><strong>Parcelas:</strong> {opcao.numeroDeParcelasEValoresDelas}</p>
-                  <button id="selecionar" onClick={() => alert(`Você selecionou a opção ${opcao.numeroDaOpcao}`)}>Selecionar</button>
+                  <button id="selecionar" onClick={() => criaLancamentosMetas(opcao)}>Selecionar</button>
                 </div>
               ))}
             </div>
@@ -331,8 +410,8 @@ export default function PlanosPage() {
               {/* Barra de porcentagem (mantida) */}
               <div className="progress-container">
                 <label>Progresso... </label>
-                <progress value={progressValue} max="100"></progress>
-                <span>{progressValue}%</span>
+                <progress value={calculaProgressValue(plano.parcelasPagas, plano.parcelasTotais)} max="100"></progress>
+                <span>{calculaProgressValue(plano.parcelasPagas, plano.parcelasTotais)}%</span>
               </div>
 
               <div className="div-botoes">

@@ -70,9 +70,9 @@
 
 #logo-exit-planing {
   cursor: pointer;
-  margin-top: 0.5%;
+  margin-top: 0.2%;
   width: 6vw;
-  height: 6.5vh;
+  height: 8vh;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
@@ -274,3 +274,85 @@ label{
   width: 100%;
   margin: 0px;
 }
+
+.loading-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.712);
+  /* fundo escuro */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  /* fica acima de tudo */
+}
+
+.typing {
+  color: rgb(252, 252, 252);
+  font-size: 3vw;
+  margin-top: -40px;
+  font-weight: lighter;
+  text-shadow: 2px 2px 4px #000000;
+  font-family: 'Jersey 10', sans-serif;
+  padding: 1vw;
+  animation: glow-text 3.5s infinite alternate ease-in-out;
+}
+
+
+@keyframes glow-text {
+  0% {
+    text-shadow: 
+      0 0 0px #2a817b,  /* sombra inicial sem brilho */
+      0 0 0px #52c5bc, 
+      0 0 0px rgba(0, 183, 255, 0);
+  }
+  50% {
+    text-shadow: 
+      0 0 5px #2a817b,   /* primeira camada */
+      0 0 10px #52c5bc,  /* segunda camada */
+      0 0 20px rgba(0, 183, 255, 0.7), /* brilho forte */
+      0 0 40px rgba(0, 68, 255, 0.5);  /* anel externo */
+  }
+  100% {
+    text-shadow: 
+      0 0 0px #2a817b,
+      0 0 0px #52c5bc,
+      0 0 0px rgba(0, 183, 255, 0);
+  }
+}
+
+.glow {
+  font-size: 48px;
+  font-weight: bold;
+  color: #fff;
+  animation: glow-text 2s infinite ease-in-out;
+}
+
+
+#img_loading{
+  height: 50%;
+}
+
+
+@keyframes typing {
+  from {
+    width: 0;
+  }
+
+  to {
+    width: 8ch;
+  }
+
+  /* "Entrando" = 8 caracteres */
+}
+
+@keyframes blink {
+  50% {
+    border-color: transparent;
+  }
+}
+

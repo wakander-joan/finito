@@ -116,6 +116,7 @@ function Lancamentos() {
 
 
     async function excluiLancamento(id) {
+        console.log(id)
         const response = await api.delete(`/lancamento/deletaLancamento/${id}`);
         if (response.status === 200) {
             const response = await api.get(`/lancamento/buscaLancamentosPorMesEAno/${messelecionado}/${anoSelecionado}`);

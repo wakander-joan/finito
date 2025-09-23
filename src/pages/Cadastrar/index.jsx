@@ -1,7 +1,6 @@
 import './cadastraStyle.css';
 import Logo from '../../assets/logo.png';
 import { useNavigate } from 'react-router-dom';
-import React, { useMemo, useRef, useState } from "react";
 import loadingGif2 from '../../assets/loading3.gif';
 import goku from '../../assets/goku.gif';
 import ok from '../../assets/ok.png';

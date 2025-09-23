@@ -1,19 +1,18 @@
-A partir das informações da:
+No Primeiro Json a cima está a Meta!
+No Segundo Json a cima está a Opção de parcelamento da Meta!
 
-Meta escolhida, exemplo:
+A partir do campo "dataInicial" da Meta(primeiro Json) crie um lancamento em Json e adicione a um ARRAY!
+Sendo que o preco do lancamento será o preco da parcela!
+Será adicionado no array um lacamento para cada Parcela da opção! Seguindo a data de vencimento a partir do campo "dataInicial"!
+Na "descricao" do lancamento adicione a "description" da meta, do primeiro Json e o numero da parcela exemplo "1/12"
 
-{"description":"Comprar moto","dataInicial":"2025-09-12","dataAlvo":"2026-04-24","valorInicial":0,"valorAlvo":10000,"idUsuario":"fc243ecc-e03b-4af3-8d7b-5c2725e7cf03"}
+A "categoriaLancamento" será "META"!
+"status" será "PENDENTE"
+"tipo" será "DESPESA",
+"preco" será o valor da parcela!
+A "dataVencimento" será de acordo com o tipo de Opção e numero de parcelas a partir do campo "dataInicial"!
 
-E da opção escolhida, exemplo:
-
-{
-    "numeroDaOpcao": 1,
-    "MotivoDaOpcao": "Parcelas fixas mensais, fácil de planejar o orçamento",
-    "numeroDeParcelasEValoresDelas": "1ª parcela R$ 1250,00, 2ª parcela R$ 1250,00, 3ª parcela R$ 1250,00, 4ª parcela R$ 1250,00, 5ª parcela R$ 1250,00, 6ª parcela R$ 1250,00, 7ª parcela R$ 1250,00, 8ª parcela R$ 1250,00"
-  }
-
-A partir da dataInicial crie um ARRAY de lancamentos em Json's relativos ao numero de poarcelas correspondente a opção escolhida! Ou seja um lancamento para cada parcela a partir da dataInicial da meta!
-Exemplo de lancamento:
+Apenas um exemplo de array de lancamentos:
 
 [
 	{
@@ -22,17 +21,24 @@ Exemplo de lancamento:
   		"dataVencimento": "escolha uma dentro do mês",
   		"status": "PENDENTE",
   		"tipo": "DESPESA",
-  		"categoriaLancamento": "OUTRAS_DESPESAS"
+  		"categoriaLancamento": "META"
+		"mesDoLancamento":"mes do vencimento da parcela",
+		"ano":"ano do vencimento da parcela"
 	},
 	{
-  		"descricao": "description da Meta",
-  		"preco": preço da parcela,
+  		"descricao": "description da Meta 2",
+  		"preco": preço da parcela 2,
   		"dataVencimento": "escolha uma dentro do mês",
   		"status": "PENDENTE",
   		"tipo": "DESPESA",
-  		"categoriaLancamento": "OUTRAS_DESPESAS"
+  		"categoriaLancamento": "META"
+		"mesDoLancamento":"mes do vencimento da parcela",
+		"ano":"ano do vencimento da parcela"
 	}
 ]
 
-Não quero que me responda mais nada além do Json com as opções!
-Json a a ser analisado a seguir:
+Fique atento a descrição da Opção se é bimestral ou Trimestral ou mes a mes!
+Tudo acima é apenas exemplo!
+Json certo a ser analisado a seguir:
+Não quero que me responda mais nada além do Json com o array de lancamentos! exatamente só o Json sem mais nada!!!
+Sem isso ```json nem isso ``` !
