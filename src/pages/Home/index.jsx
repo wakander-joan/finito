@@ -17,6 +17,14 @@ function Home() {
   const [loading, setLoading] = useState(false); // novo estado
   const navigate = useNavigate();
 
+  const audioLoading = new Audio("/loading.mp3");
+
+  const tocarSomLoading = () => {
+    audioLoading.currentTime = 0; // reinicia do começo
+    audioLoading.play();
+  };
+
+
   async function login() {
     try {
       setLoading(true); // mostra o loading
@@ -35,14 +43,15 @@ function Home() {
       console.log('Token recebido:', tokenRecebido);
       const decoded = jwtDecode(tokenRecebido);
       console.log(decoded);
-      const {id, nomePessoa, perfil } = decoded;
+      const { id, nomePessoa, perfil } = decoded;
       localStorage.setItem('idPessoa', id);
       localStorage.setItem('nomePessoa', nomePessoa);
       localStorage.setItem('perfil', perfil);
+      tocarSomLoading();
       setTimeout(() => {
         setLoading(false); // esconde o loading
         navigate('/cadastro'); // navega para a página
-      }, 1700);
+      }, 3100);
 
     } catch (error) {
       alert(`Erro ao fazer login: ${error.response?.data || error.message}`);
@@ -52,12 +61,12 @@ function Home() {
 
   async function loadingAnimation() {
     setLoading(true); // mostra o loading
-    // Simula um tempo de carregamento
     setTimeout(() => {
       setLoading(false); // esconde o loading
       navigate('/cadastrar')
     }, 1700); // 3 segundos
   }
+
 
   return (
     <div className="container">
@@ -87,7 +96,7 @@ function Home() {
             onChange={(e) => setSenha(e.target.value)}
           />
         </div>
-        <button type='button' onClick={login}>Entrar</button>
+        <button type='button' onClick={()=>{login(); tocarSomLoading();}}>Entrar</button>
       </form>
 
       <div className='googledivider'>
@@ -99,7 +108,7 @@ function Home() {
         <img id="logo-face" name='google' src={Face} />
         <button onClick={() => window.open('https://www.facebook.com', '_blank', 'noopener,noreferrer')} id='botaoFace'>Logar com Facebook</button>
       </div>
-      <button onClick={loadingAnimation} id='botaocadastro'>Cadastrar</button>
+      <button onClick={()=> navigate('/cadastrar')} id='botaocadastro'>Cadastrar</button>
 
       <div className='rodape'>
         <div className='coluna1'>

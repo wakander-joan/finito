@@ -10,7 +10,10 @@ import icon_filtro from '../../assets/filtro.png';
 import icon_lupa from '../../assets/lupa.png';
 import edita from '../../assets/edita.png';
 import apaga from '../../assets/apaga.png';
-
+import React from "react";
+import jsPDF from "jspdf";
+import autoTable from "jspdf-autotable";
+import Logo from '../../assets/finito-logo.png';
 
 function Lancamentos() {
     {/* Body-response-Geral.................................................................*/ }
@@ -41,18 +44,26 @@ function Lancamentos() {
     {/* Edita .................*/ }
     const [overlayVisivel, setOverlayVisivel] = useState(false);
     const [overlayExclui, setOverlayExclui] = useState(false);
+    const [overlayDescricaoPDF, setOverlayDescricaoPDF] = useState(false);
     const [dataSelecionadaEdita, setDataSelecionadaEdita] = useState("");
+    const [data, setData] = useState('');
     const [categoriaEdita, setCategoriaEdita] = useState("SALARIO");
     const [lancamentoSelecionado, setLancamentoSelecionado] = useState(null);
     const [opcaoTipo, setOpcao] = useState("RECEITA");
     const [descricaoEditada, setDescricaoEditada] = useState("");
     const [valorEditado, setValorEditado] = useState();
     const [categoria, setCategoria] = useState("");
+    const [descricaoPDF, setDescricaoPDF] = useState("");
+
+    const formata_data = (e) => {
+        setData(e.target.value); // já vem no formato yyyy-mm-dd
+    };
 
     const abrirOverlay = (lancamento) => {
         setDescricaoEditada(lancamento.descricao)
         setCategoriaEdita(lancamento.categoriaLancamento)
         setValorEditado(lancamento.preco)
+        setDataSelecionadaEdita(lancamento.dataVencimento)
         setLancamentoSelecionado(lancamento);
         setOverlayVisivel(true);
     };
@@ -83,6 +94,11 @@ function Lancamentos() {
 
     const confirmarExclusao = () => {
         excluiLancamento(lancamentoSelecionado?.idLancamento)
+        fecharOverlayExclui();
+    };
+
+    const confirmarExclusaoRecorrente = () => {
+        excluiLancamentosRecorrente(lancamentoSelecionado?.idRecorrencia)
         fecharOverlayExclui();
     };
 
@@ -123,6 +139,20 @@ function Lancamentos() {
             console.log('Resultado:', response);
             localStorage.setItem('body-response-array', JSON.stringify(response.data))
             navigate('/dashboard'); // Vai para login
+            return;
+        } else {
+            alert(`⚠ Algo deu errado! Código: ${response.status}`);
+            console.log('Algo deu errado!', response);
+        }
+    }
+    async function excluiLancamentosRecorrente(id) {
+        console.log(id)
+        const response = await api.delete(`/lancamento/deletaAllLancamentoRecorrente/${id}`);
+        if (response.status === 200) {
+            const response = await api.get(`/lancamento/buscaLancamentosPorMesEAno/${messelecionado}/${anoSelecionado}`);
+            console.log('Resultado:', response);
+            localStorage.setItem('body-response-array', JSON.stringify(response.data))
+            navigate('/dashboard'); // Recarrega a Pagina
             return;
         } else {
             alert(`⚠ Algo deu errado! Código: ${response.status}`);
@@ -261,25 +291,245 @@ function Lancamentos() {
             console.log('Algo deu errado!', response);
         }
     }
+
+    const gerarPDF = (descriao) => {
+        // Recupera totais do localStorage
+        const totalReceitas = localStorage.getItem("totalFormatadoReceitas") || "R$ 0,00";
+        const totalDespesas = localStorage.getItem("totalFormatadoDespesas") || "R$ 0,00";
+        const mediaTotal = localStorage.getItem("mediaTotalFormatado") || "R$ 0,00";
+        const saldo = localStorage.getItem("saldoFormatado") || "R$ 0,00";
+        let messelecionadoMinusculo = messelecionado.toLowerCase();
+        let messelecionadoFormatado = messelecionadoMinusculo.charAt(0).toUpperCase() + messelecionadoMinusculo.slice(1);
+
+        const doc = new jsPDF();
+
+        doc.addImage(Logo, "PNG", 170, 2, 17, 15);
+        // Título
+        doc.setFont("helvetica", "bold");
+        doc.setFontSize(18);
+        doc.text(`Relatório Financeiro de ${messelecionadoFormatado} de ${anoSelecionado}`, 12, 10);
+
+        // Tabela com receitas/despesas
+        const colunas = ["Descrição", "Tipo", "Preço", "Vencimento", "Status", "Categoria"];
+        const linhas = body_response.map((item) => [
+            item.descricao,
+            item.tipo,
+            item.preco,
+            item.dataVencimento,
+            item.status,
+            item.categoriaLancamento,
+        ]);
+
+        // ⚡ Aqui está a mudança
+        autoTable(doc, {
+            startY: 20,
+            head: [colunas],
+            body: linhas,
+            styles: { fontSize: 10, cellPadding: 3 },
+            headStyles: { fillColor: [42, 129, 123], textColor: 255 },
+
+            didParseCell: (data) => {
+                if (data.section === 'body' && data.column.index === 2) {
+                    let valorNumerico = Number(data.cell.raw);
+                    let valorTexto = `R$\u00A0${valorNumerico.toLocaleString("pt-BR", {
+                        minimumFractionDigits: 2,
+                        maximumFractionDigits: 2
+                    })}`;
+
+                    // força ser uma única linha
+                    data.cell.text = [valorTexto];
+                    data.cell.styles.textColor = [0, 0, 0];
+                }
+
+                if (data.column.index === 4) {
+                    const valorTexto = String(data.cell.raw).toUpperCase();
+                    data.cell.text = [valorTexto];
+
+                    if (valorTexto === 'PENDENTE') {
+                        data.cell.styles.textColor = [255, 0, 0];
+                    } else if (valorTexto === 'PAGO') {
+                        data.cell.styles.textColor = [0, 128, 0];
+                    } else {
+                        data.cell.styles.textColor = [255, 255, 255];
+                    }
+                }
+
+                if (data.column.index === 1) {
+                    const valorTexto = String(data.cell.raw).toUpperCase();
+                    data.cell.text = [valorTexto];
+
+                    if (valorTexto === 'DESPESA') {
+                        data.cell.styles.textColor = [255, 0, 0];
+                    } else if (valorTexto === 'RECEITA') {
+                        data.cell.styles.textColor = [0, 128, 0];
+                    } else {
+                        data.cell.styles.textColor = [255, 255, 255];
+                    }
+                }
+            },
+        });
+
+
+        // 2️⃣ Tabela de Resumo
+        const finalY = doc.lastAutoTable?.finalY || 5; // posição abaixo da primeira tabela
+        const resumoColunas = ["RESUMO", "VALORES"];
+        const resumoLinhas = [
+            ["Total de Receitas", totalReceitas],
+            ["Total de Despesas", totalDespesas],
+            ["Média Total", mediaTotal],
+            ["Saldo Atual", saldo],
+        ];
+
+        autoTable(doc, {
+            startY: finalY + 15,
+            head: [resumoColunas],
+            body: resumoLinhas,
+            styles: { fontSize: 11, cellPadding: 3 },
+            headStyles: {
+                fillColor: [255, 0, 0], // vermelho
+                textColor: 255          // texto branco
+            },
+            didParseCell: (data) => {
+                if (data.section === 'body' && data.column.index === 1) { // só aplica na coluna de valores
+                    const valorTexto = data.cell.raw;
+                    const valorNumerico = Number(valorTexto.toString().replace(/[R$\s.]/g, "").replace(",", "."));
+
+                    // Define a cor conforme a linha
+                    switch (data.row.index) {
+                        case 0: // Total de Receitas
+                            data.cell.styles.textColor = [0, 128, 0]; // verde
+                            break;
+                        case 1: // Total de Despesas
+                            data.cell.styles.textColor = [255, 0, 0]; // vermelho
+                            break;
+                        case 2: // Média Total
+                            data.cell.styles.textColor = [0, 0, 0]; // azul
+                            break;
+                        case 3: // Saldo Final
+                            data.cell.styles.textColor = valorNumerico >= 0 ? [255, 140, 0] : [255, 0, 0];
+                            break;
+                        default:
+                            data.cell.styles.textColor = [0, 0, 0]; // fallback (preto)
+                    }
+                }
+            },
+        });
+
+
+        if (descriao !== undefined && descriao !== "") {
+            doc.setFontSize(16);
+            doc.text(`ANOTAÇÃO:`, 20, doc.lastAutoTable.finalY + 30);
+
+            doc.setTextColor(100)
+            doc.setFontSize(14);
+            doc.text(`${descriao}`, 20, doc.lastAutoTable.finalY + 40);
+        }
+
+        setDescricaoPDF("");
+
+        window.open(doc.output("bloburl"), "_blank");
+        //doc.save(`relatorio-financeiro-de-${messelecionado}.pdf`);
+    };
+
+    const audioPDF = new Audio("/pdf.mp3");
+    const audioClick = new Audio("/click.mp3");
+    const audioExcluir = new Audio("/excluir.mp3");
+    const audioAtualiza = new Audio("/atualiza.mp3");
+    const audioHover = new Audio("/hover.mp3");
+    const passedGTA5 = new Audio("/passedGTA5.mp3");
+    const clickGTA = new Audio("/clickGTA.mp3");
+
+    const tocarSom = (som) => {
+        som.currentTime = 0;
+        som.play();
+    };
+
+    function ativaOverlayPDF() {
+
+    }
+
+    const [checkedExclui, setCheckedExclui] = useState(false);
+
     return (
         <div className='Lancamentos-grafico-IA'>
+            {overlayDescricaoPDF && (
+                <div className='overlayPDF'>
+                    <div className='modalPDF'>
+                        <button
+                            id="fechar"
+                            onClick={() => { tocarSom(audioClick); setOverlayDescricaoPDF(false); }}
+                        >X</button>
+                        <p id='Descricao-PDF' style={{ margin: "20px 0" }}>Quer adicionar uma descrição ao PDF?</p>
+                        <textarea
+                            id="mensagem"
+                            rows="4"
+                            cols="30"
+                            placeholder="Digite aqui a sua descrição..."
+                            onChange={(e) => setDescricaoPDF(e.target.value)}>
+                        </textarea>
+
+                        <div className='Botoes-PDF'>
+                            <button
+                                id="Botao-PDF-sim"
+                                onClick={() => { tocarSom(audioPDF); gerarPDF(descricaoPDF); }}
+                            >
+                                Sim
+                            </button>
+                            <button
+                                id="Botao-PDF-nao"
+                                onClick={() => { tocarSom(audioPDF); setOverlayDescricaoPDF(false); gerarPDF(); }}
+                            >
+                                Sem descrição!
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
             {overlayExclui && (
                 <div className='overlayExclui'>
                     <div className='modalExclui'>
-                        <p id='Descricao-exclui' style={{ margin: "20px 0" }}>
+                        <p id='Descricao-exclui' style={{ margin: "5px 0" }}>
                             Excluir o lançamento
                             <strong id='Descricao-id-exclui'> "{lancamentoSelecionado?.descricao}"</strong>?
                         </p>
+                        {lancamentoSelecionado?.idRecorrencia > 0 && (
+                            <div className='todos' >
+                                <p id='exclui'>
+                                    Excluir de todos os meses?
+                                </p>
+
+                                <label class="switch">
+                                    <input
+                                        onClick={() => tocarSom(audioHover)}
+                                        type="checkbox"
+                                        name="aceito"
+                                        onChange={(e) => {
+                                            setCheckedExclui(e.target.checked);
+                                        }}
+                                    />
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                        )}
+
                         <div className='Botoes-exclui'>
                             <button
                                 id="Botao-excluir-sim"
-                                onClick={confirmarExclusao}
+                                onClick={() => {
+                                    if (checkedExclui == true) {
+                                        tocarSom(audioExcluir);
+                                        setCheckedExclui(false);
+                                        confirmarExclusaoRecorrente();
+                                    } else {
+                                        tocarSom(audioExcluir); confirmarExclusao();
+                                    }
+                                }}
                             >
                                 Sim
                             </button>
                             <button
                                 id="Botao-excluir-nao"
-                                onClick={fecharOverlayExclui}
+                                onClick={() => { fecharOverlayExclui(); tocarSom(audioClick); }}
                             >
                                 Não
                             </button>
@@ -326,11 +576,11 @@ function Lancamentos() {
                             <button
                                 id="Botao-excluir-nao"
                                 disabled={!mesDestino}
-                                onClick={confirmarReplica}
+                                onClick={() => { confirmarReplica(); tocarSom(audioClick); }}
                             >
                                 Confirmar
                             </button>
-                            <button id="Botao-excluir-sim" onClick={fecharOverlayReplica}>
+                            <button id="Botao-excluir-sim" onClick={() => { fecharOverlayReplica(); tocarSom(audioClick); }}>
                                 Cancelar
                             </button>
                         </div>
@@ -342,9 +592,9 @@ function Lancamentos() {
                     <p id='Lancamentos'>Lancamentos</p>
                 </div>
                 <div className='caixa-filtro-busca'>
-                    <button id='botao-replica' onClick={() => abrirOverlayReplica()}>↪️REPLICAR</button>
-                    <button id='botao-dashboard' onClick={() => navigate('/graficos')}>🖥️ DASHBOARD</button>
-                    <img id='filtro-img' onClick={() => alert("Ainda não implementado!")} src={icon_filtro} alt="Carregando..." />
+                    <button id='botao-replica' onClick={() => { abrirOverlayReplica(); tocarSom(audioClick); }}>↪️REPLICAR</button>
+                    <button title="Gerar um relatório detalhado do mês em PDF"
+                        id='botao-dashboard' onClick={() => { tocarSom(audioClick); setOverlayDescricaoPDF(true); }}>📄Gerar-PDF</button>
                     <div className="search-box">
                         <img
                             src={icon_lupa}
@@ -381,14 +631,18 @@ function Lancamentos() {
                                     <label id='descricao-lancamento-label' htmlFor="text">DESCRIÇÃO</label>
                                     <p id='descricao-lancamento'>{lancamento.descricao}</p>
                                 </div>
+                                {lancamento.idRecorrencia > 0 && (
+                                    <p title='Esse é um Lançamento Recorrente!' id="recorrente">R</p>
+                                )}
+
                                 <div className='edita-lancamento'>
                                     <label id='descricao-lancamento-label' htmlFor="text">EDITAR</label>
-                                    <img id='edita-img' src={edita} className="icon" onClick={() => abrirOverlay(lancamento)} />
-                                    {/* Overlay do editar ---------------------------------------------------- */}
+                                    <img id='edita-img' src={edita} className="icon" onClick={() => { abrirOverlay(lancamento); tocarSom(audioClick); }} />
 
+                                    {/* Overlay do editar ---------------------------------------------------- */}
                                     {overlayVisivel && (
                                         <div className='overlay'>
-                                            <div className='modal'>
+                                            <div className='modal-edita'>
                                                 <div className='cabecalho-edita'>
                                                     <label id='Edita-label' htmlFor="text">Edita Lancamento</label>
                                                     <img id='edita-img-edita' src={edita} className="icon" />
@@ -412,7 +666,7 @@ function Lancamentos() {
                                                     <input
                                                         type="date"
                                                         id="data-edita"
-                                                        value={dataSelecionadaEdita}
+                                                        value={data}
                                                         onChange={(e) => {
                                                             formata_data(e);
                                                             setDataSelecionadaEdita(e.target.value);
@@ -460,32 +714,33 @@ function Lancamentos() {
                                                     <button
                                                         id="Botao-atualizar-editar"
                                                         onClick={() => {
+                                                            tocarSom(audioAtualiza);
+
+                                                            const semAcento = (str) =>
+                                                                str
+                                                                    .normalize("NFD")              // separa os caracteres e os acentos
+                                                                    .replace(/[\u0300-\u036f]/g, "") // remove os acentos
+                                                                    .toUpperCase();                // transforma em maiúscula
+
+
                                                             const bodyJson = {
                                                                 descricao: descricaoEditada,
                                                                 preco: valorEditado,
                                                                 dataVencimento: dataSelecionadaEdita,
                                                                 tipo: opcaoTipo,
-                                                                categoriaLancamento: categoriaEdita.toUpperCase(),
+                                                                categoriaLancamento: semAcento(categoriaEdita),
                                                             };
 
-                                                            /* alert(
-                                                                'Atualizando od id: ' + lancamentoSelecionado?.idLancamento + '\n' +
-                                                                'Descrição: ' + descricaoEditada + '\n' +
-                                                                'Categoria: ' + categoriaEdita + '\n' +
-                                                                'Tipo: ' + opcaoTipo + '\n' +
-                                                                'Data: ' + dataSelecionadaEdita + '\n' +
-                                                                'Valor: ' + valorEditado
-                                                            ) */
-
+                                                            console.log(bodyJson);
                                                             editaLancamento(bodyJson, lancamentoSelecionado?.idLancamento)
-
+                                                            setData('');
                                                         }
                                                         }
                                                     >
-                                                        Atualizar Lançamento
+                                                        Atualizar
                                                     </button>
 
-                                                    <button id='Fechar-editar' onClick={fecharOverlay}>Fechar</button>
+                                                    <button id='Fechar-editar' onClick={() => { tocarSom(audioClick); fecharOverlay(); }}>Fechar</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -494,7 +749,7 @@ function Lancamentos() {
                                 </div>
                                 <div className='edita-lancamento'>
                                     <label id='descricao-lancamento-label' htmlFor="text">EXCLUIR</label>
-                                    <img id='exclui-img' src={apaga} className="icon" onClick={() => abrirOverlayExclui(lancamento)} />
+                                    <img id='exclui-img' src={apaga} className="icon" onClick={() => { abrirOverlayExclui(lancamento); tocarSom(audioClick); }} />
                                 </div>
                             </div>
                             <div className='tipo-valor-vencimento-etc'>
@@ -522,13 +777,19 @@ function Lancamentos() {
                                     <label id='descricao-lancamento-label' htmlFor="text">STATUS</label>
                                     <div id='Div-status-lancamento'>
                                         <select
+                                            onClick={() => tocarSom(clickGTA)}
+                                            style={{
+                                                color: lancamento.status === "PAGO" ? "#00ad2eff" : "#da0012ff"
+                                            }}
                                             id="Status-select-lancamento"
                                             value={lancamento.status}
                                             onChange={(e) => {
                                                 if (e.target.value === "PAGO") {
                                                     alteraStatusPago(lancamento.idLancamento);
+                                                    tocarSom(passedGTA5)
                                                 } else {
                                                     alteraStatusPendente(lancamento.idLancamento);
+                                                    tocarSom(audioExcluir)
                                                 }
                                             }}
                                             className="Status-Select"
@@ -540,7 +801,11 @@ function Lancamentos() {
                                 </div>
                                 <div className='Categoria-lancamento'>
                                     <label id='descricao-lancamento-label' htmlFor="text">CATEGORIA</label>
-                                    <p id='Categoria-lancamento'>{lancamento.categoriaLancamento}</p>
+                                    <p
+                                        style={{
+                                            color: lancamento.categoriaLancamento === "Outras_Despesasas" ? "#4b4b4bff" : "#000000ff"
+                                        }}
+                                        id='Categoria-lancamento'>{lancamento.categoriaLancamento}</p>
                                 </div>
                             </div>
                         </div>

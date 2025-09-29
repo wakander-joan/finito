@@ -12,11 +12,11 @@ export default function PlanosPage() {
   const API_KEY = 'sk-74cf215326ba4a9c901dd9966d7a3572';
   const [showOverlay, setShowOverlay] = useState(false);
   const [opcoesOverlay, setOpcoesOverlay] = useState([]);
-  const [loadingIA, setLoadingIA] = useState(false); 
-  const [loadingIASave, setloadingIASave] = useState(false); 
+  const [loadingIA, setLoadingIA] = useState(false);
+  const [loadingIASave, setloadingIASave] = useState(false);
 
   // exemplo de dado vindo da API: "13/30"
-  function calculaProgressValue(parcelasPagas,parcelastotais){
+  function calculaProgressValue(parcelasPagas, parcelastotais) {
     console.log(`${parcelasPagas}/${parcelastotais}`)
     const backendValue = `${parcelasPagas}/${parcelastotais}`;
     const [num, total] = backendValue.split("/").map(Number);
@@ -56,7 +56,6 @@ export default function PlanosPage() {
     const opcaoJson = JSON.stringify(opcaoMandar);
     console.log(`${planoJsonText}\n\n${opcaoJson}\n\n${prompt}`);
 
-    //alert('pausa')
     console.clear();
     setloadingIASave(true)
     const respostaDeepSeek = await chamarAPI(`${planoJsonText}\n\n${opcaoJson}\n\n${prompt}`);
@@ -64,11 +63,10 @@ export default function PlanosPage() {
     //Aqui Chamar a API para salvar a resposta do Deepseek + idMeta e idPessoa
     const respostaDeepSeekJson = JSON.parse(respostaDeepSeek);
     const idMeta = idMetaCriada;
-    
+
 
     console.log(`${respostaDeepSeek} \n\n ${idMeta}`)
 
-    alert('Continuar?')
     console.clear();
     try {
       const response = await api.post(`/lancamento/cadastraLancamentoEmLote/${idMeta}`, respostaDeepSeekJson);
@@ -84,7 +82,7 @@ export default function PlanosPage() {
       console.error("Erro na API:", error);
       alert("⚠ Erro ao buscar planos!");
     }
-      
+
   }
 
   //Adicionar uma animação de overlayer!
@@ -115,14 +113,16 @@ export default function PlanosPage() {
       setLoadingIA(true)
       const respostaDeepSeek = await chamarAPI(`${txtConteudo} ${planoJson}`);
       setLoadingIA(false)
+      paraSom();
       console.log(respostaDeepSeek);
       const arrayDeJson = JSON.parse(respostaDeepSeek);
       setShowOverlay
       abrirOverlayComOpcoes(arrayDeJson)
-      
+
 
       const responseDeep = await api.post(`/meta/createMeta`, plano);
       if (responseDeep.status === 201) {
+        paraSom;
         //setPlanos(responseDeep.data);
         const id = responseDeep.data.id;
         setIdMetaCriada(id)
@@ -132,6 +132,7 @@ export default function PlanosPage() {
       }
 
     } catch (error) {
+      paraSom;
       console.error("Erro na API:", error);
       alert("⚠ Erro ao buscar planos!");
     }
@@ -210,6 +211,7 @@ export default function PlanosPage() {
 
   const chamarAPI = async (prompt) => {
     try {
+      tocarSom(audioLoadingai);
       const response = await fetch('https://api.deepseek.com/v1/chat/completions', {
         method: 'POST',
         headers: {
@@ -224,15 +226,17 @@ export default function PlanosPage() {
           ]
         })
       });
-
+      paraSom()
       if (!response.ok) {
         // Log/erro amigável
         const text = await response.text();
         throw new Error(`Deepseek error ${response.status}: ${text}`);
       }
+      paraSom();
       const data = await response.json();
       const content = data?.choices?.[0]?.message?.content ?? '';
       setRespostaDeep(content); // atualiza state
+      paraSom(); // para sons
       return content; // retorna para uso imediato
     } catch (err) {
       console.error('Erro chamarAPI:', err);
@@ -250,12 +254,31 @@ export default function PlanosPage() {
     setShowOverlay(true);            // abre o modal
   };
 
+  const audioClick = new Audio("/click.mp3");
+  const audioLoadingai = new Audio("/loadingia.mp3");
+  const audioclickGTA = new Audio("/clickGTA.mp3");
+  const audioPassedGTA5 = new Audio("/passedGTA5.mp3");
+
+  const tocarSom = (som) => {
+    som.currentTime = 0; // reinicia o áudio do começo
+    som.play();
+  };
+
+  const paraSom = () => {
+    document.querySelectorAll("audio, video").forEach(el => {
+      el.pause();
+      el.currentTime = 0;
+    });
+  };
+
+
+
   return (
     <div className="page-container">
       <div className="cabecalho-planing">
-        <img onClick={voltar_menu} id="logo-exit-planing" src={Exit} alt="Finito" title="Voltar ao Menu!" />
-        <p className="page-title">  METAS  </p>
-        <button className="criar" id="criar" onClick={() => setShowForm(true)} title="Criar novo Plano!">CRIAR NOVA META</button>
+        <p className="page-title">  METAS🪙  </p>
+        <button className="criar" id="criar" onClick={() => { setShowForm(true); tocarSom(audioclickGTA); }} title="Criar nova meta!">NOVA META</button>
+        <button className="criar" id="sair" onClick={() => { voltar_menu(); tocarSom(audioClick); }} title="Sair">🔙</button>
       </div>
       {/* Overlay de Loading */}
       {loadingIA && (
@@ -264,7 +287,7 @@ export default function PlanosPage() {
           <p class="typing">Criando opções de Parcelamento...</p>
         </div>
       )}
-      
+
       {loadingIASave && (
         <div className="loading-container">
           <img id="img_loading" src={loadingGif3} alt="Carregando..." />
@@ -285,7 +308,7 @@ export default function PlanosPage() {
                   <h2>Opção {opcao.numeroDaOpcao}</h2>
                   <p><strong>Motivo:</strong> {opcao.MotivoDaOpcao}</p>
                   <p><strong>Parcelas:</strong> {opcao.numeroDeParcelasEValoresDelas}</p>
-                  <button id="selecionar" onClick={() => criaLancamentosMetas(opcao)}>Selecionar</button>
+                  <button id="selecionar" onClick={() => {criaLancamentosMetas(opcao); setShowOverlay(false);}}>Selecionar</button>
                 </div>
               ))}
             </div>
@@ -297,7 +320,7 @@ export default function PlanosPage() {
       {showForm && (
         <div className="overlay">
           <div className="modal">
-            <h2 className="Titulo-New">Novo Plano</h2>
+            <h2 className="Titulo-New">Nova Meta🚀</h2>
 
             <form id="div-input" onSubmit={handleSubmit} className="div-123">
               <label id="descricao" htmlFor="text">Descrição</label>
@@ -311,8 +334,9 @@ export default function PlanosPage() {
               />
 
               <div className="caixinhas">
-                <label htmlFor="text">Data Inicio 🚀</label>
+                <label htmlFor="text">Data Inicio🗓️</label>
                 <input
+                  onClick={() => tocarSom(audioclickGTA)}
                   type="date"
                   placeholder="Data de Vencimento (dd-mm-aaaa)"
                   value={dataInicial}
@@ -323,18 +347,7 @@ export default function PlanosPage() {
               </div>
 
               <div className="caixinhas">
-                <label htmlFor="text">Data Alvo 🎯</label>
-                <input
-                  type="date"
-                  placeholder="Data de Vencimento (dd-mm-aaaa)"
-                  value={dataAlvo}
-                  onChange={(e) => setDataAlvo(e.target.value)}
-                  id="data-plano"
-                  required
-                />
-              </div>
-              <div className="caixinhas">
-                <label htmlFor="text">Valor Inicial 🚀</label>
+                <label htmlFor="text">Valor Inicial💲</label>
                 <input
                   type="number"
                   step="0.01"
@@ -345,8 +358,21 @@ export default function PlanosPage() {
                   required
                 />
               </div>
+              <p id='separador' >-------------------------------------------</p>
               <div className="caixinhas">
-                <label htmlFor="text">Valor Alvo 🎯</label>
+                <label htmlFor="text">Data Alvo📅</label>
+                <input
+                  onClick={() => tocarSom(audioclickGTA)}
+                  type="date"
+                  placeholder="Data de Vencimento (dd-mm-aaaa)"
+                  value={dataAlvo}
+                  onChange={(e) => setDataAlvo(e.target.value)}
+                  id="data-plano"
+                  required
+                />
+              </div>
+              <div className="caixinhas">
+                <label htmlFor="text">Valor Alvo💸</label>
                 <input
                   type="number"
                   step="0.01"
@@ -364,7 +390,7 @@ export default function PlanosPage() {
                   type="submit"
                   id="editar"
                 >
-                  Salvar
+                  Enviar
                 </button>
 
                 <button
@@ -385,7 +411,7 @@ export default function PlanosPage() {
       {/*Começa overlayer de Planos.............................*/}
       {/*Começa overlayer de Metas.............................*/}
       {planos.length === 0 ? (
-        <p className="text-center">Nenhuma meta encontrada.</p>
+        <p className="text-center">Nenhuma meta encontrada...</p>
       ) : (
         <div className="planos-grid">
           {planos.map((plano, index) => (
@@ -417,24 +443,10 @@ export default function PlanosPage() {
               <div className="div-botoes">
                 <button
                   className="botoes"
-                  id="status"
-                  onClick={() => mudarStatus(plano.id)}
-                >
-                  🔁Status
-                </button>
-                <button
-                  className="botoes"
-                  id="editar"
-                  onClick={() => alert("Editar " + index)}
-                >
-                  ✏️Editar
-                </button>
-                <button
-                  className="botoes"
                   id="excluir"
                   onClick={() => deletaPlano(plano.id)}
                 >
-                  ❌Excluir
+                  Excluir
                 </button>
               </div>
             </div>

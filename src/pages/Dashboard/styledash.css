@@ -61,32 +61,32 @@
 }
 
 #logo-exit-dash {
-    width: 80px;
-    height: 55px;
-    padding-top: 20px;
-    padding-left: 10px;
-    padding-right: 0px;
+    font-family: 'Jersey 20', sans-serif;
+    font-size: 2.5vw;
     cursor: pointer;
+    margin-top: 1.5vh;
 
     &:hover {
         transform: scale(1.1);
         transition: transform 0.3s ease;
+        color: chocolate;
     }
 }
 
 #logo-finito-cabecalho-dash {
-    width: 50px;
-    height: 55px;
-    margin-left: 8px;
-    margin-top: 10px;
-    margin-bottom: 10px;
+    width: 5vw;
+    height: 8vh;
+    margin-left: 0.42vw;
+    margin-top: 2vh;
+    margin-bottom: 0.93vh;
 }
 
 #FINITO-TEXT-DASH {
-    font-size: 49px;
-    font-weight: bold;
+    font-size: 4vw;
     color: #000000;
-    padding-top: 9px;
+    padding-top: 2vh;
+    font-weight: lighter;
+    font-family: 'Jersey 20', sans-serif;
 }
 
 #ano-cabecalho {
@@ -97,10 +97,11 @@
 }
 
 #USUARIO-TEXT2 {
-    font-size: 2.7vw;
-    font-weight: bold;
+    font-family: 'Jersey 10', sans-serif;
+    font-size: 3.5vw;
+    font-weight: lighter;
     color: #000000;
-    padding-top: 9px;
+
 }
 
 #PERFIL-EMOGI2 {
@@ -241,47 +242,61 @@ h4 {
     justify-content: baseline;
 }
 
+#Categoria-input{
+    margin-top: -3vh;
+}
+
 #Descricao-text-inputs {
-    font-size: 1.3vw;
-    font-family: inherit;
+    font-size: 1.7vw;
+    font-family: 'Jersey 10', sans-serif;
     color: rgb(49, 49, 49);
-    font-weight: bold;
-    padding-left: 3%;
+    padding-left: 2%;
 }
 
 
 #Tipo-status-select {
     width: 9.5vw;
     border-radius: 10px;
-    font-size: 1.2vw;
+    font-size: 1.5vw;
     cursor: pointer;
-    font-family: unset;
+    font-family: 'Jersey 10', sans-serif;
+    text-shadow: none;
+    color: #616161;
+    height: 6.5vh;
 }
 
 #Tipo-status-options-receita {
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-family: 'Jersey 10', sans-serif;
     background-color: #ffffff;
     color: #23af00;
 }
 
 #Tipo-status-options-despesa {
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-family: 'Jersey 10', sans-serif;
     background-color: #ffffff;
     color: #ff0000;
 }
 
-#Tipo-status-options {
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+#status-options-pen {
+    color: #ff0000;
+    font-family: 'Jersey 10', sans-serif;
+    background-color: #ffffff;
+}
+
+#status-options-pag {
+    color: #23af00;
+    font-family: 'Jersey 10', sans-serif;
     background-color: #ffffff;
 }
 
 .Bloquinho-input-descricao {
-    padding-top: 1.5vh;
+    padding-top: 0vh;
 }
 
 #Descricao-input {
-    font-size: 1.35vw;
-    width: 19.5vw;
+    font-family: 'Jersey 10', sans-serif;
+    font-size: 1.5vw;
+    width: 19vw;
     height: 5vh;
 }
 
@@ -290,6 +305,7 @@ h4 {
     font-size: 1.5vw;
     color: rgb(48, 48, 48);
     width: 7.5vw;
+    height: 5.5vh;
 }
 
 #data {
@@ -297,14 +313,38 @@ h4 {
     font-size: 1.6vw;
     color: rgb(48, 48, 48);
     cursor: pointer;
+    width: 11.3vw;
+    height: 5.5vh;
+}
+
+#Tipo-status-select-categoria-input {
+    width: 19vw;
+    height: 6.5vh;
+    border-radius: 10px;
+    font-size: 1.7vw;
+    cursor: pointer;
+    font-family: 'Jersey 10', sans-serif;
+    text-shadow: none;
+    border-radius: 10px;
+    color: #000000;
+    padding: 0px;
+    text-align: center;
+    padding-right: 4vw;
 }
 
 #Tipo-status-select-categoria {
-    width: 16.5vw;
+    width: 15vw;
+    height: 6.5vh;
     border-radius: 10px;
-    font-size: 1.2vw;
+    font-size: 1.3vw;
     cursor: pointer;
-    font-family: unset;
+    font-family: 'Jersey 10', sans-serif;
+    text-shadow: none;
+    border-radius: 10px;
+    color: #000000;
+    padding: 0px;
+    text-align: center;
+    padding-right: 3vw;
 }
 
 .div-botao-cadastro {
@@ -367,26 +407,30 @@ h4 {
 #botao-dashboard {
     width: 8vw;
     height: 5vh;
+    border: none;
     border-radius: 5px;
-    font-size: 1vw;
+    font-size: 1.1vw;
     cursor: pointer;
     margin-top: 0.7vh;
+    background-color: rgb(245, 0, 0);
+    color: #ffffff;
 
     &:hover {
-        background-color: rgb(143, 0, 245);
+        transform: scale(1.1);
+        transition: transform 0.3s ease;
     }
 }
 
 #botao-replica {
-    width: 8vw;
+    width: 7.5vw;
     height: 5vh;
     border-radius: 5px;
-    font-size: 1vw;
+    font-size: 1.4vw;
     cursor: pointer;
     margin-top: 0.7vh;
     background-color: rgb(143, 0, 245);
     color: #ffffff;
-    font-family: 'JetBrains Mono', monospace;
+    font-family: 'Jersey 20', sans-serif;
     border: 1px solid rgb(255, 255, 255);
     
     &:hover {
@@ -408,12 +452,13 @@ h4 {
 }
 
 .search-box input {
-    width: 100%;
+    width: 15.5vw;
     height: 5.5vh;
     padding: 8px 8px 8px 32px;
-    font-size: 16px;
+    font-size: 1.7vw;
     border-radius: 5px;
     border: 1px solid #ccc;
+    font-family: 'Jersey 10', sans-serif;
 }
 
 .search-box .icon {
@@ -462,13 +507,23 @@ h4 {
     padding-top: 5%;
     width: 1.7vw;
     cursor: pointer;
-    filter: grayscale(100%);
+   
+    &:hover {
+        transform: scale(1.1);
+        transition: transform 0.3s ease;
+        color: chocolate;
+    }
 }
 
 #exclui-img {
     padding-top: 5%;
     width: 1.5vw;
     cursor: pointer;
+    &:hover {
+        transform: scale(1.1);
+        transition: transform 0.3s ease;
+        color: chocolate;
+    }
 }
 
 .Grupo-de-Lancamentos {
@@ -499,26 +554,26 @@ h4 {
     justify-content: space-between;
     display: flex;
     padding-right: 1vw;
+    gap: 1%;
 
 }
 
 #descricao-lancamento {
     padding-left: 1vh;
-    padding-top: 0.5vh;
+    padding-top: 0vh;
     border: 1px solid rgb(161, 161, 161);
-    width: 35vw;
+    width: 33vw;
     height: 4.5vh;
     border-radius: 5px;
-    font-size: 1.2vw;
-    font-family: 'Open Sans', sans-serif;
-    font-weight: bolder;
+    font-size: 1.7vw;
+    font-family: 'Jersey 20', sans-serif;
     overflow-x: auto;
-    color: #000000;
+    color: #272727;
 }
 
 #descricao-lancamento-label {
     font-size: 1.5vw;
-    font-family: 'Jersey 10', sans-serif;
+    font-family: 'Jersey 20', sans-serif;
     color: #727272;
 }
 
@@ -562,37 +617,40 @@ h4 {
 }
 
 #Valor-lancamento {
-    color: #ff0000;
+    color: #008d2a;
     padding-top: 3%;
     width: 7vw;
     border-radius: 5px;
-    font-size: 1.7vw;
+    font-size: 2vw;
     font-family: 'Jersey 10', sans-serif;
 }
 
 #Vencimento-lancamento {
-    padding-top: 6%;
-    font-size: 1.5vw;
+    padding-top: 2%;
+    font-size: 1.9vw;
     font-family: 'Jersey 10', sans-serif;
 }
 
 #Status-select-lancamento {
-    border: 1px solid rgb(126, 126, 126);
-    background-color: #ffffff00;
+    border: 1px solid rgb(187, 186, 186);
     border-radius: 10px;
-    width: 8vw;
+    width: 8.5vw;
+    font-size: 1.4vw;
     cursor: pointer;
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-family: 'Jersey 10', sans-serif;
+    text-shadow: none;
+    height: 5vh;
+    padding: 0px;
+    padding-left: 1vw;
 }
 
 #Categoria-lancamento {
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 4vh;
-    font-size: 1.1vw;
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    font-weight: bold;
+    height: auto;
+    font-size: 1.4vw;
+    font-family: 'Jersey 10', sans-serif;
     color: #004196;
     border: 1px solid rgb(126, 126, 126);
     border-radius: 5px;
@@ -614,6 +672,14 @@ h4 {
 }
 
 .modal {
+  background: #fff;
+  padding: 15px;
+  border-radius: 10px;
+  min-width: 300px;
+  text-align: left;
+}
+
+.modal-edita {
   background: #fff;
   padding: 15px;
   border-radius: 10px;
@@ -645,16 +711,15 @@ h4 {
 #Edita-descricao{
     color: #727272;
     padding-right: 59%;
-    font-size: 1.4vw;
-    font-family: 'JetBrains Mono', monospace;
-    font-weight: bold;
+    font-size: 1.9vw;
+    font-family: 'Jersey 10', sans-serif;
 }
 
 #Edita-input-descricao{
-    font-size: 1.3vw;
-    font-weight: bold;
+    font-size: 1.8vw;
+    font-weight: lighter;
     width: 100%;
-    font-family: 'JetBrains Mono', monospace;
+    font-family: 'Jersey 10', sans-serif;
 }
 
 
@@ -666,73 +731,66 @@ h4 {
 #Label-tipo{
     color: #727272;
     padding-left: 0.5vw;
-    font-size: 1.4vw;
-    font-family: 'JetBrains Mono', monospace;
-    font-weight: bold;
+    font-size: 1.9vw;
+    font-family: 'Jersey 10', sans-serif;
 }
 
 #Label-data{
     color: #727272;
     padding-left: 0.5vw;
-    font-size: 1.4vw;
-    font-family: 'JetBrains Mono', monospace;
-    font-weight: bold;
-    padding-left: 12.5vw;
+    font-size: 1.9vw;
+    font-family: 'Jersey 10', sans-serif;
+    padding-left: 11vw;
 }
 
 #Label-categoria{
     color: #727272;
     padding-left: 0.5vw;
-    font-size: 1.4vw;
-    font-family: 'JetBrains Mono', monospace;
-    font-weight: bold;
-    padding-left: 7vw;
+    font-size: 1.9vw;
+    font-family: 'Jersey 10', sans-serif;
+    padding-left: 8.4vw;
 }
 
 .Tipo-edita{
     border-radius: 7px;
-    font-family: 'JetBrains Mono', monospace;
-    font-weight: bold;
+    font-family: 'Jersey 10', sans-serif;
     width: 12vw;
     cursor: pointer;
+    text-shadow: none;
+    font-size: 1.8vw;
 }
 
 #opção-edita{
     background-color: #c2c2c2;
-    font-family: 'JetBrains Mono', monospace;
-    font-weight: bold;
+    font-family: 'Jersey 10', sans-serif;
 }
 
 #data-edita{
-    font-family: 'JetBrains Mono', monospace;
-    font-weight: bold;
+    font-family: 'Jersey 10', sans-serif;
     width: 13vw;
     cursor: pointer;
+    font-size: 1.8vw;
 }
 
 #Input-valor{
-    font-family: 'JetBrains Mono', monospace;
-    font-weight: bold;
-    font-size: 1.3vw;
+    font-family: 'Jersey 10', sans-serif;
+    font-size: 1.9vw;
     width: 10vw;
-    color: rgb(255, 38, 0);
+    color: rgb(238, 127, 0);
+    height: 6vh;
 }
 
 #Valor-categoria{
+    color: #000000;
     display: flex;
     justify-content: space-between;
 }
 
-#Tipo-status-select-categoria{
-    font-family: 'JetBrains Mono', monospace;
-    font-weight: bold;
-    font-size: 1vw;
-}
-
 .Botoes{
+    display: flex;
     padding-top: 2%;
-    text-align: start;
-    justify-content: space-between;
+    text-align: center;
+    justify-content: center;
 }
 
 #Botao-atualizar-editar{
@@ -742,9 +800,8 @@ h4 {
     color: #ffffff;
     width: 14vw;
     height: 5.5vh;
-    font-family: 'JetBrains Mono', monospace;
-    font-weight: bold;
-    font-size: 1vw;
+    font-family: 'Jersey 10', sans-serif;
+    font-size: 1.9vw;
     border: 1px solid rgb(255, 255, 255);
     &:hover{
         background-color: #5300C8;
@@ -756,13 +813,12 @@ h4 {
     cursor: pointer;
     border-radius: 5px;
     width: 6vw;
-    height: 4.5vh;
+    height: 5.5vh;
     font-size: 1.3vw;
     color: #ffffff;
-    background-color: rgba(255, 145, 49, 0.699);
-    margin-left: 8vw;
+    background-color: rgb(0, 0, 0);
     &:hover{
-        background-color: rgb(255, 49, 49);
+        background-color: rgba(0, 0, 0, 0.527);
     }
 }
 
@@ -777,9 +833,8 @@ h4 {
     color: #ffffff;
     width: 10vw;
     height: 5.5vh;
-    font-family: 'JetBrains Mono', monospace;
-    font-weight: bold;
-    font-size: 1vw;
+    font-family: 'Jersey 10', sans-serif;
+    font-size: 1.6vw;
     border: 1px solid rgb(255, 255, 255);
     &:hover{
         background-color: #c82f00;
@@ -793,9 +848,8 @@ h4 {
     color: #ffffff;
     width: 10vw;
     height: 5.5vh;
-    font-family: 'JetBrains Mono', monospace;
-    font-weight: bold;
-    font-size: 1vw;
+    font-family: 'Jersey 10', sans-serif;
+    font-size: 1.6vw;
     border: 1px solid rgb(255, 255, 255);
     &:hover{
         background-color: #00c821;
@@ -803,14 +857,14 @@ h4 {
 }
 
 #Descricao-exclui{
-    font-family: 'JetBrains Mono', monospace;
-    font-weight: bold;
+    font-size: 1.9vw;
+    font-family: 'Jersey 10', sans-serif;
 }
 
 #Descricao-id-exclui{
-    font-family: 'JetBrains Mono', monospace;
-    font-weight: bold;
-    color: #c80000;
+    font-family: 'Jersey 10', sans-serif;
+    color: #ff7300;
+    font-weight: lighter;
 }
 
 #Excui-label{
@@ -839,7 +893,7 @@ h4 {
 
 #Select-replica-ano-mes{
     width: 9vw;
-    font-family: 'JetBrains Mono', monospace;
+    font-family: 'Jersey 10', sans-serif;
     font-weight: bold;
     font-size: 1vw;
     border-radius: 7px;
@@ -849,4 +903,228 @@ h4 {
     padding-top: 2%;
     text-align: center;
     gap: 10%;
+}
+
+.div-checkbox{
+    margin-left: 8.5vw;
+    width: 11vw;
+    height: 6vh;
+    border-radius: 7px;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    border: 1px solid rgb(197, 197, 197);
+    display: flex;
+    margin-top: 2%;
+    gap: 5px;
+    cursor: pointer;
+}
+
+#caixa-check{
+    width: 1.5vw;
+    height: 1.5vw;
+    cursor: pointer;
+
+    &:hover{
+        border: 2px solid #000000;
+    }
+}
+
+.overlayPDF {
+  position: fixed;
+  inset: 0;                 /* top/right/bottom/left: 0 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(36, 36, 36, 0.72);
+  z-index: 9999;
+}
+
+.modalPDF {
+    align-items: center;
+    text-align: center;
+  background: #fff;
+  padding: 15px;
+  border-radius: 10px;
+  min-width: 700px;
+  text-align: right;
+}
+
+#fechar{
+    align-items: center;
+    text-align: center;
+    font-size: 2vw;
+    border-radius:7px;
+    width: 3vw;
+    height: 3vw;
+    font-weight: bold;
+    background-color: rgba(255, 0, 0, 1);
+    color: #ffffff;
+    cursor: pointer;
+    border: none;
+
+    &:hover{
+        background-color: rgba(255, 0, 0, 0.651);
+    }
+}
+
+#Descricao-PDF{
+    text-align: center;
+    font-size: 2.8vw;
+    font-family: 'Jersey 10', sans-serif;
+}
+
+#mensagem{
+    font-size: 2.2vw;
+    font-weight: lighter;
+    width: 100%;
+    height: 20vh;
+    font-family: 'Jersey 20', sans-serif;
+    margin-top: -1%;
+}
+.Botoes-PDF{
+    font-size: 2.5vw;
+    display: flex;
+    padding-top: 3%;
+    text-align: center;
+    justify-content: center;
+    gap: 5%;
+}
+
+#Botao-PDF-sim{
+    cursor: pointer;
+    border-radius: 7px;
+    background-color: #5300c8a9;
+    color: #ffffff;
+    width: 10vw;
+    height: 6vh;
+    font-family: 'Jersey 20', sans-serif;
+    font-size: 2.5vw;
+    border: 1px solid rgb(255, 255, 255);
+    &:hover{
+        background-color: #4e00bb;
+    }
+}
+
+#Botao-PDF-nao{
+    cursor: pointer;
+    border-radius: 7px;
+    background-color: #c80000a9;
+    color: #ffffff;
+    width: 18vw;
+    height: 6vh;
+    font-family: 'Jersey 20', sans-serif;
+    font-size: 2.5vw;
+    border: 1px solid rgb(255, 255, 255);
+    &:hover{
+        background-color: #000000ff;
+    }
+}
+
+#recorrente{
+    text-align: center;
+    align-items: center;
+    font-size: 1.8vw;
+    font-family: 'Jersey 10', sans-serif;
+    color: #ffffff;
+    background-color: #0015d1;
+    height: 5vh;
+    width: 10vh;
+    border-radius: 20%;
+    margin-top: 3%;
+    padding-top: 0.3vh;
+    cursor: text;
+}
+
+#exclui{
+    text-align: center;
+    align-items: center;
+    padding-top: 1%;
+    font-size: 1.5vw;
+    font-family: 'Jersey 20', sans-serif;
+    color: #ff0000;
+    padding-bottom: 1%;
+    margin-bottom: 2%;
+}
+
+#caixa-check-exclui{
+    width: 2vw;
+    height: 2vw;
+    cursor: pointer;
+
+    &:hover{
+        border: 2px solid #000000;
+    }
+}
+
+.todos{
+    display: flex;
+    justify-content: center;
+}
+
+/* Container */
+.switch {
+  position: relative;
+
+  display: inline-block;
+  width: 40px;
+  height: 24px;
+}
+
+/* Esconde o checkbox padrão */
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* Faixa de fundo */
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #888;
+  transition: 0.4s;
+  border-radius: 34px;
+}
+
+/* Bolinha */
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 16px;
+  width: 16px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  transition: 0.4s;
+  border-radius: 50%;
+}
+
+/* Quando marcado (checked) */
+.switch input:checked + .slider {
+  background-color: rgb(60, 0, 201); /* cor ativa */
+}
+
+.switch input:checked + .slider:before {
+  transform: translateX(17px); /* move a bolinha */
+}
+
+.containerr {
+  display: flex;
+  justify-content: flex-end; /* joga para a direita */
+  margin-top: 2%;
+  margin-bottom: 2%;
+  margin-right: 6%;
+  gap: 1%;
+}
+
+#Texto-checkbox{
+    font-family: 'Jersey 10', sans-serif;
+    font-size: 1.6VW;
+    color: #000000;
+    cursor: pointer;
 }

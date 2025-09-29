@@ -38,8 +38,9 @@
   padding: 10px;
   border: 0px solid #7c7c7c;
   cursor: pointer;
-  font-size: 18px;
-  font-weight: semibold;
+  font-size: 20px;
+  font-family: 'Jersey 10', sans-serif;
+  font-weight: lighter;
   width: 100%;
   border-radius: 5px;
 }
@@ -51,8 +52,9 @@
   padding: 10px;
   border: 0px solid #1e78ff;
   cursor: pointer;
-  font-size: 18px;
-  font-weight: semibold;
+  font-size: 20px;
+  font-family: 'Jersey 10', sans-serif;
+  font-weight: lighter;
   width: 100%;
   border-radius: 5px;
 }
@@ -100,11 +102,13 @@ h1 {
 }
 
 h5 {
+  font-family: 'Jersey 10', sans-serif;
   text-align: left;
   color: black;
-  font-size: 20px;
+  font-size: 25px;
   margin-top: 0px;
   margin-left: 10px;
+  font-weight: lighter;
 }
 
 h2 {
@@ -176,9 +180,10 @@ h2 {
 
 
 .dots::after {
+  font-family: 'Jersey 20', sans-serif;
   content: "";
   display: inline-block;
-  animation: dots 2s steps(3, end) infinite;
+  animation: dots 2s steps(3, end) forwards;
 }
 
 @keyframes typing {
@@ -265,6 +270,8 @@ h2 {
   box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.849);
 
   & button {
+    font-family: 'Jersey 10', sans-serif;
+    text-align: center;
     border-radius: 7px;
     background-color: #107513;
     color: white;
@@ -272,8 +279,8 @@ h2 {
     border: 1px solid #45a049;
     border-color: #7c7c7c;
     cursor: pointer;
-    font-size: 19px;
-    font-weight: semibold;
+    font-size: 22px;
+    font-weight: lighter;
     cursor: pointer;
     width: 50%;
     margin: auto;
@@ -293,22 +300,25 @@ h2 {
   }
 
   & input {
+    font-family: 'Jersey 20', sans-serif;
+    text-align: left;
     padding: 10px;
     border-color: #000000;
     border-radius: 10px;
     border: 1px solid #000000;
     font-size: 20px;
-    color: black;
+    color: rgb(85, 85, 85);
     margin: 0px;
   }
 
   & input:focus {
     outline: none;
-    border: 3px solid #3c8d40;
+    border: 2px solid #3c8d40;
   }
 }
 
 #botaocadastro {
+  
   border-radius: 7px;
   background-color: #5300C8;
   border: 1px solid #5300C8;

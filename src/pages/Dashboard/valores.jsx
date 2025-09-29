@@ -42,6 +42,12 @@ function Valores() {
     const totalFormatadoDespesas = somarDespesasFormatadas(body_response);
     const saldoFormatado = calcularSaldo(body_response);
 
+    localStorage.setItem("totalFormatadoReceitas", totalFormatadoReceitas);
+    localStorage.setItem("totalFormatadoDespesas", totalFormatadoDespesas);
+    localStorage.setItem("mediaTotalFormatado", mediaTotalFormatado);
+    localStorage.setItem("saldoFormatado", saldoFormatado);
+
+
 
     {/* Valoressssssssssssss.................*/ }
     function somarReceitasFormatadas(bodyArray) {

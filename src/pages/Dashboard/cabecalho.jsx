@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import './styledash.css';
 import api from '../../services/api';
 import Logo from '../../assets/logo.png';
-import Exit from '../../assets/back.png';
+import Exit from '../../assets/exit.png';
 import loadingGif4 from '../../assets/loading4.gif';
 
 function Cabecalho() {
@@ -39,7 +39,7 @@ function Cabecalho() {
     function getPerfilEmoji() {
         const perfil = localStorage.getItem("perfil"); // Ex.: "3"
         const perfilIndex = parseInt(perfil, 10); // Converte para número
-        
+
         if (!isNaN(perfilIndex) && perfilIndex >= 0 && perfilIndex < EMOJIS.length) {
             return EMOJIS[perfilIndex];
         }
@@ -77,6 +77,18 @@ function Cabecalho() {
         get_next(novoMes); // chama sua função
     }
 
+    const audioBlip = new Audio("/mes.mp3");
+    const audioClick = new Audio("/click.mp3");
+    const audioClickMes = new Audio("/clickMes.mp3");
+    const audioGameOver = new Audio("/over.mp3");
+    const audioError = new Audio("/error.mp3");
+    const audioPDF = new Audio("/pdf.mp3");
+
+    // funções de reprodução
+    const tocarSom = (som) => {
+        som.currentTime = 0;
+        som.play();
+    };
 
     return (
         <div className='Cabecalho'>
@@ -88,22 +100,22 @@ function Cabecalho() {
                 </div>
             )}
             <div className='Areadash1'>
-                <img onClick={voltar_menu_animacao} id="logo-exit-dash" src={Exit} alt="Finito" />
                 <img id="logo-finito-cabecalho-dash" src={Logo} alt="Finito" />
                 <h2 id='FINITO-TEXT-DASH'>FINITO</h2>
             </div>
 
             <div className='Areadash2'>
-                <h5 id='seta' onClick={() => direcaoSetaClicada("anterior")}>{setlaE}</h5>
+                <h5 id='seta' onClick={() => {direcaoSetaClicada("anterior"); tocarSom(audioClick);}}>{setlaE}</h5>
                 <h5 id='ano-cabecalho'>{messelecionado}</h5>
                 <h5 id='de-cabecalho'>de</h5>
                 <h5 id='ano-cabecalho'>{anoSelecionado}</h5>
-                <h5 id='seta' onClick={() => direcaoSetaClicada("proximo")}>{setlaD}</h5>
+                <h5 id='seta' onClick={() => {direcaoSetaClicada("proximo"); tocarSom(audioClick);}}>{setlaD}</h5>
             </div>
 
             <div className='Area3'>
                 <h2 id='USUARIO-TEXT2'>{nomePessoa}</h2>
                 <h2 id='PERFIL-EMOGI2'>{perfilEmoji}</h2>
+                <img onClick={() => { voltar_menu_animacao(); tocarSom(audioClick);}} id="logo-exit" src={Exit} alt="Finito" title="Voltar ao MENU" />
             </div>
         </div>
     )

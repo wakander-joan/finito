@@ -6,7 +6,7 @@
 .Cabecalho {
   display: flex;
   align-items: center;
-  height: 60px;
+  height: 7vh;
   max-height: 11.5vh;
   width: 100%;
   background-color: #ffffff;
@@ -18,6 +18,8 @@
 }
 
 .Area1{
+  padding: 0px;
+  padding: 0px;
   display: flex;
   align-items: center;
 }
@@ -47,17 +49,17 @@
 }
 
 #logo-finito-cabecalho {
-  width: 70px;
-  height: 65px;
-  margin-left: 10px;
-  margin-top: 10px;
-  margin-bottom: 10px;
+    width: 4vw;
+    height: 8vh;
+    margin-left: 0.42vw;
+    margin-top: 1vh;
+    margin-bottom: 0.93vh;
 }
 
 #logo-edita {
-  width: 40px;
-  height: 40px;
-  margin-top: 8px;
+  width: 2.5vw;
+  height: 5vh;
+  margin-top: 1%;
   cursor: pointer;
   &:hover {
     transform: scale(1.1);
@@ -66,9 +68,9 @@
 }
 
 #logo-exit {
-  width: 48px;
-  height: 45px;
-  margin-top: 9px;
+  width: 3.2vw;
+  height: 6.3vh;
+  margin-top: 1%;
   cursor: pointer;
   padding-right: 5px;
   &:hover {
@@ -78,21 +80,41 @@
 }
 
 .select-ano {
-  font-family: 'Rambla', sans-serif;
-  padding: 5px 10px;
-  font-size: 2rem;
+  font-family: 'Jersey 20', sans-serif;
+  height: 5.9vh;
+  width: 9vw;
+  font-size: 2.3vw;
+  padding: 0px, 0px, 0px, 0px;
   color: #ffffff;
   border-radius: 5px;
   background-color: #FF8181;
-  font-weight: bold;
+  font-weight: lighter;
+}
+
+#select-perfil2 {
+  padding: 0px;
+  padding-left: 2%;
+  appearance: none;
+  /* remove a seta padrão */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  /* espaço para a seta personalizada */
+  background-image: url('../../assets/seta-cima.png');
+  /* sua seta personalizada */
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 25% 65%;
+  /* tamanho da seta */
+  cursor: pointer;
 }
 
 #lista-select{
-  background-color: #FF8181;
-  font-family: jersey-m54, sans-serif;
+  background-color: #414141;
+  font-family: 'Jersey 20', sans-serif;
   font-size: 1.5rem;
-  font-weight: bold;
+  font-weight: lighter;
   color: #ffffff;
+  padding: 0px;
 }
 
 #Text-selecao {
@@ -105,30 +127,36 @@
 }
 
 #FINITO-TEXT {
-  font-size: 45px;
-  font-weight: bold;
-  color: #000000;
-  padding-top: 12px;
+  font-size: 3.5vw;
+    color: #000000;
+    padding-top: 0vh;
+    font-weight: lighter;
+    font-family: 'Jersey 20', sans-serif;
 }
 
 #ANO-TEXT {
-  font-size: 50px;
-  font-weight: bold;
+  font-size: 3vw;
+  font-family: 'Jersey 20', sans-serif;
   color: #000000;
-
+  font-weight: lighter;
 }
 
 #USUARIO-TEXT {
-  font-size: 200%;
+  font-size: 3.1vw;
   font-weight: bold;
   color: #000000;
   padding: 1px;
   margin-right: 0px;
-  padding-top: 10px;
+  padding-top: 0px;
+  margin-top: 0%;
+  font-family: 'Jersey 20', sans-serif;
+  font-weight: lighter;
+  text-transform: uppercase;
 }
 
 #PERFIL-EMOGI {
-  font-size: 45px;
+  font-size: 2.5vw;
+  margin-top: 0px;
 }
 
 #logo-principal {
@@ -265,34 +293,21 @@
   background-color: #FF6B6B;
 }
 
-#select-perfil2 {
-  appearance: none;
-  /* remove a seta padrão */
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  padding: 8px 50px 8px 10px;
-  /* espaço para a seta personalizada */
-  background-image: url('../../assets/seta-cima.png');
-  /* sua seta personalizada */
-  background-repeat: no-repeat;
-  background-position: right 10px center;
-  background-size: 25% 65%;
-  /* tamanho da seta */
-  cursor: pointer;
-}
+
 
 h1 {
   text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
   text-align: center;
-  font-size: 23px;
+  font-size: 2.5vw;
   width: 26%;
   margin-bottom: 20px;
-  padding: 10px;
+  padding: 0.7vh;
   border-radius: 7px;
-  font-weight: bold;
-  color: white;
+  color: rgb(255, 255, 255);
   transform: translate(-48%, -50%);
   height: 8%;
+  font-family: 'Jersey 10', sans-serif;
+  font-weight: lighter;
 
   &:hover {
     background-color: #FF5733;
