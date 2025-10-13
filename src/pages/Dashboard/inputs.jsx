@@ -184,6 +184,7 @@ function Imputs() {
                         id='Descricao-input'
                         onChange={(e) => setDescricaoSelecionada(e.target.value)}
                         type="text"
+                        maxLength={30}
                         required
                     />
 

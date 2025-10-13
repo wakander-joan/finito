@@ -60,21 +60,45 @@ function Cabecalho() {
         return;
     }
 
+    async function get_next_seta(mes, ano) {
+        const response = await api.get(`/lancamento/buscaLancamentosPorMesEAno/${mes}/${ano}`);
+        console.log('Resultado:', response);
+        localStorage.setItem('body-response-array', JSON.stringify(response.data))
+        localStorage.setItem('mes-selecionado', mes)
+        localStorage.setItem('ano-selecionado', ano)
+        navigate('/dashboard')
+        return;
+    }
+
     function direcaoSetaClicada(direcao) {
         // Pega o índice do mês atualmente selecionado
         const indiceAtual = meses.indexOf(messelecionado); // mesSelecionado deve estar no estado
-
+        
+        let novoAno = anoSelecionado;
         let novoIndice;
+
         if (direcao === "proximo") {
             // próximo mês (loop no final)
             novoIndice = (indiceAtual + 1) % meses.length;
+            if(messelecionado === "DEZEMBRO"){
+                novoAno = parseInt(anoSelecionado) + 1;
+                //alert(`Mudando Para o ano de ${novoAno}`)
+            }
         } else if (direcao === "anterior") {
+            if(anoSelecionado === "2025" && messelecionado === "JANEIRO"){
+                return alert("Você não pode voltar para anos anteriores a 2025!");
+            }
+
             // mês anterior (loop no começo)
             novoIndice = (indiceAtual - 1 + meses.length) % meses.length;
+            if(messelecionado === "JANEIRO"){
+                novoAno = parseInt(anoSelecionado) - 1;
+                //alert(`Mudando Para o ano de ${novoAno}`)
+            }
         }
 
         const novoMes = meses[novoIndice];
-        get_next(novoMes); // chama sua função
+        get_next_seta(novoMes, novoAno); // chama sua função
     }
 
     const audioBlip = new Audio("/mes.mp3");

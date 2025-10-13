@@ -147,6 +147,8 @@ function Cadastro() {
             <option id='lista-select' value="2025">2025</option>
             <option id='lista-select' value="2026">2026</option>
             <option id='lista-select' value="2027">2027</option>
+            <option id='lista-select' value="2027">2028</option>
+            <option id='lista-select' value="2027">2029</option>
           </select>
         </div>
 

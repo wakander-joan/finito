@@ -54,6 +54,7 @@ function Lancamentos() {
     const [valorEditado, setValorEditado] = useState();
     const [categoria, setCategoria] = useState("");
     const [descricaoPDF, setDescricaoPDF] = useState("");
+    const [idsReplica, setIdsReplica] = useState([]);
 
     const formata_data = (e) => {
         setData(e.target.value); // já vem no formato yyyy-mm-dd
@@ -192,18 +193,20 @@ function Lancamentos() {
 
     const numeroMes = meses[messelecionado];
 
-    const confirmarReplica = () => {
+    function confirmaReplica(idsReplica) {
+        //alert('Entrou no comfirmaReplica!');
+
         if (Number(numeroMes) === Number(mesDestino)) {
             alert('Mês de destino igual ao mês atual! Escolha outro mês!');
             return;
         }
         const bodyJson = {
-            mesBase: Number(numeroMes),
-            anoBase: Number(anoSelecionado),
             mesDestino: Number(mesDestino),
-            anoDestino: Number(anoDestino)
+            anoDestino: Number(anoDestino),
+            idsLancamentos: idsReplica
         };
         console.log(bodyJson);
+        //alert(`Esse é o Bady JSon ${JSON.stringify(bodyJson)}`);
         replicarLancamentos(bodyJson);
     };
 
@@ -217,6 +220,8 @@ function Lancamentos() {
     async function replicarLancamentos(body) {
         const response = await api.post(`/lancamento/replicaLancamentos`, body);
         if (response.status === 201) {
+            setIdsReplica([]);
+            setOverlayReplica(false);
             const response = await api.get(`/lancamento/buscaLancamentosPorMesEAno/${nomeMes}/${anoDestino}`);
             console.log(response);
             fecharOverlayReplica();
@@ -540,43 +545,94 @@ function Lancamentos() {
             {overlayReplica && (
                 <div className='overlay'>
                     <div className='modal'>
-                        <div className='cabecalho-edita'>
-                            <label id='Edita-label'>Replicar os Lançamentos do mês?</label>
+                        <div className='cabecalho-replica'>
+                            <label id='Replica-label'>Replicar Lançamentos</label>
                         </div>
-                        <p id='Descricao-id-exclui'>Ano atual: <strong id='Descricao-id-exclui'>
-                            {anoSelecionado}
-                        </strong></p>
-                        <p id='Descricao-id-exclui'>Mês atual: <strong id='Descricao-id-exclui'>
-                            {messelecionado}
-                        </strong></p>
+                        <div className='info-replica'>
+                            <p id='Descricao-replica'>Ano atual:
+                                <strong id='ano-base-replica'> {anoSelecionado}</strong>
+                            </p>
+                            <p id='Descricao-replica'>Mês atual:
+                                <strong id='ano-base-replica'> {messelecionado}</strong>
+                            </p>
+                        </div>
+                        <div className='selecao-horizontal-replica'>
 
-                        <label id='Descricao-exclui'>Selecionar Ano e Mês de destino:</label>
-                        <select
-                            id='Select-replica-ano-mes'
-                            value={anoDestino}
-                            onChange={(e) => setAnoDestino(e.target.value)}
-                        >
-                            <option id='opção-edita' value="">SELECIONE</option>
-                            {anos.map((ano, idx) => (
-                                <option id='opção-edita' key={idx} value={ano}>{ano}</option>
-                            ))}
-                        </select>
-                        <select
-                            id='Select-replica-ano-mes'
-                            value={mesDestino}
-                            onChange={(e) => setMesDestino(e.target.value)}
-                        >
-                            <option id='opção-edita' value="">SELECIONE</option>
-                            {mesesAno.map((mes, idx) => (
-                                <option id='opção-edita' key={idx} value={mes}>{mes}</option>
-                            ))}
-                        </select>
+                            <label id='text-replica'>Ano de destino:</label>
+                            <select
+                                onClick={() => tocarSom(audioClick)}
+                                required
+                                id='Select-replica-ano-mes'
+                                value={anoDestino}
+                                onChange={(e) => setAnoDestino(e.target.value)}
+                            >
+                                <option id='opção-edita' value="">SELECIONE</option>
+                                {anos.map((ano, idx) => (
+                                    <option id='opção-edita' key={idx} value={ano}>{ano}</option>
+                                ))}
+                            </select>
+                        </div>
+                        <div className='selecao-horizontal-replica'>
+                            <label id='text-replica'>Mês de destino:</label>
+                            <select
+                                onClick={() => tocarSom(audioClick)}
+                                required
+                                id='Select-replica-ano-mes'
+                                value={mesDestino}
+                                onChange={(e) => setMesDestino(e.target.value)}
+                            >
+                                <option id='opção-edita' value="">SELECIONE</option>
+                                {mesesAno.map((mes, idx) => (
+                                    <option id='opção-edita' key={idx} value={mes}>{mes}</option>
+                                ))}
+                            </select>
+                        </div>
+                        <div className='listagem-replica'>
+                            {body_response
+                                .map((lancamento) => (
+                                    <div className='linha-horizontal-replica'>
+                                        <p id='descricao-lancamento-replica'>{lancamento.descricao}</p>
+                                        <label class="switch">
+                                            <input
+                                                onClick={() => tocarSom(clickGTA)}
+                                                type="checkbox"
+                                                name="aceito"
+                                                onChange={(e) => {
+                                                    const id = String(lancamento.idLancamento); // garante string única
+                                                    setIdsReplica((prev) => [...prev, lancamento.idLancamento]);
+                                                    console.log(typeof lancamento.idLancamento, lancamento.idLancamento);
+                                                    //alert(id);
+                                                }}
+                                            />
+
+
+                                            <span class="slider"></span>
+                                        </label>
+                                    </div>
+                                ))}
+                        </div>
 
                         <div className='Botoes-replica'>
                             <button
                                 id="Botao-excluir-nao"
-                                disabled={!mesDestino}
-                                onClick={() => { confirmarReplica(); tocarSom(audioClick); }}
+                                //disabled={!mesDestino}
+                                onClick={() => {
+                                    if (mesDestino === "") {
+                                        alert('Escolha o mês de destino!');
+                                        return;
+                                    }
+                                    if (anoDestino === "") {
+                                        alert('Escolha o ano de destino!');
+                                        return;
+                                    }
+                                    if (idsReplica.length === 0) {
+                                        alert('Escolha ao menos um lançamento para replicar!');
+                                        return;
+                                    }
+                                    tocarSom(passedGTA5);
+                                    confirmaReplica(idsReplica);
+                                    //alert(idsReplica.map((id) => `${id}`).join("\n"));
+                                }}
                             >
                                 Confirmar
                             </button>
@@ -603,6 +659,7 @@ function Lancamentos() {
                         />
                         <input
                             type="text"
+                            maxLength={15}
                             placeholder="Pesquisar..."
                             value={inputValue} // controlled input
                             onChange={(e) => setInputValue(e.target.value)} // atualiza a constante
@@ -651,6 +708,7 @@ function Lancamentos() {
                                                     <label id='Edita-descricao' htmlFor="text">Descrição</label>
                                                     <input
                                                         id='Edita-input-descricao'
+                                                        maxLength={30}
                                                         placeholder='Descrição...'
                                                         type="text" name="nome"
                                                         defaultValue={descricaoEditada}
