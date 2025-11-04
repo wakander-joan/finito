@@ -61,6 +61,12 @@ function Cadastrar() {
 
       const response = await api.post('/usuario/criaUsuario', body);
 
+      if (response.status === 401) {
+        alert('⚠ Você precisa fazer login novamente!');
+        localStorage.removeItem('token');
+        navigate('/');
+      }
+
       if (response.status === 201) {
         setTimeout(() => {
           setLoadingSave(false);

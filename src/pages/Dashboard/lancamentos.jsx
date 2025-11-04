@@ -21,6 +21,8 @@ function Lancamentos() {
     let body_response = [];
     try {
         const stored = localStorage.getItem('body-response-array');
+        //console.log(`${stored}`)
+        //alert(stored)
         if (stored) {
             body_response = JSON.parse(stored); // só tenta parsear se houver algo
             if (!Array.isArray(body_response)) {
@@ -98,15 +100,30 @@ function Lancamentos() {
         fecharOverlayExclui();
     };
 
-    const confirmarExclusaoRecorrente = () => {
-        excluiLancamentosRecorrente(lancamentoSelecionado?.idRecorrencia)
+    const confirmarExclusaoRecorrente = (dataVencimento) => {
+        excluiLancamentosRecorrente(lancamentoSelecionado?.idRecorrencia, dataVencimento)
+        fecharOverlayExclui();
+    };
+
+    const confirmarExclusaoParcelada = (dataVencimento) => {
+        excluiLancamentosParcelados(lancamentoSelecionado?.idParcela, dataVencimento)
         fecharOverlayExclui();
     };
 
     async function alteraStatusPago(id) {
         const response = await api.patch(`/lancamento/statusPago/${id}`);
+        if (response.status === 403) {
+            alert('⚠ Você precisa fazer login novamente!');
+            localStorage.removeItem('token');
+            navigate('/');
+        }
         if (response.status === 200) {
             const response = await api.get(`/lancamento/buscaLancamentosPorMesEAno/${messelecionado}/${anoSelecionado}`);
+            if (response.status === 403) {
+                alert('⚠ Você precisa fazer login novamente!');
+                localStorage.removeItem('token');
+                navigate('/');
+            }
             console.log('Resultado:', response);
             localStorage.setItem('body-response-array', JSON.stringify(response.data))
             navigate('/dashboard'); // Vai para login
@@ -119,8 +136,18 @@ function Lancamentos() {
 
     async function alteraStatusPendente(id) {
         const response = await api.patch(`/lancamento/statusPendente/${id}`);
+        if (response.status === 403) {
+            alert('⚠ Você precisa fazer login novamente!');
+            localStorage.removeItem('token');
+            navigate('/');
+        }
         if (response.status === 200) {
             const response = await api.get(`/lancamento/buscaLancamentosPorMesEAno/${messelecionado}/${anoSelecionado}`);
+            if (response.status === 403) {
+                alert('⚠ Você precisa fazer login novamente!');
+                localStorage.removeItem('token');
+                navigate('/');
+            }
             console.log('Resultado:', response);
             localStorage.setItem('body-response-array', JSON.stringify(response.data))
             navigate('/dashboard'); // Vai para login
@@ -135,8 +162,18 @@ function Lancamentos() {
     async function excluiLancamento(id) {
         console.log(id)
         const response = await api.delete(`/lancamento/deletaLancamento/${id}`);
+        if (response.status === 403) {
+            alert('⚠ Você precisa fazer login novamente!');
+            localStorage.removeItem('token');
+            navigate('/');
+        }
         if (response.status === 200) {
             const response = await api.get(`/lancamento/buscaLancamentosPorMesEAno/${messelecionado}/${anoSelecionado}`);
+            if (response.status === 403) {
+                alert('⚠ Você precisa fazer login novamente!');
+                localStorage.removeItem('token');
+                navigate('/');
+            }
             console.log('Resultado:', response);
             localStorage.setItem('body-response-array', JSON.stringify(response.data))
             navigate('/dashboard'); // Vai para login
@@ -146,11 +183,48 @@ function Lancamentos() {
             console.log('Algo deu errado!', response);
         }
     }
-    async function excluiLancamentosRecorrente(id) {
+    async function excluiLancamentosRecorrente(id, dataVencimento) {
         console.log(id)
-        const response = await api.delete(`/lancamento/deletaAllLancamentoRecorrente/${id}`);
+        //alert(`/lancamento/deletaAllLancamentoRecorrente/${id}/${dataVencimento}`)
+        const response = await api.delete(`/lancamento/deletaAllLancamentoRecorrente/${id}/${dataVencimento}`);
+        if (response.status === 403) {
+            alert('⚠ Você precisa fazer login novamente!');
+            localStorage.removeItem('token');
+            navigate('/');
+        }
         if (response.status === 200) {
             const response = await api.get(`/lancamento/buscaLancamentosPorMesEAno/${messelecionado}/${anoSelecionado}`);
+            if (response.status === 403) {
+                alert('⚠ Você precisa fazer login novamente!');
+                localStorage.removeItem('token');
+                navigate('/');
+            }
+            console.log('Resultado:', response);
+            localStorage.setItem('body-response-array', JSON.stringify(response.data))
+            navigate('/dashboard'); // Recarrega a Pagina
+            return;
+        } else {
+            alert(`⚠ Algo deu errado! Código: ${response.status}`);
+            console.log('Algo deu errado!', response);
+        }
+    }
+
+    async function excluiLancamentosParcelados(idParcela, dataVencimento) {
+        console.log(idParcela)
+        alert(`Vai excluir todas as parcelas! ${idParcela} - ${dataVencimento}`)
+        const response = await api.delete(`/lancamento/deletaAllLancamentoParcelado/${idParcela}/${dataVencimento}`);
+        if (response.status === 403) {
+            alert('⚠ Você precisa fazer login novamente!');
+            localStorage.removeItem('token');
+            navigate('/');
+        }
+        if (response.status === 200) {
+            const response = await api.get(`/lancamento/buscaLancamentosPorMesEAno/${messelecionado}/${anoSelecionado}`);
+            if (response.status === 403) {
+                alert('⚠ Você precisa fazer login novamente!');
+                localStorage.removeItem('token');
+                navigate('/');
+            }
             console.log('Resultado:', response);
             localStorage.setItem('body-response-array', JSON.stringify(response.data))
             navigate('/dashboard'); // Recarrega a Pagina
@@ -219,10 +293,20 @@ function Lancamentos() {
     console.log(nomeMes)
     async function replicarLancamentos(body) {
         const response = await api.post(`/lancamento/replicaLancamentos`, body);
+        if (response.status === 403) {
+            alert('⚠ Você precisa fazer login novamente!');
+            localStorage.removeItem('token');
+            navigate('/');
+        }
         if (response.status === 201) {
             setIdsReplica([]);
             setOverlayReplica(false);
             const response = await api.get(`/lancamento/buscaLancamentosPorMesEAno/${nomeMes}/${anoDestino}`);
+            if (response.status === 403) {
+                alert('⚠ Você precisa fazer login novamente!');
+                localStorage.removeItem('token');
+                navigate('/');
+            }
             console.log(response);
             fecharOverlayReplica();
             localStorage.setItem('body-response-array', JSON.stringify(response.data))
@@ -284,8 +368,18 @@ function Lancamentos() {
 
     async function editaLancamento(body, id) {
         const response = await api.patch(`/lancamento/edita/${id}`, body);
+        if (response.status === 403) {
+            alert('⚠ Você precisa fazer login novamente!');
+            localStorage.removeItem('token');
+            navigate('/');
+        }
         if (response.status === 200) {
             const response = await api.get(`/lancamento/buscaLancamentosPorMesEAno/${messelecionado}/${anoSelecionado}`);
+            if (response.status === 403) {
+                alert('⚠ Você precisa fazer login novamente!');
+                localStorage.removeItem('token');
+                navigate('/');
+            }
             console.log('Resultado:', response);
             localStorage.setItem('body-response-array', JSON.stringify(response.data))
             fecharOverlay();
@@ -454,6 +548,7 @@ function Lancamentos() {
     }
 
     const [checkedExclui, setCheckedExclui] = useState(false);
+    const [ckedExcluiParcelas, setCheckedExcluiParcelas] = useState(false);
 
     return (
         <div className='Lancamentos-grafico-IA'>
@@ -517,6 +612,26 @@ function Lancamentos() {
                             </div>
                         )}
 
+                        {lancamentoSelecionado?.idParcela > 0 && (
+                            <div className='todos' >
+                                <p id='exclui'>
+                                    Excluir todas as Parcelas?
+                                </p>
+
+                                <label class="switch">
+                                    <input
+                                        onClick={() => tocarSom(audioHover)}
+                                        type="checkbox"
+                                        name="aceito"
+                                        onChange={(e) => {
+                                            setCheckedExcluiParcelas(e.target.checked);
+                                        }}
+                                    />
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                        )}
+
                         <div className='Botoes-exclui'>
                             <button
                                 id="Botao-excluir-sim"
@@ -524,9 +639,15 @@ function Lancamentos() {
                                     if (checkedExclui == true) {
                                         tocarSom(audioExcluir);
                                         setCheckedExclui(false);
-                                        confirmarExclusaoRecorrente();
+                                        confirmarExclusaoRecorrente(lancamentoSelecionado.dataVencimento);
                                     } else {
                                         tocarSom(audioExcluir); confirmarExclusao();
+                                    }
+
+                                    if (ckedExcluiParcelas == true) {
+                                        tocarSom(audioExcluir);
+                                        setCheckedExcluiParcelas(false);
+                                        confirmarExclusaoParcelada(lancamentoSelecionado.dataVencimento);
                                     }
                                 }}
                             >
@@ -690,6 +811,10 @@ function Lancamentos() {
                                 </div>
                                 {lancamento.idRecorrencia > 0 && (
                                     <p title='Esse é um Lançamento Recorrente!' id="recorrente">R</p>
+                                )}
+
+                                {lancamento.idParcela > 0 && (
+                                    <p title='Esse é um Lançamento Parcelado!' id="parcelado">P</p>
                                 )}
 
                                 <div className='edita-lancamento'>

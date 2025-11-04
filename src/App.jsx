@@ -5,6 +5,7 @@ import Home from "./pages/Home";
 import Cadastrar from "./pages/Cadastrar";
 import Dashboard from "./pages/Dashboard";
 import Graficos from "./pages/Graficos";
+import Resultados from "./pages/Resultados/GraficosMes";
 
 function App() {
   useEffect(() => {
@@ -37,6 +38,7 @@ function App() {
         <Route path="/cadastrar" element={<Cadastrar />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/graficos" element={<Graficos />} />
+        <Route path="/resultados" element={<Resultados />} />
       </Routes>
     </BrowserRouter>
   );

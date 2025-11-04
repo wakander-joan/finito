@@ -243,7 +243,7 @@ h4 {
 }
 
 #Categoria-input{
-    margin-top: -3vh;
+    margin-top: -1vh;
 }
 
 #Descricao-text-inputs {
@@ -888,7 +888,7 @@ h4 {
   padding: 15px;
   border-radius: 10px;
   min-width: 300px;
-  text-align: left;
+  text-align: center;
 }
 
 #Select-replica-ano-mes{
@@ -1031,11 +1031,26 @@ h4 {
     color: #ffffff;
     background-color: #0015d1;
     height: 5vh;
-    width: 10vh;
+    width: 8vh;
     border-radius: 20%;
     margin-top: 3%;
     padding-top: 0.3vh;
     cursor: text;
+}
+
+#parcelado{
+    text-align: center;
+    align-items: center;
+    font-size: 1.8vw;
+    font-family: 'Jersey 10', sans-serif;
+    color: #ffffff;
+    background-color: #ff9100;
+    height: 5vh;
+    width: 7vh;
+    border-radius: 20%;
+    margin-top: 3%;
+    padding-top: 0.3vh;
+    cursor: pointer;
 }
 
 #exclui{
@@ -1117,11 +1132,13 @@ h4 {
 
 .containerr {
   display: flex;
-  justify-content: flex-end; /* joga para a direita */
+  padding-left: 3%;
+  padding-right: 3%;
+  justify-content: space-between; /* joga para a direita */
   margin-top: 2%;
   margin-bottom: 2%;
-  margin-right: 6%;
-  gap: 1%;
+  margin-right: 4%;
+  gap: 0%;
 }
 
 #Texto-checkbox{
@@ -1221,3 +1238,8 @@ h4 {
     font-weight: lighter;
 }
 
+#input-quantidade-parcelas{
+    font-size: 3vw;
+    width: 7vw;
+    margin-bottom: 2%;
+}

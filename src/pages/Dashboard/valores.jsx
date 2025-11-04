@@ -1,7 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import './styledash.css';
-import api from '../../services/api';
 import setareceitas from '../../assets/seta-receitas.png';
 import setadespesas from '../../assets/seta-despesas.png';
 

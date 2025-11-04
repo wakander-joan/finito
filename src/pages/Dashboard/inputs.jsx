@@ -6,7 +6,7 @@ import api from '../../services/api';
 function Imputs() {
     const navigate = useNavigate();
     const anoSelecionado = localStorage.getItem('ano-selecionado');
-    const messelecionado = localStorage.getItem('mes-selecionado');
+    const mesSelecionado = localStorage.getItem('mes-selecionado');
     const [loading, setLoading] = useState(false);
 
     {/* Const's Input's.................*/ }
@@ -14,7 +14,19 @@ function Imputs() {
     const [displayEdita, setDisplayEdita] = useState("R$ 0,00");
     const [raw, setRaw] = useState(0); // em centavos
     const fmt = new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" });
-    const [data, setData] = useState('');
+    const [data, setData] = useState(() => {
+        const ano = localStorage.getItem("ano-selecionado");
+        const mes = localStorage.getItem("mes-selecionado");
+        const dia = new Date().getDate().toString().padStart(2, "0");
+
+        // se já tiver ano e mês salvos, usa eles
+        if (ano && mes) {
+            return `${ano}-${mes.padStart(2, "0")}-${dia}`;
+        }
+
+        // senão, usa a data atual
+        return new Date().toISOString().split("T")[0];
+    });
     const [tipoSelecionado, setTipoSelecionado] = useState("DESPESA");
     const [statusSelecionado, setStatusSelecionado] = useState("PENDENTE");
     const [dataSelecionada, setDataSelecionada] = useState("");
@@ -22,6 +34,9 @@ function Imputs() {
     const [categoria, setCategoria] = useState("");
     const [descricaoSelecionada, setDescricaoSelecionada] = useState("");
     const [checkRecorrente, setCheckRecorrente] = useState(false);
+    const [checkParcelado, setCheckParcelado] = useState(false);
+    const [divParcelas, setDivParcelas] = useState(false);
+    const [numeroParcelas, setNumeroParcelas] = useState(0);
 
     const categoriasDespesa = [
         "MORADIA", "TRANSPORTE", "ALIMENTACAO", "SAUDE", "EDUCACAO",
@@ -35,6 +50,36 @@ function Imputs() {
         setData(e.target.value); // já vem no formato yyyy-mm-dd
     };
 
+    function formatYMD(date) {
+        // garante que a Date é válida antes de usar toISOString
+        if (!(date instanceof Date) || isNaN(date.getTime())) return '';
+        return date.toISOString().substring(0, 10);
+    }
+
+    useEffect(() => {
+        // tenta converter para números
+        const ano = Number(anoSelecionado);
+        const mes = Number(mesSelecionado); // 1..12 esperados
+
+        // checa se ano e mês são números válidos e mês dentro do intervalo
+        if (!Number.isInteger(ano) || !Number.isInteger(mes) || mes < 1 || mes > 12) {
+            // opcional: limpar ou manter valor atual
+            setData('');
+            return;
+        }
+
+        // monta Date de forma segura: new Date(year, monthIndex, day)
+        const dt = new Date(ano, mes - 1, 1); // monthIndex = mes - 1
+
+        // valida Date antes de usar toISOString
+        if (isNaN(dt.getTime())) {
+            setData('');
+            return;
+        }
+
+        setData(formatYMD(dt));
+    }, [anoSelecionado, mesSelecionado]);
+
     {/* Inputtttttttttttttt.................*/ }
     function formata_display_input(e) {
         const digits = e.target.value.replace(/\D/g, "") || "0";
@@ -45,6 +90,11 @@ function Imputs() {
 
     async function recarrega_pagina_apos_cadastrar(mes) {
         const response = await api.get(`/lancamento/buscaLancamentosPorMesEAno/${mes}/${anoSelecionado}`);
+        if (response.status === 403) {
+            alert('⚠ Você precisa fazer login novamente!');
+            localStorage.removeItem('token');
+            navigate('/');
+        }
         console.log('Resultado:', response);
         localStorage.setItem('body-response-array', JSON.stringify(response.data))
         localStorage.setItem('mes-selecionado', mes)
@@ -56,6 +106,7 @@ function Imputs() {
 
     async function cadastraLancamento() {
         try {
+
             const body = {
                 descricao: descricaoSelecionada,
                 preco: valorSelecionado,
@@ -63,7 +114,8 @@ function Imputs() {
                 status: statusSelecionado,
                 tipo: tipoSelecionado,
                 categoriaLancamento: categoria,
-                recorrente: checkRecorrente
+                recorrente: checkRecorrente,
+                numeroParcelas: numeroParcelas
             };
 
             // Validações individuais
@@ -99,14 +151,20 @@ function Imputs() {
             }
 
             console.log(body);
+            //alert(`${body.descricao} - ${body.preco} - ${body.dataVencimento} - ${body.status} - ${body.tipo} - ${body.categoriaLancamento} - Recorrente: ${body.recorrente} - Parcelas: ${body.numeroParcelas}`);
+            const response = await api.post(`/lancamento/cadastraLancamento/${mesSelecionado}/${anoSelecionado}`, body);
 
-            const response = await api.post(`/lancamento/cadastraLancamento/${messelecionado}/${anoSelecionado}`, body);
+            if (response.status === 403) {
+                alert('⚠ Você precisa fazer login novamente!');
+                localStorage.removeItem('token');
+                navigate('/');
+            }
 
             if (response.status === 201) {
                 tocarSom(audioPDF);
 
                 alert(`Lançamento cadastrado com sucesso ✅`);
-                recarrega_pagina_apos_cadastrar(messelecionado)
+                recarrega_pagina_apos_cadastrar(mesSelecionado)
             } else {
                 alert(`⚠ Algo deu errado! Código: ${response.status}`);
                 console.log('Algo deu errado!', response);
@@ -133,6 +191,53 @@ function Imputs() {
 
     return (
         <div className='Inputs'>
+            {divParcelas && (
+                <div className='overlayExclui'>
+                    <div className='modalExclui'>
+                        <p id='Descricao-exclui' style={{ margin: "5px 0" }}>
+                            Mesês deseja repetir o lançamento:
+                        </p>
+
+                        <input
+                            id='input-quantidade-parcelas'
+                            type="number"
+                            min="2"
+                            max="999"
+                            defaultValue={0}
+                            onInput={(e) => {
+                                if (e.target.value.length > 3) {
+                                    e.target.value = e.target.value.slice(0, 3);
+                                }
+                            }}
+                            onChange={(e) => setNumeroParcelas(Number(e.target.value))}
+                        />
+
+                        <div className='Botoes-exclui'>
+                            <button
+                                id="Botao-excluir-sim"
+                                onClick={() => {
+                                    if (numeroParcelas < 2) {
+                                        alert('⚠ O número de parcelas deve ser no mínimo 2.');
+                                        return;
+                                    }
+                                    console.log(`Numero de Parcelas definido como ${numeroParcelas}`);
+                                    setDivParcelas(false);
+
+                                }}
+                            >
+                                Sim
+                            </button>
+                            <button
+                                id="Botao-excluir-nao"
+                                onClick={() => { setNumeroParcelas(0); setDivParcelas(false); tocarSom(audioClick); setCheckParcelado(false); }}
+
+                            >
+                                Não
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
             <p id='Novo-lancamento'>Novo Lancamento</p>
             {/* Tipo-status */}
             <div className='Tipo-status-div'>
@@ -238,14 +343,48 @@ function Imputs() {
 
             <div className='containerr' >
                 <p title='Ele replica o Lançamento, da data atual até o ultimo mês do ano atual'
-                    id='Texto-checkbox'>Recorrente?</p>
+                    id='Texto-checkbox'>Repetir</p>
                 <label class="switch">
                     <input
                         onClick={() => tocarSom(audioExcluir)}
                         type="checkbox"
                         name="aceito"
                         checked={checkRecorrente}
-                        onChange={(e) => setCheckRecorrente(e.target.checked)}
+                        onChange={(e) => {
+                            if (!checkParcelado) {
+                                setCheckRecorrente(e.target.checked);
+                                if (e.target.checked) {
+                                    alert('✅ Lançamento será repetido até o final do ano!');
+                                }
+                            } else {
+                                alert('❌ Não é possível repetir um lançamento parcelado!');
+                            }
+                        }}
+                    />
+                    <span class="slider"></span>
+                </label>
+                <p title='Ele replica o Lançamento, da data atual até o ultimo mês do ano atual'
+                    id='Texto-checkbox'>Parcelado</p>
+                <label class="switch">
+                    <input
+                        onClick={() => tocarSom(audioExcluir)}
+                        type="checkbox"
+                        name="aceito"
+                        checked={checkParcelado}
+                        onChange={(e) => {
+                            if (!checkRecorrente) {
+                                if (checkParcelado) {
+                                    setCheckParcelado(e.target.checked);
+                                    setNumeroParcelas(0);
+                                } else {
+                                    setCheckParcelado(e.target.checked);
+                                    setDivParcelas(true);
+                                }
+                            } else {
+                                alert('❌ Não é possível parcelar um lançamento recorrente!');
+                            }
+
+                        }}
                     />
                     <span class="slider"></span>
                 </label>
@@ -280,7 +419,7 @@ function Imputs() {
                 </div>
             </div>
             <div className='div-botao-cadastro'>
-                <button onClick={() => { cadastraLancamento(); }} id='Botao-cadastra-lancamento'>CADASTRAR</button>
+                <button onClick={() => { cadastraLancamento() }} id='Botao-cadastra-lancamento'>CADASTRAR</button>
             </div>
 
         </div>

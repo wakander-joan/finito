@@ -52,6 +52,11 @@ function Cabecalho() {
 
     async function get_next(mes) {
         const response = await api.get(`/lancamento/buscaLancamentosPorMesEAno/${mes}/${anoSelecionado}`);
+        if (response.status === 403) {
+            alert('⚠ Você precisa fazer login novamente!');
+            localStorage.removeItem('token');
+            navigate('/');
+        }
         console.log('Resultado:', response);
         localStorage.setItem('body-response-array', JSON.stringify(response.data))
         localStorage.setItem('mes-selecionado', mes)
@@ -62,6 +67,11 @@ function Cabecalho() {
 
     async function get_next_seta(mes, ano) {
         const response = await api.get(`/lancamento/buscaLancamentosPorMesEAno/${mes}/${ano}`);
+        if (response.status === 403) {
+            alert('⚠ Você precisa fazer login novamente!');
+            localStorage.removeItem('token');
+            navigate('/');
+        }
         console.log('Resultado:', response);
         localStorage.setItem('body-response-array', JSON.stringify(response.data))
         localStorage.setItem('mes-selecionado', mes)
@@ -73,25 +83,25 @@ function Cabecalho() {
     function direcaoSetaClicada(direcao) {
         // Pega o índice do mês atualmente selecionado
         const indiceAtual = meses.indexOf(messelecionado); // mesSelecionado deve estar no estado
-        
+
         let novoAno = anoSelecionado;
         let novoIndice;
 
         if (direcao === "proximo") {
             // próximo mês (loop no final)
             novoIndice = (indiceAtual + 1) % meses.length;
-            if(messelecionado === "DEZEMBRO"){
+            if (messelecionado === "DEZEMBRO") {
                 novoAno = parseInt(anoSelecionado) + 1;
                 //alert(`Mudando Para o ano de ${novoAno}`)
             }
         } else if (direcao === "anterior") {
-            if(anoSelecionado === "2025" && messelecionado === "JANEIRO"){
+            if (anoSelecionado === "2025" && messelecionado === "JANEIRO") {
                 return alert("Você não pode voltar para anos anteriores a 2025!");
             }
 
             // mês anterior (loop no começo)
             novoIndice = (indiceAtual - 1 + meses.length) % meses.length;
-            if(messelecionado === "JANEIRO"){
+            if (messelecionado === "JANEIRO") {
                 novoAno = parseInt(anoSelecionado) - 1;
                 //alert(`Mudando Para o ano de ${novoAno}`)
             }
@@ -129,17 +139,17 @@ function Cabecalho() {
             </div>
 
             <div className='Areadash2'>
-                <h5 id='seta' onClick={() => {direcaoSetaClicada("anterior"); tocarSom(audioClick);}}>{setlaE}</h5>
+                <h5 id='seta' onClick={() => { direcaoSetaClicada("anterior"); tocarSom(audioClick); }}>{setlaE}</h5>
                 <h5 id='ano-cabecalho'>{messelecionado}</h5>
                 <h5 id='de-cabecalho'>de</h5>
                 <h5 id='ano-cabecalho'>{anoSelecionado}</h5>
-                <h5 id='seta' onClick={() => {direcaoSetaClicada("proximo"); tocarSom(audioClick);}}>{setlaD}</h5>
+                <h5 id='seta' onClick={() => { direcaoSetaClicada("proximo"); tocarSom(audioClick); }}>{setlaD}</h5>
             </div>
 
             <div className='Area3'>
                 <h2 id='USUARIO-TEXT2'>{nomePessoa}</h2>
                 <h2 id='PERFIL-EMOGI2'>{perfilEmoji}</h2>
-                <img onClick={() => { voltar_menu_animacao(); tocarSom(audioClick);}} id="logo-exit" src={Exit} alt="Finito" title="Voltar ao MENU" />
+                <img onClick={() => { voltar_menu_animacao(); tocarSom(audioClick); }} id="logo-exit" src={Exit} alt="Finito" title="Voltar ao MENU" />
             </div>
         </div>
     )

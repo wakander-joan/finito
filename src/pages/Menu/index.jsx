@@ -67,13 +67,29 @@ function Cadastro() {
   const perfilEmoji = getPerfilEmoji();
 
   async function get_next(mes) {
-    //setLoadingOpen(true)
-    const response = await api.get(`/lancamento/buscaLancamentosPorMesEAno/${mes}/${anoSelecionado}`);
-    console.log('Resultado:', response);
-    localStorage.setItem('body-response-array', JSON.stringify(response.data))
-    localStorage.setItem('mes-selecionado', mes)
-    localStorage.setItem('ano-selecionado', anoSelecionado)
-    navigate('/dashboard')
+    try {
+      const response = await api.get(`/lancamento/buscaLancamentosPorMesEAno/${mes}/${anoSelecionado}`);
+      console.log(response);
+
+      console.log('Resultado:', response);
+      localStorage.setItem('body-response-array', JSON.stringify(response.data))
+      localStorage.setItem('mes-selecionado', mes)
+      localStorage.setItem('ano-selecionado', anoSelecionado)
+      navigate('/dashboard')
+      return response.data;
+
+    } catch (error) {
+      // Aqui você trata erros, como 403
+      if (error.response && error.response.status === 403) {
+        alert('⚠ Você precisa fazer login novamente!');
+        localStorage.removeItem('token');
+        navigate('/');
+      } else {
+        console.error('Erro ao buscar lançamentos:', error);
+        alert('Ocorreu um erro ao buscar os lançamentos.');
+      }
+    }
+
 
     /*setTimeout(() => {
       setLoadingOpen(false); // esconde o loading
@@ -133,7 +149,7 @@ function Cadastro() {
         <div className='Area2'>
           <h2 id='ANO-TEXT'>ANO</h2>
           <select
-            onClick={()=> tocarSom(audioClick)}
+            onClick={() => tocarSom(audioClick)}
             id='select-perfil2'
             value={anoSelecionado}
             onChange={(e) => {
@@ -147,14 +163,14 @@ function Cadastro() {
             <option id='lista-select' value="2025">2025</option>
             <option id='lista-select' value="2026">2026</option>
             <option id='lista-select' value="2027">2027</option>
-            <option id='lista-select' value="2027">2028</option>
-            <option id='lista-select' value="2027">2029</option>
+            <option id='lista-select' value="2028">2028</option>
+            <option id='lista-select' value="2029">2029</option>
           </select>
         </div>
 
         <div className='Area3'>
 
-          <img onClick={()=> {tocarSom(audioGameOver); alert('Em processo de desenvolvimento!')}} id="logo-edita" src={Edita} alt="Finito" title="Edite seu Perfil" />
+          <img onClick={() => { tocarSom(audioGameOver); alert('Em processo de desenvolvimento!') }} id="logo-edita" src={Edita} alt="Finito" title="Edite seu Perfil" />
           <h2 id='USUARIO-TEXT'>{nomePessoa}</h2>
           <h2 id='PERFIL-EMOGI'>{perfilEmoji}</h2>
           <img onClick={() => { loadingAnimation(); tocarSom(audioGameOver); }} id="logo-exit" src={Exit} alt="Finito" title="Sair para Login" />
@@ -164,18 +180,18 @@ function Cadastro() {
       <div className="image-container">
         <img id="logo-principal" src={calender} alt="Finito" />
         <div className="mes-overlay">
-          <h1 onMouseEnter={()=> tocarSom(audioHover)} onClick={() => { get_next('JANEIRO'); tocarSom(audioClickMes); }} className="JANEIRO">JANEIRO</h1>
-          <h1 onMouseEnter={()=> tocarSom(audioHover)} onClick={() => { get_next('FEVEREIRO'); tocarSom(audioClickMes); }} className="FEVEREIRO">FEVEREIRO</h1>
-          <h1 onMouseEnter={()=> tocarSom(audioHover)} onClick={() => { get_next('MARCO'); tocarSom(audioClickMes); }} className="MARCO">MARÇO</h1>
-          <h1 onMouseEnter={()=> tocarSom(audioHover)} onClick={() => { get_next('ABRIL'); tocarSom(audioClickMes); }} className="ABRIL">ABRIL</h1>
-          <h1 onMouseEnter={()=> tocarSom(audioHover)} onClick={() => { get_next('MAIO'); tocarSom(audioClickMes); }} className="MAIO">MAIO</h1>
-          <h1 onMouseEnter={()=> tocarSom(audioHover)} onClick={() => { get_next('JUNHO'); tocarSom(audioClickMes); }} className="JUNHO">JUNHO</h1>
-          <h1 onMouseEnter={()=> tocarSom(audioHover)} onClick={() => { get_next('JULHO'); tocarSom(audioClickMes); }} className="JULHO">JULHO</h1>
-          <h1 onMouseEnter={()=> tocarSom(audioHover)} onClick={() => { get_next('AGOSTO'); tocarSom(audioClickMes); }} className="AGOSTO">AGOSTO</h1>
-          <h1 onMouseEnter={()=> tocarSom(audioHover)} onClick={() => { get_next('SETEMBRO'); tocarSom(audioClickMes); }} className="SETEMBRO">SETEMBRO</h1>
-          <h1 onMouseEnter={()=> tocarSom(audioHover)} onClick={() => { get_next('OUTUBRO'); tocarSom(audioClickMes); }} className="OUTUBRO">OUTUBRO</h1>
-          <h1 onMouseEnter={()=> tocarSom(audioHover)} onClick={() => { get_next('NOVEMBRO'); tocarSom(audioClickMes); }} className="NOVEMBRO">NOVEMBRO</h1>
-          <h1 onMouseEnter={()=> tocarSom(audioHover)} onClick={() => { get_next('DEZEMBRO'); tocarSom(audioClickMes); }} className="DEZEMBRO">DEZEMBRO</h1>
+          <h1 onMouseEnter={() => tocarSom(audioHover)} onClick={() => { get_next('JANEIRO'); tocarSom(audioClickMes); }} className="JANEIRO">JANEIRO</h1>
+          <h1 onMouseEnter={() => tocarSom(audioHover)} onClick={() => { get_next('FEVEREIRO'); tocarSom(audioClickMes); }} className="FEVEREIRO">FEVEREIRO</h1>
+          <h1 onMouseEnter={() => tocarSom(audioHover)} onClick={() => { get_next('MARCO'); tocarSom(audioClickMes); }} className="MARCO">MARÇO</h1>
+          <h1 onMouseEnter={() => tocarSom(audioHover)} onClick={() => { get_next('ABRIL'); tocarSom(audioClickMes); }} className="ABRIL">ABRIL</h1>
+          <h1 onMouseEnter={() => tocarSom(audioHover)} onClick={() => { get_next('MAIO'); tocarSom(audioClickMes); }} className="MAIO">MAIO</h1>
+          <h1 onMouseEnter={() => tocarSom(audioHover)} onClick={() => { get_next('JUNHO'); tocarSom(audioClickMes); }} className="JUNHO">JUNHO</h1>
+          <h1 onMouseEnter={() => tocarSom(audioHover)} onClick={() => { get_next('JULHO'); tocarSom(audioClickMes); }} className="JULHO">JULHO</h1>
+          <h1 onMouseEnter={() => tocarSom(audioHover)} onClick={() => { get_next('AGOSTO'); tocarSom(audioClickMes); }} className="AGOSTO">AGOSTO</h1>
+          <h1 onMouseEnter={() => tocarSom(audioHover)} onClick={() => { get_next('SETEMBRO'); tocarSom(audioClickMes); }} className="SETEMBRO">SETEMBRO</h1>
+          <h1 onMouseEnter={() => tocarSom(audioHover)} onClick={() => { get_next('OUTUBRO'); tocarSom(audioClickMes); }} className="OUTUBRO">OUTUBRO</h1>
+          <h1 onMouseEnter={() => tocarSom(audioHover)} onClick={() => { get_next('NOVEMBRO'); tocarSom(audioClickMes); }} className="NOVEMBRO">NOVEMBRO</h1>
+          <h1 onMouseEnter={() => tocarSom(audioHover)} onClick={() => { get_next('DEZEMBRO'); tocarSom(audioClickMes); }} className="DEZEMBRO">DEZEMBRO</h1>
 
         </div>
       </div>

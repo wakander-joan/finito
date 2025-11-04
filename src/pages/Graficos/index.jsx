@@ -70,6 +70,11 @@ export default function PlanosPage() {
     console.clear();
     try {
       const response = await api.post(`/lancamento/cadastraLancamentoEmLote/${idMeta}`, respostaDeepSeekJson);
+      if (response.status === 403) {
+        alert('⚠ Você precisa fazer login novamente!');
+        localStorage.removeItem('token');
+        navigate('/');
+      }
       setloadingIASave(false)
       if (response.status === 201) {
         alert('Lancamentos cadastrados com sucesso!');
@@ -121,6 +126,11 @@ export default function PlanosPage() {
 
 
       const responseDeep = await api.post(`/meta/createMeta`, plano);
+      if (response.status === 403) {
+        alert('⚠ Você precisa fazer login novamente!');
+        localStorage.removeItem('token');
+        navigate('/');
+      }
       if (responseDeep.status === 201) {
         paraSom;
         //setPlanos(responseDeep.data);
@@ -146,8 +156,12 @@ export default function PlanosPage() {
 
   async function buscaPlanos() {
     try {
-      const response = await api.get(`/meta/getAllMeta/${idUsuario}`
-      );
+      const response = await api.get(`/meta/getAllMeta/${idUsuario}`);
+      if (response.status === 403) {
+        alert('⚠ Você precisa fazer login novamente!');
+        localStorage.removeItem('token');
+        navigate('/');
+      }
       if (response.status === 200) {
         setPlanos(response.data);
       } else {
@@ -164,8 +178,12 @@ export default function PlanosPage() {
 
   async function mudarStatus(id) {
     try {
-      const response = await apiPlanos.patch(`/planning/changeStatusPlanning/${id}`
-      );
+      const response = await apiPlanos.patch(`/planning/changeStatusPlanning/${id}`);
+      if (response.status === 403) {
+        alert('⚠ Você precisa fazer login novamente!');
+        localStorage.removeItem('token');
+        navigate('/');
+      }
       if (response.status === 200) {
         window.location.reload();
       } else {
@@ -180,8 +198,12 @@ export default function PlanosPage() {
 
   async function deletaPlano(id) {
     try {
-      const response = await api.delete(`/meta/deleteMetaId/${id}`
-      );
+      const response = await api.delete(`/meta/deleteMetaId/${id}`);
+      if (response.status === 403) {
+        alert('⚠ Você precisa fazer login novamente!');
+        localStorage.removeItem('token');
+        navigate('/');
+      }
       if (response.status === 200) {
         window.location.reload();
       } else {
@@ -308,7 +330,7 @@ export default function PlanosPage() {
                   <h2>Opção {opcao.numeroDaOpcao}</h2>
                   <p><strong>Motivo:</strong> {opcao.MotivoDaOpcao}</p>
                   <p><strong>Parcelas:</strong> {opcao.numeroDeParcelasEValoresDelas}</p>
-                  <button id="selecionar" onClick={() => {criaLancamentosMetas(opcao); setShowOverlay(false);}}>Selecionar</button>
+                  <button id="selecionar" onClick={() => { criaLancamentosMetas(opcao); setShowOverlay(false); }}>Selecionar</button>
                 </div>
               ))}
             </div>
