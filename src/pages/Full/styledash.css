@@ -546,21 +546,8 @@ h4 {
     background-color: #f1f1f1;
 }
 
-.Grupo-de-Lancamentos-overlay {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 10px;
-    height: 95vh;
-    width: 200vh;
-    padding-left: 1%;
-    padding-right: 1%;
-    padding-top: 1.5%;
-    overflow: hidden;
-    overflow-y: auto;
-    background-color: #cacaca;
-}
-
 .lancamento-block {
+    height: 20vh;
     margin-top: 2.5%;
     border: 1px solid rgb(156, 156, 156);
     border-radius: 7px;
@@ -1024,15 +1011,6 @@ h4 {
     margin-top: -1%;
 }
 
-#caixa-anotacao {
-    font-size: 1.8vw;
-    font-weight: inherit;
-    width: 100%;
-    height: 20vh;
-    font-family: 'Jersey 40', sans-serif;
-    margin-top: -1%;
-}
-
 .Botoes-PDF {
     font-size: 2.5vw;
     display: flex;
@@ -1312,7 +1290,10 @@ h4 {
 }
 
 .cabeca{
+    border-radius: 9px;
     padding-top: 0.5%;
+    width: 50%;
+    margin-top: 1%;
     padding-bottom: 0.5%;
     display: flex;
     background-color: #f1f1f1;
@@ -1335,4 +1316,29 @@ h4 {
 #Label-lancamentos{
     font-family: 'Jersey 20', sans-serif;
     font-size: 2vw;
+}
+
+.Grupo-de-Lancamentos-overlay {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    height: 92vh;
+    width: 100%;
+    padding-left: 1%;
+    padding-right: 1%;
+    padding-top: 1.5%;
+    overflow-y: auto;
+    background-color: #cacaca00;
+}
+
+.div-total{
+    height: 100%;
+    justify-content: center;
+
+}
+
+.div-cabeca-fora{
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

@@ -1,4 +1,4 @@
-
+import "../../index.css";
 import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import './styledash.css';
@@ -14,6 +14,7 @@ import React from "react";
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
 import Logo from '../../assets/finito-logo.png';
+import maximizar from '../../assets/maximizar.png';
 
 function Lancamentos() {
     {/* Body-response-Geral.................................................................*/ }
@@ -47,13 +48,16 @@ function Lancamentos() {
     const [overlayVisivel, setOverlayVisivel] = useState(false);
     const [overlayExclui, setOverlayExclui] = useState(false);
     const [overlayDescricaoPDF, setOverlayDescricaoPDF] = useState(false);
-    const [dataSelecionadaEdita, setDataSelecionadaEdita] = useState("");
+    const [overlayLancamentos, setOverlayLancamentos] = useState(false);
     const [data, setData] = useState('');
-    const [categoriaEdita, setCategoriaEdita] = useState("SALARIO");
-    const [lancamentoSelecionado, setLancamentoSelecionado] = useState(null);
-    const [opcaoTipo, setOpcao] = useState("RECEITA");
+    
     const [descricaoEditada, setDescricaoEditada] = useState("");
+    const [categoriaEdita, setCategoriaEdita] = useState("SALARIO");
     const [valorEditado, setValorEditado] = useState();
+    const [dataSelecionadaEdita, setDataSelecionadaEdita] = useState("");
+    const [lancamentoSelecionado, setLancamentoSelecionado] = useState(null);
+
+    const [opcaoTipo, setOpcao] = useState("RECEITA");
     const [categoria, setCategoria] = useState("");
     const [descricaoPDF, setDescricaoPDF] = useState("");
     const [idsReplica, setIdsReplica] = useState([]);
@@ -543,6 +547,8 @@ function Lancamentos() {
         som.play();
     };
 
+    
+
     function ativaOverlayPDF() {
 
     }
@@ -552,6 +558,13 @@ function Lancamentos() {
 
     return (
         <div className='Lancamentos-grafico-IA'>
+            {/*overlayLancamentos && (
+                <div className='overlay' id="overlay-lancamentos">
+                    <div className="modal-lancamentos">
+                        <LancamentosFull />
+                    </div>
+                </div>
+            )*/}
             {overlayDescricaoPDF && (
                 <div className='overlayPDF'>
                     <div className='modalPDF'>
@@ -764,6 +777,7 @@ function Lancamentos() {
                     </div>
                 </div>
             )}
+
             <div className='cabecalho-lancamentos'>
                 <div className='caixa-lancamentos'>
                     <p id='Lancamentos'>Lancamentos</p>
@@ -784,6 +798,14 @@ function Lancamentos() {
                             placeholder="Pesquisar..."
                             value={inputValue} // controlled input
                             onChange={(e) => setInputValue(e.target.value)} // atualiza a constante
+                        />
+                    </div>
+                    <div className="box-maximizar">
+                        <img
+                            src={maximizar}
+                            title="Maximizar lançamentos"
+                            className="icon-maximizar"
+                            onClick={() => {navigate('/full'); tocarSom(audioClick);}}
                         />
                     </div>
                 </div>

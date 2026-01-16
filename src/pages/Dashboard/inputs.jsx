@@ -36,6 +36,8 @@ function Imputs() {
     const [checkRecorrente, setCheckRecorrente] = useState(false);
     const [checkParcelado, setCheckParcelado] = useState(false);
     const [divParcelas, setDivParcelas] = useState(false);
+    const [campoAnotacao, setCampoAnotacao] = useState(false);
+    const [anotacao, setAnotacao] = useState("");
     const [numeroParcelas, setNumeroParcelas] = useState(0);
 
     const categoriasDespesa = [
@@ -105,8 +107,9 @@ function Imputs() {
     }
 
     async function cadastraLancamento() {
-        try {
+        setCampoAnotacao(false);
 
+        try {
             const body = {
                 descricao: descricaoSelecionada,
                 preco: valorSelecionado,
@@ -115,60 +118,64 @@ function Imputs() {
                 tipo: tipoSelecionado,
                 categoriaLancamento: categoria,
                 recorrente: checkRecorrente,
-                numeroParcelas: numeroParcelas
+                numeroParcelas: numeroParcelas,
+                anotacao: anotacao
             };
 
-            // Validações individuais
-            if (!body.descricao || body.descricao.trim() === "") {
-                tocarSom(audioError)
-                alert("⚠ Preencha a descrição antes de cadastrar!");
-                return;
-            }
-            if (!body.preco || body.preco <= 0) {
-                tocarSom(audioError)
-                alert("⚠ Informe um valor válido!");
-                return;
-            }
-            if (!body.dataVencimento) {
-                tocarSom(audioError)
-                alert("⚠ Selecione uma data de vencimento!");
-                return;
-            }
-            if (!body.status) {
-                tocarSom(audioError)
-                alert("⚠ Selecione um status!");
-                return;
-            }
-            if (!body.tipo) {
-                tocarSom(audioError)
-                alert("⚠ Selecione um tipo (Receita ou Despesa)!");
-                return;
-            }
-            if (!body.categoriaLancamento) {
-                tocarSom(audioError)
-                alert("⚠ Selecione uma categoria!");
-                return;
-            }
+                // Validações individuais
+                if (!body.descricao || body.descricao.trim() === "") {
+                    tocarSom(audioError)
+                    alert("⚠ Preencha a descrição antes de cadastrar!");
+                    return;
+                }
+                if (!body.preco || body.preco <= 0) {
+                    tocarSom(audioError)
+                    alert("⚠ Informe um valor válido!");
+                    return;
+                }
+                if (!body.dataVencimento) {
+                    tocarSom(audioError)
+                    alert("⚠ Selecione uma data de vencimento!");
+                    return;
+                }
+                if (!body.status) {
+                    tocarSom(audioError)
+                    alert("⚠ Selecione um status!");
+                    return;
+                }
+                if (!body.tipo) {
+                    tocarSom(audioError)
+                    alert("⚠ Selecione um tipo (Receita ou Despesa)!");
+                    return;
+                }
+                if (!body.categoriaLancamento) {
+                    tocarSom(audioError)
+                    alert("⚠ Selecione uma categoria!");
+                    return;
+                }
+            
 
             console.log(body);
-            //alert(`${body.descricao} - ${body.preco} - ${body.dataVencimento} - ${body.status} - ${body.tipo} - ${body.categoriaLancamento} - Recorrente: ${body.recorrente} - Parcelas: ${body.numeroParcelas}`);
-            const response = await api.post(`/lancamento/cadastraLancamento/${mesSelecionado}/${anoSelecionado}`, body);
 
-            if (response.status === 403) {
-                alert('⚠ Você precisa fazer login novamente!');
-                localStorage.removeItem('token');
-                navigate('/');
-            }
+                const response = await api.post(`/lancamento/cadastraLancamento/${mesSelecionado}/${anoSelecionado}`, body);
+                setAnotacao("")
 
-            if (response.status === 201) {
-                tocarSom(audioPDF);
+                if (response.status === 403) {
+                    alert('⚠ Você precisa fazer login novamente!');
+                    localStorage.removeItem('token');
+                    navigate('/');
+                }
 
-                alert(`Lançamento cadastrado com sucesso ✅`);
-                recarrega_pagina_apos_cadastrar(mesSelecionado)
-            } else {
-                alert(`⚠ Algo deu errado! Código: ${response.status}`);
-                console.log('Algo deu errado!', response);
-            }
+                if (response.status === 201) {
+                    tocarSom(audioPDF);
+                    setAnotacao("")
+                    alert(`Lançamento cadastrado com sucesso ✅`);
+                    recarrega_pagina_apos_cadastrar(mesSelecionado)
+                } else {
+                    alert(`⚠ Algo deu errado! Código: ${response.status}`);
+                    console.log('Algo deu errado!', response);
+                }
+            
         } catch (error) {
             const mensagemErro = error.response?.data?.message || error.message;
             alert(`❌ Erro ao cadastrar Lancamento: ${mensagemErro}`);
@@ -191,6 +198,36 @@ function Imputs() {
 
     return (
         <div className='Inputs'>
+            {campoAnotacao && (
+                <div className='overlayExclui'>
+                    <div className='modalExclui'>
+                        <p id='Descricao-exclui' style={{ margin: "5px 0" }}>
+                            Adicionar uma anotação ao Lançamento?
+                        </p>
+
+                        <textarea
+                            id="caixa-anotacao"
+                            rows="4"
+                            cols="30"
+                            placeholder="Escreva aqui a sua anotação..."
+                            onChange={(e) => setAnotacao(e.target.value)}>
+                        </textarea>
+
+                        <div className='anotacao-sim'>
+                            <button
+                                id=""
+                                onClick={() => {
+                                    alert(`Anotação a ser salva: ${anotacao}`);
+                                    cadastraLancamento();
+                                }}
+                            >
+                                Avançar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
+
             {divParcelas && (
                 <div className='overlayExclui'>
                     <div className='modalExclui'>
@@ -419,7 +456,7 @@ function Imputs() {
                 </div>
             </div>
             <div className='div-botao-cadastro'>
-                <button onClick={() => { cadastraLancamento() }} id='Botao-cadastra-lancamento'>CADASTRAR</button>
+                <button onClick={() => { setCampoAnotacao(true) }} id='Botao-cadastra-lancamento'>CADASTRAR</button>
             </div>
 
         </div>

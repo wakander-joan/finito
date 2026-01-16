@@ -5,6 +5,8 @@ import api from '../../services/api';
 import Logo from '../../assets/logo.png';
 import Exit from '../../assets/exit.png';
 import loadingGif4 from '../../assets/loading4.gif';
+import seta from '../../assets/seta.png';
+import seta2 from '../../assets/seta2.png';
 
 function Cabecalho() {
     const navigate = useNavigate();
@@ -13,8 +15,8 @@ function Cabecalho() {
     {/* Const's Cabecalho.................*/ }
     const nomePessoa = localStorage.getItem("nomePessoa");
     const [loading, setLoading] = useState(false);
-    const setlaD = "--->"
-    const setlaE = "<---"
+    const setlaD = seta
+    const setlaE = seta2
     const EMOJIS = [
         "🕎", // 0
         "💀", // 1
@@ -139,17 +141,17 @@ function Cabecalho() {
             </div>
 
             <div className='Areadash2'>
-                <h5 id='seta' onClick={() => { direcaoSetaClicada("anterior"); tocarSom(audioClick); }}>{setlaE}</h5>
+                <img id='seta' src={setlaE} alt="Logo" onClick={() => { direcaoSetaClicada("anterior"); tocarSom(audioClick); }} />
                 <h5 id='ano-cabecalho'>{messelecionado}</h5>
                 <h5 id='de-cabecalho'>de</h5>
                 <h5 id='ano-cabecalho'>{anoSelecionado}</h5>
-                <h5 id='seta' onClick={() => { direcaoSetaClicada("proximo"); tocarSom(audioClick); }}>{setlaD}</h5>
+                <img id='seta' src={setlaD} alt="Logo" onClick={() => { direcaoSetaClicada("proximo"); tocarSom(audioClick); }} />
             </div>
 
-            <div className='Area3'>
+            <div className='Areadash3'>
                 <h2 id='USUARIO-TEXT2'>{nomePessoa}</h2>
                 <h2 id='PERFIL-EMOGI2'>{perfilEmoji}</h2>
-                <img onClick={() => { voltar_menu_animacao(); tocarSom(audioClick); }} id="logo-exit" src={Exit} alt="Finito" title="Voltar ao MENU" />
+                <img onClick={() => { voltar_menu_animacao(); tocarSom(audioClick); }} id="logo-exit-dash" src={Exit} alt="Finito" title="Voltar ao MENU" />
             </div>
         </div>
     )
