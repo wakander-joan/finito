@@ -122,17 +122,7 @@
 
 /* Variaveis de width: do Dashboard Geral */
 
-:root {
-    --largura-principal: 70vw;
-}
 
-/* Dashboard Pricipal */
-
-.Caixa-dados {
-    width: var(--largura-principal);
-    height: 85vh;
-
-}
 
 h4 {
     text-align: center;
@@ -205,15 +195,6 @@ h4 {
     color: dodgerblue;
 }
 
-/* Tela de Inputs */
-
-.Inputs {
-    width: 30%;
-    background-color: #ffffff;
-    border-radius: 10px;
-    padding-top: 10px;
-    box-shadow: 3px 3px 10px 0px #000000;
-}
 
 #Novo-lancamento {
     margin-left: 3px;
@@ -221,18 +202,6 @@ h4 {
     font-family: 'Jersey 10', sans-serif;
     color: rgb(0, 0, 0);
     padding-left: 3%;
-}
-
-.Tipo-status-div {
-    padding: 0%;
-    gap: 5px;
-    display: flex;
-    padding-left: 2.5%;
-    justify-content: baseline;
-}
-
-#Categoria-input {
-    margin-top: -1vh;
 }
 
 #Descricao-text-inputs {
@@ -282,12 +251,6 @@ h4 {
     padding-top: 0vh;
 }
 
-#Descricao-input {
-    font-family: 'Jersey 10', sans-serif;
-    font-size: 1.5vw;
-    width: 19vw;
-    height: 5vh;
-}
 
 #input-valor {
     font-family: 'Jersey 10', sans-serif;
@@ -306,20 +269,6 @@ h4 {
     height: 5.5vh;
 }
 
-#Tipo-status-select-categoria-input {
-    width: 19vw;
-    height: 6.5vh;
-    border-radius: 10px;
-    font-size: 1.7vw;
-    cursor: pointer;
-    font-family: 'Jersey 10', sans-serif;
-    text-shadow: none;
-    border-radius: 10px;
-    color: #000000;
-    padding: 0px;
-    text-align: center;
-    padding-right: 4vw;
-}
 
 #Tipo-status-select-categoria {
     width: 15vw;
@@ -546,32 +495,32 @@ h4 {
     background-color: #f1f1f1;
 }
 
-.lancamento-block {
-    height: 20vh;
-    margin-top: 2.5%;
+.lancamento-block-full {
+    height: min-content;
+    margin-top: 1%;
     border: 1px solid rgb(156, 156, 156);
     border-radius: 7px;
     background-color: #ffffff;
     padding: 0%;
 }
 
-.descricao-lancamento-block {
+.descricao-lancamento-block-full {
     padding-left: 0.3vw;
+    text-align: center;
 }
 
-.descricao-edit-exclui {
-    justify-content: space-between;
+.descricao-edit-exclui-full {
+    justify-content: center;
     display: flex;
-    padding-right: 1vw;
-    gap: 1%;
 
 }
 
-#descricao-lancamento {
+#descricao-lancamento-full {
+    text-align: left;
     padding-left: 1vh;
     padding-top: 0vh;
     border: 1px solid rgb(161, 161, 161);
-    width: 33vw;
+    width: 110%;
     height: 4.5vh;
     border-radius: 5px;
     font-size: 1.7vw;
@@ -580,7 +529,7 @@ h4 {
     color: #272727;
 }
 
-#descricao-lancamento-label {
+#descricao-lancamento-label-full {
     font-size: 1.5vw;
     font-family: 'Jersey 20', sans-serif;
     color: #727272;
@@ -677,7 +626,7 @@ h4 {
     display: flex;
     justify-content: center;
     align-items: center;
-    background: rgba(36, 36, 36, 0.089);
+    background: rgba(36, 36, 36, 0.342);
     z-index: 9999;
 }
 
@@ -1322,7 +1271,7 @@ h4 {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 10px;
-    height: 92vh;
+    height: 75vh;
     width: 100%;
     padding-left: 1%;
     padding-right: 1%;
@@ -1341,4 +1290,32 @@ h4 {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.div-anotacao{
+    text-align: start;
+    height: min-content;
+    width: 96%;
+    font-size: 2.2vh;
+    padding-left: 0.5vw;
+    padding-top: 0.5vw;
+    padding-bottom: 0.5vw;
+    margin-top: 0.2vw;
+    margin-left: 0.4vw;
+    margin-bottom: 0.5vw;
+    background-color: #f0f0f0b2;
+    border-radius: 3px;
+    border-color: #000000;
+    border-style: solid;
+    border-width: 1px;
+}
+
+.anotacao-full{
+    text-align: center;
+}
+
+#anotacao-label {
+    font-size: 1.5vw;
+    font-family: 'Jersey 20', sans-serif;
+    color: #727272;
 }

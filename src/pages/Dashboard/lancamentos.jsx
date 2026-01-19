@@ -9,6 +9,7 @@ import setadespesas from '../../assets/seta-despesas.png';
 import icon_filtro from '../../assets/filtro.png';
 import icon_lupa from '../../assets/lupa.png';
 import edita from '../../assets/edita.png';
+import escrevendo from '../../assets/escrevendo.png';
 import apaga from '../../assets/apaga.png';
 import React from "react";
 import jsPDF from "jspdf";
@@ -41,6 +42,12 @@ function Lancamentos() {
     const messelecionado = localStorage.getItem('mes-selecionado');
     const [loading, setLoading] = useState(false);
 
+    const [lancamentoSelecionado, setLancamentoSelecionado] = useState(null);
+    const [display, setDisplay] = useState('');
+    const [valorEditado, setValorEditado] = useState(0);
+    const [raw, setRaw] = useState(0); 
+    const fmt = new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" });
+
     {/* Const's Lancamentos.................*/ }
     const [inputValue, setInputValue] = useState("");
 
@@ -49,13 +56,15 @@ function Lancamentos() {
     const [overlayExclui, setOverlayExclui] = useState(false);
     const [overlayDescricaoPDF, setOverlayDescricaoPDF] = useState(false);
     const [overlayLancamentos, setOverlayLancamentos] = useState(false);
+    const [overlayAnotacao, setOverlayAnotacao] = useState(false);
+    const [condicaoAnotacao, setCondicaoAnotacao] = useState(true);
     const [data, setData] = useState('');
-    
+
     const [descricaoEditada, setDescricaoEditada] = useState("");
+    const [anotacaoAtual, setAnotacaoAtual] = useState("");
     const [categoriaEdita, setCategoriaEdita] = useState("SALARIO");
-    const [valorEditado, setValorEditado] = useState();
+
     const [dataSelecionadaEdita, setDataSelecionadaEdita] = useState("");
-    const [lancamentoSelecionado, setLancamentoSelecionado] = useState(null);
 
     const [opcaoTipo, setOpcao] = useState("RECEITA");
     const [categoria, setCategoria] = useState("");
@@ -421,6 +430,7 @@ function Lancamentos() {
             item.dataVencimento,
             item.status,
             item.categoriaLancamento,
+            item.anotacao
         ]);
 
         // ⚡ Aqui está a mudança
@@ -547,14 +557,34 @@ function Lancamentos() {
         som.play();
     };
 
-    
-
-    function ativaOverlayPDF() {
-
-    }
-
     const [checkedExclui, setCheckedExclui] = useState(false);
     const [ckedExcluiParcelas, setCheckedExcluiParcelas] = useState(false);
+
+    function formata_display_input(e) {
+        const digits = e.target.value.replace(/\D/g, "") || "0";
+        const cents = parseInt(digits, 10);
+        setRaw(cents);
+        setDisplay(fmt.format(cents / 100));
+    }
+
+    useEffect(() => {
+        if (lancamentoSelecionado?.preco != null) {
+            const valor = lancamentoSelecionado.preco;
+
+            setValorEditado(valor);
+
+            setDisplay(
+                valor.toLocaleString('pt-BR', {
+                    style: 'currency',
+                    currency: 'BRL'
+                })
+            );
+        } else {
+            setDisplay('');
+            setValorEditado(0);
+        }
+    }, [lancamentoSelecionado]);
+
 
     return (
         <div className='Lancamentos-grafico-IA'>
@@ -805,7 +835,7 @@ function Lancamentos() {
                             src={maximizar}
                             title="Maximizar lançamentos"
                             className="icon-maximizar"
-                            onClick={() => {navigate('/full'); tocarSom(audioClick);}}
+                            onClick={() => { navigate('/full'); tocarSom(audioClick); }}
                         />
                     </div>
                 </div>
@@ -821,27 +851,111 @@ function Lancamentos() {
                             lancamento.categoriaLancamento.toLowerCase().includes(texto) ||
                             lancamento.tipo.toLowerCase().includes(texto) ||
                             lancamento.status.toLowerCase().includes(texto) ||
-                            lancamento.preco.toString().includes(texto)
+                            lancamento.preco.toString().includes(texto) ||
+                            lancamento.anotacao.toString().includes(texto) ||
+                            lancamento.idLancamento.toString().includes(texto)
                         );
                     })
-                    .map((lancamento) => (
-                        <div key={lancamento.idLancamento} className='lancamento-block'>
+                    .map((lancamentoAtual) => (
+                        <div key={lancamentoAtual.idLancamento} className='lancamento-block'>
                             <div className='descricao-edit-exclui'>
                                 <div className='descricao-lancamento-block'>
                                     <label id='descricao-lancamento-label' htmlFor="text">DESCRIÇÃO</label>
-                                    <p id='descricao-lancamento'>{lancamento.descricao}</p>
+                                    <p id='descricao-lancamento'>{lancamentoAtual.descricao}</p>
                                 </div>
-                                {lancamento.idRecorrencia > 0 && (
+                                {lancamentoAtual.idRecorrencia > 0 && (
                                     <p title='Esse é um Lançamento Recorrente!' id="recorrente">R</p>
                                 )}
 
-                                {lancamento.idParcela > 0 && (
+                                {lancamentoAtual.idParcela > 0 && (
                                     <p title='Esse é um Lançamento Parcelado!' id="parcelado">P</p>
                                 )}
 
                                 <div className='edita-lancamento'>
+                                    <label id='descricao-lancamento-label' htmlFor="text">ANOTAÇÃO</label>
+                                    <img id='edita-img' src={escrevendo} className="icon" onClick={() => { setAnotacaoAtual(lancamentoAtual.anotacao); setLancamentoSelecionado(lancamentoAtual); setOverlayAnotacao(true); tocarSom(audioClick); }} />
+
+                                    {overlayAnotacao && (
+                                        <div className='overlay2'>
+                                            <div className='modal-anotacao'>
+                                                <div className="botoes-div-anotacao">
+                                                    {condicaoAnotacao === true && (
+                                                        <button
+                                                            id="fechar-anotacao"
+                                                            onClick={() => { setOverlayAnotacao(false); setCondicaoAnotacao(true); tocarSom(audioClick) }}
+                                                        >Fechar
+                                                        </button>
+                                                    )}
+
+                                                    {condicaoAnotacao !== true && (
+                                                        <button
+                                                            id="fechar-anotacao"
+                                                            onClick={() => { setOverlayAnotacao(false); setCondicaoAnotacao(true); tocarSom(audioClick) }}
+                                                        >Cancelar
+                                                        </button>
+                                                    )}
+
+                                                    {condicaoAnotacao === true && (
+                                                        <button
+                                                            id="editar-anotacao"
+                                                            onClick={() => { setCondicaoAnotacao(false); tocarSom(audioExcluir) }}
+                                                        >Editar
+                                                        </button>
+                                                    )}
+
+                                                    {condicaoAnotacao !== true && (
+                                                        <button
+                                                            id="salvar-anotacao"
+                                                            onClick={() => {
+                                                                tocarSom(passedGTA5);
+                                                                const bodyJson = {
+                                                                    descricao: lancamentoSelecionado?.descricao,
+                                                                    preco: lancamentoSelecionado?.preco,
+                                                                    dataVencimento: lancamentoSelecionado?.dataVencimento,
+                                                                    tipo: lancamentoSelecionado?.tipo
+                                                                        ?.normalize("NFD")
+                                                                        .replace(/[\u0300-\u036f]/g, "")
+                                                                        .toUpperCase(),
+                                                                    categoriaLancamento: lancamentoSelecionado?.categoriaLancamento
+                                                                        ?.normalize("NFD")
+                                                                        .replace(/[\u0300-\u036f]/g, "")
+                                                                        .toUpperCase(),
+                                                                    //Tudo isso somente para alterar as anotações kkkkkk
+                                                                    anotacao: anotacaoAtual === "" ? "   " : anotacaoAtual
+                                                                };
+
+                                                                //alert(JSON.stringify(bodyJson, null, 2));
+                                                                //alert(lancamentoSelecionado?.idLancamento);
+                                                                setCondicaoAnotacao(true);
+                                                                console.log(bodyJson)
+
+                                                                editaLancamento(bodyJson, lancamentoSelecionado?.idLancamento);
+                                                                setOverlayAnotacao(false)
+                                                            }}
+                                                        >Salvar
+                                                        </button>
+                                                    )}
+                                                </div>
+                                                <div className="anotacao-conteudo">
+                                                    <textarea
+                                                        id="text-anotacao"
+                                                        className="anotacao-conteudo"
+                                                        value={anotacaoAtual || ""}
+                                                        readOnly={condicaoAnotacao}
+                                                        maxLength={255}
+                                                        onChange={(e) => setAnotacaoAtual(e.target.value)}
+                                                        placeholder="Sem anotação..."
+                                                    />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    )}
+
+                                </div>
+
+                                <div className='edita-lancamento'>
                                     <label id='descricao-lancamento-label' htmlFor="text">EDITAR</label>
-                                    <img id='edita-img' src={edita} className="icon" onClick={() => { abrirOverlay(lancamento); tocarSom(audioClick); }} />
+                                    <img id='edita-img' src={edita} className="icon" onClick={() => { abrirOverlay(lancamentoAtual); tocarSom(audioClick); }} />
 
                                     {/* Overlay do editar ---------------------------------------------------- */}
                                     {overlayVisivel && (
@@ -855,7 +969,7 @@ function Lancamentos() {
                                                     <label id='Edita-descricao' htmlFor="text">Descrição</label>
                                                     <input
                                                         id='Edita-input-descricao'
-                                                        maxLength={30}
+                                                        maxLength={40}
                                                         placeholder='Descrição...'
                                                         type="text" name="nome"
                                                         defaultValue={descricaoEditada}
@@ -883,18 +997,31 @@ function Lancamentos() {
                                                 <div id='Valor-categoria'>
                                                     <input
                                                         id='Input-valor'
-                                                        type="number"
-                                                        step="0.01"
-                                                        min="0"
+                                                        type="text"
                                                         inputMode="decimal"
-                                                        defaultValue={lancamentoSelecionado?.preco} // "R$ 12,34"
+                                                        value={display}
                                                         onChange={(e) => {
-                                                            const valor = e.target.value;
-                                                            setValorEditado(valor === "" ? lancamentoSelecionado?.preco : valor);
+                                                            formata_display_input(e);
+
+                                                            const somenteNumeros = e.target.value.replace(/\D/g, '');
+                                                            const valorNumerico = somenteNumeros === ''
+                                                                ? lancamentoSelecionado?.preco || 0
+                                                                : parseFloat(somenteNumeros) / 100;
+
+                                                            setValorEditado(valorNumerico);
+
+                                                            setDisplay(
+                                                                valorNumerico.toLocaleString('pt-BR', {
+                                                                    style: 'currency',
+                                                                    currency: 'BRL'
+                                                                })
+                                                            );
                                                         }}
                                                         placeholder="R$ 0,00"
                                                         autoComplete="off"
                                                     />
+
+
                                                     <select
                                                         id='Tipo-status-select-categoria'
                                                         defaultValue={categoria}
@@ -919,7 +1046,7 @@ function Lancamentos() {
                                                     <button
                                                         id="Botao-atualizar-editar"
                                                         onClick={() => {
-                                                            tocarSom(audioAtualiza);
+                                                            tocarSom(passedGTA5);
 
                                                             const semAcento = (str) =>
                                                                 str
@@ -927,20 +1054,24 @@ function Lancamentos() {
                                                                     .replace(/[\u0300-\u036f]/g, "") // remove os acentos
                                                                     .toUpperCase();                // transforma em maiúscula
 
+                                                            if (lancamentoAtual.anotacao === "") {
+                                                                var anotacao = ""
+                                                            } else {
+                                                                var anotacao = lancamentoAtual.anotacao
+                                                            }
 
                                                             const bodyJson = {
                                                                 descricao: descricaoEditada,
                                                                 preco: valorEditado,
                                                                 dataVencimento: dataSelecionadaEdita,
                                                                 tipo: opcaoTipo,
-                                                                categoriaLancamento: semAcento(categoriaEdita),
+                                                                categoriaLancamento: semAcento(categoriaEdita)
                                                             };
 
                                                             console.log(bodyJson);
                                                             editaLancamento(bodyJson, lancamentoSelecionado?.idLancamento)
                                                             setData('');
-                                                        }
-                                                        }
+                                                        }}
                                                     >
                                                         Atualizar
                                                     </button>
@@ -954,29 +1085,29 @@ function Lancamentos() {
                                 </div>
                                 <div className='edita-lancamento'>
                                     <label id='descricao-lancamento-label' htmlFor="text">EXCLUIR</label>
-                                    <img id='exclui-img' src={apaga} className="icon" onClick={() => { abrirOverlayExclui(lancamento); tocarSom(audioClick); }} />
+                                    <img id='exclui-img' src={apaga} className="icon" onClick={() => { abrirOverlayExclui(lancamentoAtual); tocarSom(audioClick); }} />
                                 </div>
                             </div>
                             <div className='tipo-valor-vencimento-etc'>
                                 <div className='Tipo-lancamento-block'>
                                     <label id='descricao-lancamento-label' htmlFor="text">TIPO</label>
                                     <div style={{
-                                        backgroundColor: lancamento.tipo === "RECEITA" ? "#5EBB48" : "#dc3545"
+                                        backgroundColor: lancamentoAtual.tipo === "RECEITA" ? "#5EBB48" : "#dc3545"
                                     }} id='Div-tipo-lancamento'>
                                         <img
-                                            id="Iconseta-tipo" src={verificaSetaLancamento(lancamento.tipo)}
+                                            id="Iconseta-tipo" src={verificaSetaLancamento(lancamentoAtual.tipo)}
                                             alt=""
                                         />
-                                        <p id='Tipo-lancamento'>{lancamento.tipo}</p>
+                                        <p id='Tipo-lancamento'>{lancamentoAtual.tipo}</p>
                                     </div>
                                 </div>
                                 <div className='edita-lancamento'>
                                     <label id='descricao-lancamento-label' htmlFor="text">VALOR</label>
-                                    <p id='Valor-lancamento'>{formatador(lancamento.preco)}</p>
+                                    <p id='Valor-lancamento'>{formatador(lancamentoAtual.preco)}</p>
                                 </div>
                                 <div className='edita-lancamento'>
                                     <label id='descricao-lancamento-label' htmlFor="text">VENCIMENTO</label>
-                                    <p id='Vencimento-lancamento'>{lancamento.dataVencimento.split("-").reverse().join("/")}</p>
+                                    <p id='Vencimento-lancamento'>{lancamentoAtual.dataVencimento.split("-").reverse().join("/")}</p>
                                 </div>
                                 <div className='edita-lancamento'>
                                     <label id='descricao-lancamento-label' htmlFor="text">STATUS</label>
@@ -984,16 +1115,16 @@ function Lancamentos() {
                                         <select
                                             onClick={() => tocarSom(clickGTA)}
                                             style={{
-                                                color: lancamento.status === "PAGO" ? "#00ad2eff" : "#da0012ff"
+                                                color: lancamentoAtual.status === "PAGO" ? "#00ad2eff" : "#da0012ff"
                                             }}
                                             id="Status-select-lancamento"
-                                            value={lancamento.status}
+                                            value={lancamentoAtual.status}
                                             onChange={(e) => {
                                                 if (e.target.value === "PAGO") {
-                                                    alteraStatusPago(lancamento.idLancamento);
+                                                    alteraStatusPago(lancamentoAtual.idLancamento);
                                                     tocarSom(passedGTA5)
                                                 } else {
-                                                    alteraStatusPendente(lancamento.idLancamento);
+                                                    alteraStatusPendente(lancamentoAtual.idLancamento);
                                                     tocarSom(audioExcluir)
                                                 }
                                             }}
@@ -1008,15 +1139,15 @@ function Lancamentos() {
                                     <label id='descricao-lancamento-label' htmlFor="text">CATEGORIA</label>
                                     <p
                                         style={{
-                                            color: lancamento.categoriaLancamento === "Outras_Despesasas" ? "#4b4b4bff" : "#000000ff"
+                                            color: lancamentoAtual.categoriaLancamento === "Outras_Despesasas" ? "#4b4b4bff" : "#000000ff"
                                         }}
-                                        id='Categoria-lancamento'>{lancamento.categoriaLancamento}</p>
+                                        id='Categoria-lancamento'>{lancamentoAtual.categoriaLancamento}</p>
                                 </div>
                             </div>
                         </div>
                     ))}
             </div>
-        </div>
+        </div >
     );
 }
 
