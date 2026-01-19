@@ -202,7 +202,7 @@ function Imputs() {
                 <div className='overlayAnotacao'>
                     <div className='modalAnotacao'>
                         <p id='Descricao-anotacao' style={{ margin: "5px 0" }}>
-                            Adicionar uma anotação ao Lançamento?
+                            Se quiser, Adicione uma anotação ao Lançamento...
                         </p>
 
                         <textarea

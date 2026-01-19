@@ -1471,6 +1471,7 @@ h4 {
 }
 
 #Avancar{
+    font-size: 1.2vw;
     background-color: rgb(71, 105, 255);
     color: white;
     padding: 3%;
@@ -1487,6 +1488,7 @@ h4 {
 }
 
 #Cancelar{
+    font-size: 1.2vw;
     background-color: rgb(255, 38, 0);
     color: white;
     padding: 3%;
