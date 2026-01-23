@@ -16,8 +16,6 @@ export default function PlanosPage() {
     return percentage;
   }
 
-
-  const [metas, setMetas] = useState([]);
   const [loading, setLoading] = useState(true);
   const anoSelecionado = localStorage.getItem("ano-selecionado");
   const navigate = useNavigate();
@@ -41,6 +39,8 @@ export default function PlanosPage() {
 
   const [descEtapaForm, setDescEtapaForm] = useState(false);
   const [anotacaoEtapa, setAnotacaoEtapa] = useState("");
+  const [descricaoEtapa, setDescricaoEtapa] = useState("");
+  const [metas, setMetas] = useState([]);
 
 
   const idUsuario = idPessoa;
@@ -51,7 +51,6 @@ export default function PlanosPage() {
   }
 
   const audioClick = new Audio("/click.mp3");
-  const audioLoadingai = new Audio("/loadingia.mp3");
   const audioclickGTA = new Audio("/clickGTA.mp3");
   const audioPassedGTA5 = new Audio("/passedGTA5.mp3");
 
@@ -60,7 +59,65 @@ export default function PlanosPage() {
     som.play();
   };
 
+  async function CadastraMeta(bodyJson) {
+    alert("Entrou no cadastra Meta!")
+    const response = await api.post(`/meta/cadastraMeta`, bodyJson);
+    if (response.status === 403) {
+      alert('⚠ Você precisa fazer login novamente!');
+      localStorage.removeItem('token');
+      navigate('/');
+    }
+    if (response.status === 201) {
+      alert("Meta cadastrada com sucesso!")
+      //const response = await api.get(`/lancamento/buscaLancamentosPorMesEAno/${messelecionado}/${anoSelecionado}`);
+      if (response.status === 403) {
+        alert('⚠ Você precisa fazer login novamente!');
+        localStorage.removeItem('token');
+        navigate('/');
+      }
+      console.log('Resultado:', response);
+      //localStorage.setItem('body-response-array', JSON.stringify(response.data))
+      window.location.reload()
+      setShowForm(false);
+      return;
+    } else {
+      alert(`⚠ Algo deu errado! Código: ${response.status}`);
+      console.log('Algo deu errado!', response);
+    }
+  }
 
+  //Função que busca as metas
+  const carregarMetas = async () => {
+    const response = await api.get(`/meta/buscaMetas`);
+
+    if (response.status === 403) {
+      alert('⚠ Você precisa fazer login novamente!');
+      localStorage.removeItem('token');
+      navigate('/');
+    }
+    if (response.status === 200) {
+      localStorage.setItem('body-metas-array', JSON.stringify(response.data))
+      console.log('Resposta: ', response.data);
+
+    } else {
+      alert(`⚠ Algo deu errado! Código: ${response.status}`);
+      console.log('Algo deu errado!', response);
+    }
+  };
+
+  useEffect(() => {
+    const metasString = localStorage.getItem('body-metas-array');
+    if (metasString) {
+      const metasParsed = JSON.parse(metasString);
+      console.log("metasParsed:", metasParsed);
+      setMetas(metasParsed);
+    }
+  }, []);
+
+
+  useEffect(() => {
+    carregarMetas();
+  }, []); // [] significa "executa só uma vez, quando o componente monta"
 
   return (
     <div className="page-container">
@@ -136,14 +193,24 @@ export default function PlanosPage() {
               {descEtapaForm && (
                 <div className="overlay">
                   <div className="modalMeta">
-                    <label htmlFor="text">Nome da nova etapa</label>
+                    <label id="label-meta" htmlFor="text">Nome da nova etapa</label>
                     <input
                       type="text"
                       placeholder="Descrição etapa"
                       onChange={(e) =>
-                        setAnotacaoEtapa(e.target.value)
+                        setDescricaoEtapa(e.target.value)
                       }
                     />
+
+                    <label id="label-meta" htmlFor="text">Anotação</label>
+                    <textarea
+                      id="anotacao-meta"
+                      className="anotacao-conteudo"
+                      maxLength={255}
+                      onChange={(e) => setAnotacaoEtapa(e.target.value)}
+                      placeholder="Adicione uma anotação aqui..."
+                    />
+
                     <button
                       className="botoes"
                       id="editar"
@@ -151,9 +218,10 @@ export default function PlanosPage() {
                         const proximoNumero = listaEtapas.length + 1; // pega o próximo número da etapa
                         setListaEtapas(prev => [
                           ...prev,
-                          { numero: proximoNumero, descricao: anotacaoEtapa } // grava número + descrição
+                          { numero: proximoNumero, descricao: descricaoEtapa, anotacao: anotacaoEtapa } // grava número + descrição
                         ]);
                         setTotalEtapas(prev => prev + 1); // opcional, se você quiser atualizar totalEtapas
+                        setDescricaoEtapa(''); // limpa o input
                         setAnotacaoEtapa(''); // limpa o input
                         setDescEtapaForm(false)
                       }}
@@ -177,7 +245,8 @@ export default function PlanosPage() {
                 <div className="etapa" key={index}>
                   <div id="etapa-subdiv">
 
-                    <label id="descricao-etapa">Etapa {index + 1}: {etapa.descricao}</label>
+
+                    <label id="descricao-etapa">Etapa {index + 1}: {etapa.descricao}</label> <br />
 
                     <div>
                       <img
@@ -200,6 +269,12 @@ export default function PlanosPage() {
                     </div>
 
                   </div>
+                  <textarea
+                    id="anotacao-textarea"
+                    className="anotacao-conteudo"
+                    value={etapa.anotacao === "" ? "Sem anotação..." : "Anotação da etapa: \n" + etapa.anotacao}
+                    readOnly={false}
+                  />
                 </div>
               ))}
 
@@ -219,8 +294,9 @@ export default function PlanosPage() {
                             dataInicial: dataInicial,
                             dataAlvo: dataAlvo,
                             etapas: listaEtapas.map((etapa, index) => ({
-                              etapa: index + 1,
-                              descricao: etapa.descricao
+                              numero: index + 1,
+                              descricao: etapa.descricao,
+                              anotacao: etapa.anotacao
                             }))
                           },
                           null,
@@ -228,8 +304,19 @@ export default function PlanosPage() {
                         )
                       );
 
+                      const bodyJson = {
+                        descricao: description,
+                        anotacao: anotacaoMeta,
+                        dataInicial: dataInicial,
+                        dataAlvo: dataAlvo,
+                        etapas: listaEtapas.map((etapa, index) => ({
+                          numero: index + 1,
+                          descricao: etapa.descricao,
+                          anotacao: etapa.anotacao
+                        }))
+                      };
 
-                      window.location.reload()
+                      CadastraMeta(bodyJson);
                     } else {
                       alert("⚠️ A meta deve ter no minimo uma etapa!")
                     }
@@ -259,8 +346,23 @@ export default function PlanosPage() {
         <p className="text-center">Nenhuma meta foi encontrada...</p>
       ) : (
         <div className="planos-grid">
-          {planos.map((plano, index) => (
-            <h1>nada</h1>
+          {metas.map((metaBuscada) => (
+
+            <div className="div-metas" key={metaBuscada.idMeta} >
+              <div className="modalMetaBuscada">
+                <p>descrição Meta: {metaBuscada.descricao}</p>
+                <p>Anotação Meta: {metaBuscada.anotacao}`</p>
+
+                {metaBuscada.etapas.map((etapa) => (
+                  <div key={etapa.idEtapa}>
+                    <p>Etapa {etapa.numero}</p>
+                    <p>Descrição etapa: {etapa.descricao}</p>
+                    <p>Anotação etapa: {etapa.anotacao}</p>
+                  </div>
+                ))}
+
+              </div>
+            </div>
           ))}
         </div>
       )}

@@ -23,13 +23,6 @@
   color: rgba(255, 196, 70, 1);
 }
 
-.planos-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(25vw, 0fr));
-  gap: 24px;
-}
-
-
 .plano-card {
   background: white;
   border: 1px solid #e5e7eb;
@@ -80,7 +73,7 @@
   padding-left: 2%;
   padding-right: 2%;
   align-items: center;
-  margin-bottom: 2%;
+  margin-bottom: 1%;
 }
 
 #logo-exit-planing {
@@ -481,6 +474,7 @@ label {
 #etapa-subdiv {
   display: flex;
   justify-content: space-between;
+  margin-bottom: 2.5%;
 }
 
 #div-descricao-etapa {
@@ -506,4 +500,41 @@ label {
   color: #000000d5;
   font-family: 'Jersey 20', sans-serif;
   font-size: 2vw;
+}
+
+#anotacao-etapa{
+  color: #3d3d3d;
+  font-size: 1.7vw;
+}
+
+#anotacao-textarea {
+  resize: none;      /* impede redimensionamento manual */
+  overflow: auto;  /* remove a barra de rolagem */
+  min-height: 10vh;  /* altura mínima */
+  max-height: 30vh;
+  width: 100%;
+}
+
+.div-metas{
+  max-width: 50vw;
+  min-width: 46vw;
+  padding-left: 2%;
+  padding-right: 2%;
+}
+
+.modalMetaBuscada {
+  background: #fff;
+  text-align: left;
+  min-width: 36vw;
+  max-height: 90vh;
+}
+
+.planos-grid {
+  background-color: #00000048;
+  justify-content: space-around;
+  height: calc(90vh - 1px); /* header + margens */
+  overflow: auto;
+  display: grid;
+  grid-template-columns: repeat(2, 0fr);
+  gap: 2%;
 }
