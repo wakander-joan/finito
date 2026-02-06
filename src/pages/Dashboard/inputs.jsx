@@ -209,6 +209,7 @@ function Imputs() {
                             id="caixa-anotacao"
                             rows="4"
                             cols="30"
+                            maxLength={255}
                             placeholder="Escreva aqui a sua anotação..."
                             onChange={(e) => setAnotacao(e.target.value)}>
                         </textarea>

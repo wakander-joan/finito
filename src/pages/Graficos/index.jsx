@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import api from "../../services/api";
 import "./PlanosPage.css";
+import loadingGif2 from '../../assets/loading5.gif';
+import goku from '../../assets/loading3 - Copia.gif';
 import Exit from '../../assets/back.gif';
 import { useNavigate } from 'react-router-dom';
 import add from '../../assets/add.png';
@@ -8,15 +10,18 @@ import apaga from '../../assets/apaga.png';
 
 export default function PlanosPage() {
   // exemplo de dado vindo da API: "13/30"
-  function calculaProgressValue(parcelasPagas, parcelastotais) {
-    console.log(`${parcelasPagas}/${parcelastotais}`)
-    const backendValue = `${parcelasPagas}/${parcelastotais}`;
-    const [num, total] = backendValue.split("/").map(Number);
-    const percentage = Math.round((num / total) * 100);
+  function calculaProgresso(totalEtapasConcluidas, totalEtapas) {
+    if (!totalEtapas || totalEtapas === 0) return 0; // evita divisão por zero
+
+    const percentage = Math.round(
+      (totalEtapasConcluidas / totalEtapas) * 100
+    );
+
     return percentage;
   }
 
-  const [loading, setLoading] = useState(true);
+
+  const [loading, setLoading] = useState(false);
   const anoSelecionado = localStorage.getItem("ano-selecionado");
   const navigate = useNavigate();
   const [showForm, setShowForm] = useState(false);
@@ -42,6 +47,12 @@ export default function PlanosPage() {
   const [descricaoEtapa, setDescricaoEtapa] = useState("");
   const [metas, setMetas] = useState([]);
 
+  const statusColors = {
+    PENDENTE: "#949494e7",
+    EMANDAMENTO: "#7700ff",
+    IMPEDIDA: "#ff0000",
+    CONCLUIDA: "#00ad2e"
+  };
 
   const idUsuario = idPessoa;
 
@@ -53,6 +64,7 @@ export default function PlanosPage() {
   const audioClick = new Audio("/click.mp3");
   const audioclickGTA = new Audio("/clickGTA.mp3");
   const audioPassedGTA5 = new Audio("/passedGTA5.mp3");
+  const audioAtualiza = new Audio("/atualiza.mp3");
 
   const tocarSom = (som) => {
     som.currentTime = 0; // reinicia o áudio do começo
@@ -98,7 +110,6 @@ export default function PlanosPage() {
     if (response.status === 200) {
       localStorage.setItem('body-metas-array', JSON.stringify(response.data))
       console.log('Resposta: ', response.data);
-
     } else {
       alert(`⚠ Algo deu errado! Código: ${response.status}`);
       console.log('Algo deu errado!', response);
@@ -119,6 +130,34 @@ export default function PlanosPage() {
     carregarMetas();
   }, []); // [] significa "executa só uma vez, quando o componente monta"
 
+
+  async function alteraStatusEtapa(status, idEtapa) {
+    //alert(`Entrou no alteraStatusEtapa! ${status}, ${idEtapa}`);
+    setLoading(true)
+    const response = await api.patch(`/meta/alteraStatusEtapa/${idEtapa}/${status}`);
+    if (response.status === 403) {
+      alert('⚠ Você precisa fazer login novamente!');
+      localStorage.removeItem('token');
+      navigate('/');
+    }
+    if (response.status === 204) {
+      //tocarSom(audioPassedGTA5)
+      console.log('Resultado:', response);
+      //alert('Alteração realizada!');
+      carregarMetas();
+      setTimeout(() => {
+        setLoading(false)
+        tocarSom(audioAtualiza)
+        setTimeout(() => {
+          window.location.reload();
+        }, 500);
+      }, 1500);
+    } else {
+      alert(`⚠ Algo deu errado! Código: ${response.status}`);
+      console.log('Algo deu errado!', response);
+    }
+  }
+
   return (
     <div className="page-container">
       <div className="cabecalho-planing">
@@ -126,6 +165,12 @@ export default function PlanosPage() {
         <button className="criar" id="criar" onClick={() => { setShowForm(true); tocarSom(audioclickGTA); }} title="Criar nova meta!">NOVA META</button>
         <button className="criar" id="sair" onClick={() => { voltar_menu(); tocarSom(audioClick); }} title="Sair">🔙</button>
       </div>
+
+      {loading && (
+        <div className="loading-container">
+          <img id='saindo' src={loadingGif2} alt="Carregando..." />
+        </div>
+      )}
 
       {/* Overlay Cria Meta*/}
       {showForm && (
@@ -346,24 +391,70 @@ export default function PlanosPage() {
         <p className="text-center">Nenhuma meta foi encontrada...</p>
       ) : (
         <div className="planos-grid">
-          {metas.map((metaBuscada) => (
+          {metas.map((metaBuscada) => {
 
-            <div className="div-metas" key={metaBuscada.idMeta} >
-              <div className="modalMetaBuscada">
-                <p>descrição Meta: {metaBuscada.descricao}</p>
-                <p>Anotação Meta: {metaBuscada.anotacao}`</p>
+            const porcentagem =
+              metaBuscada.totalEtapas > 0
+                ? Math.round(
+                  (metaBuscada.totalEtapasConcluidas / metaBuscada.totalEtapas) * 100
+                )
+                : 0;
 
-                {metaBuscada.etapas.map((etapa) => (
-                  <div key={etapa.idEtapa}>
-                    <p>Etapa {etapa.numero}</p>
-                    <p>Descrição etapa: {etapa.descricao}</p>
-                    <p>Anotação etapa: {etapa.anotacao}</p>
+            return (
+              <div className="div-metas" key={metaBuscada.idMeta} >
+                <div className="modalMetaBuscada">
+                  <div className="texto-caixa">
+                    <h2 id="label-meta-map">Descrição Meta:</h2>
+                    <h2>{metaBuscada.descricao}</h2>
                   </div>
-                ))}
+                  <p>Anotação Meta: {metaBuscada.anotacao}</p>
 
+                  <div className="progress-container">
+                    <div
+                      className="progress-bar"
+                      style={{ width: `${porcentagem}%` }}
+                    />
+                    <img id='img-gokui-barra' src={goku} className="icon" />
+                    <p className="progress-text">{porcentagem}%</p>
+                  </div>
+
+                  {metaBuscada.etapas
+                    .slice()
+                    .sort((a, b) => a.numero - b.numero)
+                    .map((etapa) => (
+                      <div className="etapa-div" key={etapa.idEtapa}>
+                        <p >Etapa {etapa.numero}</p>
+                        <p>Descrição etapa: {etapa.descricao}</p>
+                        <p>Anotação etapa: {etapa.anotacao}</p>
+                        <div className=''>
+                          <p>Status</p>
+                          <select
+                            className="Status-Select"
+                            id="Status-select-lancamento"
+                            style={{ color: statusColors[etapa.status] || "#00cbfd" }}
+                            value={etapa.status}
+                            onChange={(e) => {
+                              const statusString = e.target.value
+                                .replace(/\s/g, "_")
+                                .toUpperCase();
+                              tocarSom(audioPassedGTA5);
+
+                              alteraStatusEtapa(statusString, etapa.idEtapa);
+                            }}
+                            onClick={() => tocarSom(clickGTA)}
+                          >
+                            <option id="Tipo-status-options-PENDENTE" value="PENDENTE">PENDENTE</option>
+                            <option id="Tipo-status-options-EMANDAMENTO" value="EMANDAMENTO">EMANDAMENTO</option>
+                            <option id="Tipo-status-options-IMPEDIDA" value="IMPEDIDA">IMPEDIDA</option>
+                            <option id="Tipo-status-options-CONCLUIDA" value="CONCLUIDA">CONCLUIDA</option>
+                          </select>
+                        </div>
+                      </div>
+                    ))}
+                </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       )}
 
