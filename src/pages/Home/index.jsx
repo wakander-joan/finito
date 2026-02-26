@@ -110,34 +110,6 @@ function Home() {
       </div>
       <button onClick={()=> navigate('/cadastrar')} id='botaocadastro'>Cadastrar</button>
 
-      <div className='rodape'>
-        <div className='coluna1'>
-          <h2>SOBRE</h2>
-          <h3>Quem somos</h3>
-          <h3>Missão e Valores</h3>
-          <h3>Termos de Uso</h3>
-        </div>
-        <div className='coluna1'>
-          <h2>RECURSOS</h2>
-          <h3>Dashboard Financeiro</h3>
-          <h3>Planejamento Mensal</h3>
-          <h3>Metas</h3>
-        </div>
-        <img id="logo-rodape" name='finito' src={Logo} />
-        <div className='coluna1'>
-          <h2>RECURSOS</h2>
-          <h3>Dashboard Financeiro</h3>
-          <h3>Planejamento Mensal</h3>
-          <h3>Metas</h3>
-        </div>
-        <div className='coluna1'>
-          <h2>RECURSOS</h2>
-          <h3>Dashboard Financeiro</h3>
-          <h3>Planejamento Mensal</h3>
-          <h3>Metas</h3>
-        </div>
-      </div>
-
     </div>
   );
 }
