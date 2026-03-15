@@ -96,7 +96,7 @@ function Home() {
             onChange={(e) => setSenha(e.target.value)}
           />
         </div>
-        <button type='button' onClick={()=>{login(); tocarSomLoading();}}>Entrar</button>
+        <button type='button' onClick={() => { login(); tocarSomLoading(); }}>Entrar</button>
       </form>
 
       { /*
@@ -109,8 +109,8 @@ function Home() {
         <img id="logo-face" name='google' src={Face} />
         <button onClick={() => window.open('https://www.facebook.com', '_blank', 'noopener,noreferrer')} id='botaoFace'>Logar com Facebook</button>
       </div>
-      <button onClick={()=> navigate('/cadastrar')} id='botaocadastro'>Cadastrar</button> 
       */}
+      <button onClick={() => navigate('/cadastrar')} id='botaocadastro'>Cadastrar</button>
     </div>
   );
 }
