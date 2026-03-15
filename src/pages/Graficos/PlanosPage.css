@@ -1,12 +1,17 @@
 .page-container {
   min-height: 100vh;
   width: 100%;
-  background: 
-    linear-gradient(180deg, #363467 0%, rgba(0, 0, 0, 0.473) 10%), /* Gradiente */
-    url('assets/gif.gif'); /* Imagem */
-  background-size: cover; /* Faz a imagem cobrir todo o fundo */
-  background-position: left; /* Centraliza a imagem */
-  background-repeat: no-repeat; /* Evita repetição */
+  background:
+    linear-gradient(180deg, #363467 0%, rgba(0, 0, 0, 0.473) 10%),
+    /* Gradiente */
+    url('assets/gif.gif');
+  /* Imagem */
+  background-size: cover;
+  /* Faz a imagem cobrir todo o fundo */
+  background-position: left;
+  /* Centraliza a imagem */
+  background-repeat: no-repeat;
+  /* Evita repetição */
 }
 
 .page-title {
@@ -17,13 +22,6 @@
   font-family: 'Jersey 20', sans-serif;
   color: rgba(255, 196, 70, 1);
 }
-
-.planos-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(25vw, 0fr));
-  gap: 24px;
-}
-
 
 .plano-card {
   background: white;
@@ -60,17 +58,22 @@
 .cabecalho-planing {
   height: 9vh;
   background-image:
-  linear-gradient(180deg, #363467 0%, rgba(0, 0, 0, 0.562) 10%), /* Gradiente */ 
-  url('../../assets/cabe.jpeg'); /* ajuste o caminho conforme a pasta */
-  background-size: cover;      /* cobre toda a área */
-  background-position: center; /* centraliza */
-  background-repeat: no-repeat; /* não repete */
+    linear-gradient(180deg, #363467 0%, rgba(0, 0, 0, 0.562) 10%),
+    /* Gradiente */
+    url('../../assets/cabe.jpeg');
+  /* ajuste o caminho conforme a pasta */
+  background-size: cover;
+  /* cobre toda a área */
+  background-position: center;
+  /* centraliza */
+  background-repeat: no-repeat;
+  /* não repete */
   display: flex;
   justify-content: space-between;
   padding-left: 2%;
   padding-right: 2%;
   align-items: center;
-  margin-bottom: 2%;
+  margin-bottom: 1%;
 }
 
 #logo-exit-planing {
@@ -93,38 +96,41 @@
   cursor: pointer;
 }
 
-.div-botoes{
+.div-botoes {
   padding-top: 3%;
   display: flex;
   justify-content: center;
 }
 
-#excluir{
+#excluir {
   font-family: 'jersey 20', sans-serif;
   background-color: rgb(0, 0, 0);
   width: 9vw;
   height: 6vh;
-  &:hover{
+
+  &:hover {
     background-color: rgba(255, 0, 0, 0.801);
   }
 }
 
-#editar{
+#editar {
   background-color: dodgerblue;
   width: 7vw;
   height: 6vh;
-  &:hover{
+
+  &:hover {
     background-color: deepskyblue;
   }
 }
 
-#status{
+#status {
   background-color: blueviolet;
 }
 
 .overlay {
   position: fixed;
-  inset: 0;                 /* top/right/bottom/left: 0 */
+  inset: 0;
+  /* top/right/bottom/left: 0 */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -134,7 +140,8 @@
 
 .overlay2 {
   position: fixed;
-  inset: 0;                 /* top/right/bottom/left: 0 */
+  inset: 0;
+  /* top/right/bottom/left: 0 */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -142,15 +149,18 @@
   z-index: 9999;
 }
 
-.modal {
+.modalMeta {
   background: #fff;
   padding: 15px;
-  border-radius: 10px;
   text-align: left;
-  width: 35vw;
+  width: 36vw;
+  min-width: 36vw;
+  max-height: 95vh;
+  overflow-y: auto;
+  /* habilita scroll vertical */
 }
 
-.modal2{
+.modal2 {
   background: #e0e0e0;
   padding: 15px;
   border-radius: 10px;
@@ -158,13 +168,13 @@
   width: 57vw;
 }
 
-.P-fechar{
+.P-fechar {
   display: flex;
   justify-content: space-between;
   padding-bottom: 2%;
 }
 
-#Botao-fechar{
+#Botao-fechar {
   font-family: 'JetBrains Mono', monospace;
   border-radius: 7px;
   padding: 0.7%;
@@ -175,7 +185,7 @@
 
 }
 
-.opcao-card{
+.opcao-card {
   background-color: white;
   display: block;
   margin-bottom: 1.5%;
@@ -184,13 +194,15 @@
   border: #111827 1px solid;
 }
 
-.opcoes-card{
+.opcoes-card {
   display: block;
-  max-height: 75vh; /* Limita a altura do modal */
-  overflow-y: auto;  /* Ativa barra de rolagem vertical se necessário */
+  max-height: 75vh;
+  /* Limita a altura do modal */
+  overflow-y: auto;
+  /* Ativa barra de rolagem vertical se necessário */
 }
 
-#selecionar{
+#selecionar {
   margin-top: 1%;
   border-radius: 5px;
   padding: 0.4%;
@@ -201,7 +213,7 @@
   cursor: pointer;
 }
 
-.Ceck-div{
+.Ceck-div {
   width: 12vw;
   height: 6vh;
   padding-left: 2%;
@@ -211,25 +223,25 @@
   align-items: center;
 }
 
-#check-box{
+#check-box {
   width: 1.5vw;
   cursor: pointer;
 }
 
-#data-plano{
-  font-family:'jersey 10', sans-serif;
+#data-plano {
+  font-family: 'jersey 10', sans-serif;
   font-size: 2.2vw;
   font-weight: lighter;
   width: 18vw;
 }
 
-#concluido{
+#concluido {
   font-family: 'JetBrains Mono', monospace;
   font-weight: bold;
   font-size: 1.2vw;
 }
 
-#criar{
+#criar {
   margin-top: 0.5%;
   text-align: center;
   font-size: 2vw;
@@ -245,13 +257,13 @@
   cursor: pointer;
   background-color: black;
 
-  &:hover{
+  &:hover {
     background-color: rgba(255, 196, 70, 1);
     color: rgba(0, 0, 0, 1);
   }
 }
 
-#sair{
+#sair {
   margin-top: 0.5%;
   text-align: center;
   font-size: 1.8vw;
@@ -266,31 +278,31 @@
   font-weight: bold;
   cursor: pointer;
   background-color: rgba(0, 0, 0, 0.72);
-  
-  &:hover{
+
+  &:hover {
     background-color: rgba(255, 196, 70, 1);
   }
 }
 
-.Titulo-New{
+.Titulo-New {
   text-align: center;
   font-family: "Jersey 10", sans-serif;
   font-weight: 400;
-  font-size:4vw;
+  font-size: 4vw;
   font-style: normal;
   padding-left: 2%;
   text-align: center;
 }
 
-.caixinhas{
+.caixinhas {
   display: flex;
   justify-content: space-between;
   padding-top: 2%;
   align-items: center;
-  font-size: 140%;
+  font-size: 170%;
 }
 
-.inputs-new-meta{
+.inputs-new-meta {
   font-family: "Jersey 10", sans-serif;
   width: 18vw;
   font-size: 2.2vw;
@@ -298,16 +310,16 @@
   color: black;
 }
 
-label{
+label {
   padding-left: 1%;
   font-family: "Jersey 20", sans-serif;
 }
 
-#descricao{
+#descricao {
   font-size: 140%;
 }
 
-.input-descricao{
+.input-descricao {
   width: 100%;
   margin: 0px;
 }
@@ -342,20 +354,27 @@ label{
 
 @keyframes glow-text {
   0% {
-    text-shadow: 
-      0 0 0px #2a817b,  /* sombra inicial sem brilho */
-      0 0 0px #52c5bc, 
+    text-shadow:
+      0 0 0px #2a817b,
+      /* sombra inicial sem brilho */
+      0 0 0px #52c5bc,
       0 0 0px rgba(0, 183, 255, 0);
   }
+
   50% {
-    text-shadow: 
-      0 0 5px #2a817b,   /* primeira camada */
-      0 0 10px #52c5bc,  /* segunda camada */
-      0 0 20px rgba(0, 183, 255, 0.7), /* brilho forte */
-      0 0 40px rgba(0, 68, 255, 0.5);  /* anel externo */
+    text-shadow:
+      0 0 5px #2a817b,
+      /* primeira camada */
+      0 0 10px #52c5bc,
+      /* segunda camada */
+      0 0 20px rgba(0, 183, 255, 0.7),
+      /* brilho forte */
+      0 0 40px rgba(0, 68, 255, 0.5);
+    /* anel externo */
   }
+
   100% {
-    text-shadow: 
+    text-shadow:
       0 0 0px #2a817b,
       0 0 0px #52c5bc,
       0 0 0px rgba(0, 183, 255, 0);
@@ -370,7 +389,7 @@ label{
 }
 
 
-#img_loading{
+#img_loading {
   height: 50%;
 }
 
@@ -393,17 +412,205 @@ label{
   }
 }
 
-.text-center{
+.text-center {
   text-align: center;
   font-family: 'Jersey 10', sans-serif;
   font-size: 2.8vw;
   color: white;
 }
 
-#separador{
+#separador {
   text-align: center;
   font-family: 'Jersey 10', sans-serif;
   font-size: 2.2vw;
   color: gray;
 }
 
+#anotacao-meta {
+  border-radius: 7px;
+  height: 10vh;
+}
+
+#label-meta {
+  font-size: 1.9vw;
+}
+
+#descricao-meta {
+  margin-bottom: 2%;
+}
+
+#add {
+  width: 3vw;
+  cursor: pointer;
+
+  &:hover {
+    transform: scale(1.1);
+    transition: transform 0.3s ease;
+    color: chocolate;
+  }
+}
+
+.etapa {
+  margin-top: 2%;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #000000;
+  border-radius: 7px;
+  padding: 2%;
+}
+
+#del {
+  padding-top: 3%;
+  width: 1.5vw;
+  cursor: pointer;
+
+  &:hover {
+    transform: scale(1.1);
+    transition: transform 0.3s ease;
+    color: chocolate;
+  }
+}
+
+#etapa-subdiv {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 2.5%;
+}
+
+#div-descricao-etapa {
+  min-width: 90%;
+}
+
+.add-div {
+  align-items: center;
+  justify-content: center;
+  gap: 0px;
+  margin-top: 3%;
+  display: flex;
+}
+
+#Label-nova-etapa {
+  color: #b3b3b3;
+  font-family: 'Jersey 20', sans-serif;
+  font-size: 2.3vw;
+}
+
+
+#descricao-etapa {
+  color: #000000d5;
+  font-family: 'Jersey 20', sans-serif;
+  font-size: 2vw;
+}
+
+#anotacao-etapa{
+  color: #3d3d3d;
+  font-size: 1.7vw;
+}
+
+#anotacao-textarea {
+  resize: none;      /* impede redimensionamento manual */
+  overflow: auto;  /* remove a barra de rolagem */
+  min-height: 10vh;  /* altura mínima */
+  max-height: 30vh;
+  width: 100%;
+}
+
+.div-metas{
+  max-width: 50vw;
+  min-width: 46vw;
+  padding-left: 2%;
+  padding-right: 2%;
+}
+
+.modalMetaBuscada {
+  border-radius: 10px;
+  background: #fff;
+  text-align: left;
+  min-width: 36vw;
+  max-height: 90vh;
+  padding: 1%;
+}
+
+.planos-grid {
+  background-color: #00000048;
+  justify-content: space-around;
+  height: calc(90vh - 1px); /* header + margens */
+  overflow: auto;
+  display: grid;
+  grid-template-columns: repeat(2, 0fr);
+  gap: 2%;
+}
+
+.etapa-div{
+  padding: 1%;
+  margin: 1%;
+  border: 0.1px solid #6e6e6e;
+  border-radius: 10px;
+}
+
+#Tipo-status-options-PENDENTE{
+  font-family: 'Jersey 20', sans-serif;
+  color: #949494e7;
+}
+
+#Tipo-status-options-EMANDAMENTO{
+  font-family: 'Jersey 20', sans-serif;
+  color: #7700ff;
+}
+
+#Tipo-status-options-IMPEDIDA{
+  font-family: 'Jersey 20', sans-serif;
+  color: red;
+}
+
+#Tipo-status-options-CONCLUIDA{
+  font-family: 'Jersey 20', sans-serif;
+  color: #00ad2e;
+}
+
+.progress-container {
+  width: 98%;
+  height: 2vw;
+  background-color: #e0e0e0;
+  border-radius: 8px;
+  overflow: hidden;
+  margin: 6px 0;
+  display: flex;
+  gap: 0px;
+  margin: 1%;
+}
+
+.progress-bar {
+  height: 100%;
+  background-color: #4caf50;
+  transition: width 0.3s ease;
+}
+
+.progress-text {
+  color: white;
+  background-color: #4caf50;
+  font-family: 'Jersey 20', sans-serif;
+  font-size: 1.9vw;
+  text-align: right;
+}
+
+.texto-caixa {
+  background: #fafafa;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #222;
+  box-shadow: inset 0 1px 3px rgba(0,0,0,0.08);
+  display: flex;
+}
+
+#img-gokui-barra{
+  background-color: #4caf50;
+}
+
+#label-meta-map{
+  color: #05bb0b;
+  font-weight: 900;
+}

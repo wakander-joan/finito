@@ -283,8 +283,8 @@ function Lancamentos() {
     function confirmaReplica(idsReplica) {
         //alert('Entrou no comfirmaReplica!');
 
-        if (Number(numeroMes) === Number(mesDestino)) {
-            alert('Mês de destino igual ao mês atual! Escolha outro mês!');
+        if (Number(numeroMes) === Number(mesDestino) && anoSelecionado === anoDestino) {
+            alert('Mês e Ano de destino igual! Escolha outro mês, ou outro Ano!');
             return;
         }
         const bodyJson = {
@@ -828,14 +828,6 @@ function Lancamentos() {
                             placeholder="Pesquisar..."
                             value={inputValue} // controlled input
                             onChange={(e) => setInputValue(e.target.value)} // atualiza a constante
-                        />
-                    </div>
-                    <div className="box-maximizar">
-                        <img
-                            src={maximizar}
-                            title="Maximizar lançamentos"
-                            className="icon-maximizar"
-                            onClick={() => { navigate('/full'); tocarSom(audioClick); }}
                         />
                     </div>
                 </div>

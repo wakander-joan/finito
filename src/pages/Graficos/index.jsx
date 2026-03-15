@@ -1,32 +1,27 @@
 import React, { useEffect, useState } from "react";
 import api from "../../services/api";
 import "./PlanosPage.css";
+import loadingGif2 from '../../assets/loading5.gif';
+import goku from '../../assets/loading3 - Copia.gif';
 import Exit from '../../assets/back.gif';
 import { useNavigate } from 'react-router-dom';
-import loadingGif2 from '../../assets/loading5.gif'; // seu gif de loading
-import loadingGif3 from '../../assets/load-loading7.gif'; // seu gif de loading
+import add from '../../assets/add.png';
+import apaga from '../../assets/apaga.png';
 
 export default function PlanosPage() {
-
-  const [resposta, setRespostaDeep] = useState('');
-  const API_KEY = 'sk-74cf215326ba4a9c901dd9966d7a3572';
-  const [showOverlay, setShowOverlay] = useState(false);
-  const [opcoesOverlay, setOpcoesOverlay] = useState([]);
-  const [loadingIA, setLoadingIA] = useState(false);
-  const [loadingIASave, setloadingIASave] = useState(false);
-
   // exemplo de dado vindo da API: "13/30"
-  function calculaProgressValue(parcelasPagas, parcelastotais) {
-    console.log(`${parcelasPagas}/${parcelastotais}`)
-    const backendValue = `${parcelasPagas}/${parcelastotais}`;
-    const [num, total] = backendValue.split("/").map(Number);
-    const percentage = Math.round((num / total) * 100);
+  function calculaProgresso(totalEtapasConcluidas, totalEtapas) {
+    if (!totalEtapas || totalEtapas === 0) return 0; // evita divisão por zero
+
+    const percentage = Math.round(
+      (totalEtapasConcluidas / totalEtapas) * 100
+    );
+
     return percentage;
   }
 
 
-  const [planos, setPlanos] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const anoSelecionado = localStorage.getItem("ano-selecionado");
   const navigate = useNavigate();
   const [showForm, setShowForm] = useState(false);
@@ -42,258 +37,126 @@ export default function PlanosPage() {
   const [planoJsonText, setPlanoJson] = useState();
   const [idMetaCriada, setIdMetaCriada] = useState("");
 
-  async function criaLancamentosMetas(opcao) {
+  const [anotacaoMeta, setAnotacaoMeta] = useState("");
+  const [totalEtapas, setTotalEtapas] = useState(0);
 
-    const responseTxt2 = await fetch("/prompt2.txt");
-    const prompt = await responseTxt2.text();
+  const [listaEtapas, setListaEtapas] = useState([]);
 
-    const opcaoMandar = {
-      opcao: opcao.numeroDaOpcao,
-      motivo: opcao.MotivoDaOpcao,
-      numeroParcelas: opcao.numeroDeParcelasEValoresDelas
-    }
+  const [descEtapaForm, setDescEtapaForm] = useState(false);
+  const [anotacaoEtapa, setAnotacaoEtapa] = useState("");
+  const [descricaoEtapa, setDescricaoEtapa] = useState("");
+  const [metas, setMetas] = useState([]);
 
-    const opcaoJson = JSON.stringify(opcaoMandar);
-    console.log(`${planoJsonText}\n\n${opcaoJson}\n\n${prompt}`);
-
-    console.clear();
-    setloadingIASave(true)
-    const respostaDeepSeek = await chamarAPI(`${planoJsonText}\n\n${opcaoJson}\n\n${prompt}`);
-
-    //Aqui Chamar a API para salvar a resposta do Deepseek + idMeta e idPessoa
-    const respostaDeepSeekJson = JSON.parse(respostaDeepSeek);
-    const idMeta = idMetaCriada;
-
-
-    console.log(`${respostaDeepSeek} \n\n ${idMeta}`)
-
-    console.clear();
-    try {
-      const response = await api.post(`/lancamento/cadastraLancamentoEmLote/${idMeta}`, respostaDeepSeekJson);
-      if (response.status === 403) {
-        alert('⚠ Você precisa fazer login novamente!');
-        localStorage.removeItem('token');
-        navigate('/');
-      }
-      setloadingIASave(false)
-      if (response.status === 201) {
-        alert('Lancamentos cadastrados com sucesso!');
-        window.location.reload();
-      } else {
-        alert(`⚠ Algo deu errado! Código: ${response.status}`);
-      }
-
-    } catch (error) {
-      console.error("Erro na API:", error);
-      alert("⚠ Erro ao buscar planos!");
-    }
-
-  }
-
-  //Adicionar uma animação de overlayer!
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    const plano = {
-      description,
-      dataInicial,
-      dataAlvo,
-      valorInicial: parseFloat(valueStart),
-      valorAlvo: parseFloat(valueFinish),
-      idUsuario: idPessoa,
-    };
-
-    const planoJson = JSON.stringify(plano);
-    setPlanoJson(planoJson)
-    const responseTxt = await fetch("/prompt.txt");
-    const txtConteudo = await responseTxt.text();
-
-
-    try {
-      console.log("✅ Dados do plano:", plano);
-
-      console.log(`${txtConteudo} ${planoJson}`);
-      setShowForm(false)
-      setLoadingIA(true)
-      const respostaDeepSeek = await chamarAPI(`${txtConteudo} ${planoJson}`);
-      setLoadingIA(false)
-      paraSom();
-      console.log(respostaDeepSeek);
-      const arrayDeJson = JSON.parse(respostaDeepSeek);
-      setShowOverlay
-      abrirOverlayComOpcoes(arrayDeJson)
-
-
-      const responseDeep = await api.post(`/meta/createMeta`, plano);
-      if (response.status === 403) {
-        alert('⚠ Você precisa fazer login novamente!');
-        localStorage.removeItem('token');
-        navigate('/');
-      }
-      if (responseDeep.status === 201) {
-        paraSom;
-        //setPlanos(responseDeep.data);
-        const id = responseDeep.data.id;
-        setIdMetaCriada(id)
-        console.log(idMetaCriada);
-      } else {
-        alert(`⚠ Algo deu errado! Código: ${response.status}`);
-      }
-
-    } catch (error) {
-      paraSom;
-      console.error("Erro na API:", error);
-      alert("⚠ Erro ao buscar planos!");
-    }
-
-    //window.location.reload();
-    //setShowForm(false);
+  const statusColors = {
+    PENDENTE: "#949494e7",
+    EMANDAMENTO: "#7700ff",
+    IMPEDIDA: "#ff0000",
+    CONCLUIDA: "#00ad2e"
   };
-
 
   const idUsuario = idPessoa;
 
-  async function buscaPlanos() {
-    try {
-      const response = await api.get(`/meta/getAllMeta/${idUsuario}`);
-      if (response.status === 403) {
-        alert('⚠ Você precisa fazer login novamente!');
-        localStorage.removeItem('token');
-        navigate('/');
-      }
-      if (response.status === 200) {
-        setPlanos(response.data);
-      } else {
-        alert(`⚠ Algo deu errado! Código: ${response.status}`);
-      }
-    } catch (error) {
-      console.error("Erro na API:", error);
-      alert("⚠ Erro ao buscar planos!");
-    } finally {
-      setLoading(false);
-    }
-  }
-
-
-  async function mudarStatus(id) {
-    try {
-      const response = await apiPlanos.patch(`/planning/changeStatusPlanning/${id}`);
-      if (response.status === 403) {
-        alert('⚠ Você precisa fazer login novamente!');
-        localStorage.removeItem('token');
-        navigate('/');
-      }
-      if (response.status === 200) {
-        window.location.reload();
-      } else {
-        alert(`⚠ Algo deu errado! Código: ${response.status}`);
-      }
-    } catch (error) {
-      console.error("Erro na API:", error);
-      alert("⚠ Erro ao buscar planos!");
-    }
-
-  }
-
-  async function deletaPlano(id) {
-    try {
-      const response = await api.delete(`/meta/deleteMetaId/${id}`);
-      if (response.status === 403) {
-        alert('⚠ Você precisa fazer login novamente!');
-        localStorage.removeItem('token');
-        navigate('/');
-      }
-      if (response.status === 200) {
-        window.location.reload();
-      } else {
-        alert(`⚠ Algo deu errado! Código: ${response.status}`);
-      }
-    } catch (error) {
-      console.error("Erro na API:", error);
-      alert("⚠ Erro ao buscar planos!");
-    }
-
-  }
-
-  useEffect(() => {
-    buscaPlanos();
-  }, [anoSelecionado]);
-
-  if (loading) {
-    return <p>Carregando planos...</p>;
-  }
 
   async function voltar_menu() {
     navigate('/cadastro')
   }
 
-
-  // definir fora: const [resposta, setRespostaDeep] = useState('');
-
-  const chamarAPI = async (prompt) => {
-    try {
-      tocarSom(audioLoadingai);
-      const response = await fetch('https://api.deepseek.com/v1/chat/completions', {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${API_KEY}`,
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          model: 'deepseek-chat',
-          messages: [
-            { role: 'system', content: 'Responda sempre em português do Brasil.' },
-            { role: 'user', content: prompt }
-          ]
-        })
-      });
-      paraSom()
-      if (!response.ok) {
-        // Log/erro amigável
-        const text = await response.text();
-        throw new Error(`Deepseek error ${response.status}: ${text}`);
-      }
-      paraSom();
-      const data = await response.json();
-      const content = data?.choices?.[0]?.message?.content ?? '';
-      setRespostaDeep(content); // atualiza state
-      paraSom(); // para sons
-      return content; // retorna para uso imediato
-    } catch (err) {
-      console.error('Erro chamarAPI:', err);
-      setRespostaDeep('');
-      return ''; // fallback
-    }
-  };
-
-  // State que controla o modal e recebe os dados
-
-  // Função que recebe o array e abre o modal
-  const abrirOverlayComOpcoes = (arrayDeOpcoes) => {
-    setOpcoesOverlay(arrayDeOpcoes); // define os dados a serem exibidos
-    setShowForm(false)
-    setShowOverlay(true);            // abre o modal
-  };
-
   const audioClick = new Audio("/click.mp3");
-  const audioLoadingai = new Audio("/loadingia.mp3");
   const audioclickGTA = new Audio("/clickGTA.mp3");
   const audioPassedGTA5 = new Audio("/passedGTA5.mp3");
+  const audioAtualiza = new Audio("/atualiza.mp3");
 
   const tocarSom = (som) => {
     som.currentTime = 0; // reinicia o áudio do começo
     som.play();
   };
 
-  const paraSom = () => {
-    document.querySelectorAll("audio, video").forEach(el => {
-      el.pause();
-      el.currentTime = 0;
-    });
+  async function CadastraMeta(bodyJson) {
+    alert("Entrou no cadastra Meta!")
+    const response = await api.post(`/meta/cadastraMeta`, bodyJson);
+    if (response.status === 403) {
+      alert('⚠ Você precisa fazer login novamente!');
+      localStorage.removeItem('token');
+      navigate('/');
+    }
+    if (response.status === 201) {
+      alert("Meta cadastrada com sucesso!")
+      //const response = await api.get(`/lancamento/buscaLancamentosPorMesEAno/${messelecionado}/${anoSelecionado}`);
+      if (response.status === 403) {
+        alert('⚠ Você precisa fazer login novamente!');
+        localStorage.removeItem('token');
+        navigate('/');
+      }
+      console.log('Resultado:', response);
+      //localStorage.setItem('body-response-array', JSON.stringify(response.data))
+      window.location.reload()
+      setShowForm(false);
+      return;
+    } else {
+      alert(`⚠ Algo deu errado! Código: ${response.status}`);
+      console.log('Algo deu errado!', response);
+    }
+  }
+
+  //Função que busca as metas
+  const carregarMetas = async () => {
+    const response = await api.get(`/meta/buscaMetas`);
+
+    if (response.status === 403) {
+      alert('⚠ Você precisa fazer login novamente!');
+      localStorage.removeItem('token');
+      navigate('/');
+    }
+    if (response.status === 200) {
+      localStorage.setItem('body-metas-array', JSON.stringify(response.data))
+      console.log('Resposta: ', response.data);
+    } else {
+      alert(`⚠ Algo deu errado! Código: ${response.status}`);
+      console.log('Algo deu errado!', response);
+    }
   };
 
+  useEffect(() => {
+    const metasString = localStorage.getItem('body-metas-array');
+    if (metasString) {
+      const metasParsed = JSON.parse(metasString);
+      console.log("metasParsed:", metasParsed);
+      setMetas(metasParsed);
+    }
+  }, []);
 
+
+  useEffect(() => {
+    carregarMetas();
+  }, []); // [] significa "executa só uma vez, quando o componente monta"
+
+
+  async function alteraStatusEtapa(status, idEtapa) {
+    //alert(`Entrou no alteraStatusEtapa! ${status}, ${idEtapa}`);
+    setLoading(true)
+    const response = await api.patch(`/meta/alteraStatusEtapa/${idEtapa}/${status}`);
+    if (response.status === 403) {
+      alert('⚠ Você precisa fazer login novamente!');
+      localStorage.removeItem('token');
+      navigate('/');
+    }
+    if (response.status === 204) {
+      //tocarSom(audioPassedGTA5)
+      console.log('Resultado:', response);
+      //alert('Alteração realizada!');
+      carregarMetas();
+      setTimeout(() => {
+        setLoading(false)
+        tocarSom(audioAtualiza)
+        setTimeout(() => {
+          window.location.reload();
+        }, 500);
+      }, 1500);
+    } else {
+      alert(`⚠ Algo deu errado! Código: ${response.status}`);
+      console.log('Algo deu errado!', response);
+    }
+  }
 
   return (
     <div className="page-container">
@@ -302,57 +165,38 @@ export default function PlanosPage() {
         <button className="criar" id="criar" onClick={() => { setShowForm(true); tocarSom(audioclickGTA); }} title="Criar nova meta!">NOVA META</button>
         <button className="criar" id="sair" onClick={() => { voltar_menu(); tocarSom(audioClick); }} title="Sair">🔙</button>
       </div>
-      {/* Overlay de Loading */}
-      {loadingIA && (
-        <div className="loading-container">
-          <img id="img_loading" src={loadingGif2} alt="Carregando..." />
-          <p class="typing">Criando opções de Parcelamento...</p>
-        </div>
-      )}
 
-      {loadingIASave && (
+      {loading && (
         <div className="loading-container">
-          <img id="img_loading" src={loadingGif3} alt="Carregando..." />
-          <p class="typing">Salvando Lançamentos...</p>
-        </div>
-      )}
-
-      {showOverlay && (
-        <div className="overlay">
-          <div className="modal2">
-            <div className="P-fechar">
-              <h2>Opções</h2>
-              <button id="Botao-fechar" onClick={() => setShowOverlay(false)}>Fechar</button>
-            </div>
-            <div className="opcoes-card">
-              {opcoesOverlay.map((opcao) => (
-                <div key={opcao.numeroDaOpcao} className="opcao-card">
-                  <h2>Opção {opcao.numeroDaOpcao}</h2>
-                  <p><strong>Motivo:</strong> {opcao.MotivoDaOpcao}</p>
-                  <p><strong>Parcelas:</strong> {opcao.numeroDeParcelasEValoresDelas}</p>
-                  <button id="selecionar" onClick={() => { criaLancamentosMetas(opcao); setShowOverlay(false); }}>Selecionar</button>
-                </div>
-              ))}
-            </div>
-          </div>
+          <img id='saindo' src={loadingGif2} alt="Carregando..." />
         </div>
       )}
 
       {/* Overlay Cria Meta*/}
       {showForm && (
         <div className="overlay">
-          <div className="modal">
+          <div className="modalMeta">
             <h2 className="Titulo-New">Nova Meta🚀</h2>
 
-            <form id="div-input" onSubmit={handleSubmit} className="div-123">
-              <label id="descricao" htmlFor="text">Descrição</label>
+            <form id="div-input" className="div-123">
+              <label id="label-meta" htmlFor="text">Descrição</label>
               <input
+                id="descricao-meta"
                 type="text"
                 placeholder="Escreva a descrição..."
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
                 className="input-descricao"
                 required
+              />
+
+              <label id="label-meta" htmlFor="text">Anotação</label>
+              <textarea
+                id="anotacao-meta"
+                className="anotacao-conteudo"
+                maxLength={255}
+                onChange={(e) => setAnotacaoMeta(e.target.value)}
+                placeholder="Adicione uma anotação aqui..."
               />
 
               <div className="caixinhas">
@@ -369,19 +213,6 @@ export default function PlanosPage() {
               </div>
 
               <div className="caixinhas">
-                <label htmlFor="text">Valor Inicial💲</label>
-                <input
-                  type="number"
-                  step="0.01"
-                  placeholder="R$ 00,00"
-                  value={valueStart}
-                  onChange={(e) => setValueStart(e.target.value)}
-                  className="inputs-new-meta"
-                  required
-                />
-              </div>
-              <p id='separador' >-------------------------------------------</p>
-              <div className="caixinhas">
                 <label htmlFor="text">Data Alvo📅</label>
                 <input
                   onClick={() => tocarSom(audioclickGTA)}
@@ -393,24 +224,149 @@ export default function PlanosPage() {
                   required
                 />
               </div>
-              <div className="caixinhas">
-                <label htmlFor="text">Valor Alvo💸</label>
-                <input
-                  type="number"
-                  step="0.01"
-                  placeholder="R$ 00,00"
-                  value={valueFinish}
-                  onChange={(e) => setValueFinish(e.target.value)}
-                  className="inputs-new-meta"
-                  required
-                />
+
+              <div className="add-div">
+                <img id='add' src={add} className="icon"
+                  onClick={() => {
+                    setDescEtapaForm(true);
+                    //alert(`Adicionando mais uma etapa... \n Total de etapas ${totalEtapas + 1}`);
+                    tocarSom(audioClick);
+                  }} />
+                <label id="Label-nova-etapa" htmlFor="text">Adicionar nova etapa...</label>
               </div>
+
+              {descEtapaForm && (
+                <div className="overlay">
+                  <div className="modalMeta">
+                    <label id="label-meta" htmlFor="text">Nome da nova etapa</label>
+                    <input
+                      type="text"
+                      placeholder="Descrição etapa"
+                      onChange={(e) =>
+                        setDescricaoEtapa(e.target.value)
+                      }
+                    />
+
+                    <label id="label-meta" htmlFor="text">Anotação</label>
+                    <textarea
+                      id="anotacao-meta"
+                      className="anotacao-conteudo"
+                      maxLength={255}
+                      onChange={(e) => setAnotacaoEtapa(e.target.value)}
+                      placeholder="Adicione uma anotação aqui..."
+                    />
+
+                    <button
+                      className="botoes"
+                      id="editar"
+                      onClick={() => {
+                        const proximoNumero = listaEtapas.length + 1; // pega o próximo número da etapa
+                        setListaEtapas(prev => [
+                          ...prev,
+                          { numero: proximoNumero, descricao: descricaoEtapa, anotacao: anotacaoEtapa } // grava número + descrição
+                        ]);
+                        setTotalEtapas(prev => prev + 1); // opcional, se você quiser atualizar totalEtapas
+                        setDescricaoEtapa(''); // limpa o input
+                        setAnotacaoEtapa(''); // limpa o input
+                        setDescEtapaForm(false)
+                      }}
+                    >
+                      Gravar
+                    </button>
+
+                    <button
+                      className="botoes"
+                      id="editar"
+                      onClick={() => { setDescEtapaForm(false) }}
+                    >
+                      Cancelar
+                    </button>
+                  </div>
+                </div>
+              )}
+
+              {/* Aqui ele exibe a lista de Etapas...................................................................*/}
+              {listaEtapas.map((etapa, index) => (
+                <div className="etapa" key={index}>
+                  <div id="etapa-subdiv">
+
+
+                    <label id="descricao-etapa">Etapa {index + 1}: {etapa.descricao}</label> <br />
+
+                    <div>
+                      <img
+                        id="del"
+                        src={apaga}
+                        className="icon"
+                        onClick={() => {
+                          tocarSom(audioclickGTA);
+
+                          setTotalEtapas(prev => prev - 1);
+
+                          // Remove a etapa clicada e reorganiza números
+                          setListaEtapas(prev => {
+                            const novaLista = [...prev];
+                            novaLista.splice(index, 1); // remove a etapa
+                            return novaLista; // indices vão servir como novo número
+                          });
+                        }}
+                      />
+                    </div>
+
+                  </div>
+                  <textarea
+                    id="anotacao-textarea"
+                    className="anotacao-conteudo"
+                    value={etapa.anotacao === "" ? "Sem anotação..." : "Anotação da etapa: \n" + etapa.anotacao}
+                    readOnly={false}
+                  />
+                </div>
+              ))}
+
 
               <div className="div-botoes">
                 <button
                   className="botoes"
-                  type="submit"
+                  type="button"
                   id="editar"
+                  onClick={() => { // Mostrar todas as etapas
+                    if (listaEtapas && listaEtapas.length > 0) {
+                      alert(
+                        JSON.stringify(
+                          {
+                            descricao: description,
+                            anotacao: anotacaoMeta,
+                            dataInicial: dataInicial,
+                            dataAlvo: dataAlvo,
+                            etapas: listaEtapas.map((etapa, index) => ({
+                              numero: index + 1,
+                              descricao: etapa.descricao,
+                              anotacao: etapa.anotacao
+                            }))
+                          },
+                          null,
+                          2 // identação de 2 espaços
+                        )
+                      );
+
+                      const bodyJson = {
+                        descricao: description,
+                        anotacao: anotacaoMeta,
+                        dataInicial: dataInicial,
+                        dataAlvo: dataAlvo,
+                        etapas: listaEtapas.map((etapa, index) => ({
+                          numero: index + 1,
+                          descricao: etapa.descricao,
+                          anotacao: etapa.anotacao
+                        }))
+                      };
+
+                      CadastraMeta(bodyJson);
+                    } else {
+                      alert("⚠️ A meta deve ter no minimo uma etapa!")
+                    }
+
+                  }}
                 >
                   Enviar
                 </button>
@@ -418,7 +374,7 @@ export default function PlanosPage() {
                 <button
                   className="botoes"
                   type="button"
-                  onClick={() => setShowForm(false)}
+                  onClick={() => { window.location.reload() }}
                   id="excluir"
                 >
                   Cancelar
@@ -430,52 +386,77 @@ export default function PlanosPage() {
       )}
       {/* fin da Overlayer */}
 
-      {/*Começa overlayer de Planos.............................*/}
       {/*Começa overlayer de Metas.............................*/}
-      {planos.length === 0 ? (
-        <p className="text-center">Nenhuma meta encontrada...</p>
+      {metas.length === 0 ? (
+        <p className="text-center">Nenhuma meta foi encontrada...</p>
       ) : (
         <div className="planos-grid">
-          {planos.map((plano, index) => (
-            <div key={index} className="plano-card">
-              <h2 className="plano-title">{plano.description}</h2>
+          {metas.map((metaBuscada) => {
 
-              <p className="plano-info">
-                <strong>Valor Inicial:</strong> R$ {plano.valorInicial.toFixed(2)}
-              </p>
-              <p className="plano-info">
-                <strong>Valor Alvo:</strong> R$ {plano.valorAlvo.toFixed(2)}
-              </p>
-              <p className="plano-info">
-                <strong>Data Inicial:</strong>{" "}
-                {plano.dataInicial ? plano.dataInicial.split("-").reverse().join("/") : "-"}
-              </p>
-              <p className="plano-info">
-                <strong>Data Alvo:</strong>{" "}
-                {plano.dataAlvo ? plano.dataAlvo.split("-").reverse().join("/") : "-"}
-              </p>
+            const porcentagem =
+              metaBuscada.totalEtapas > 0
+                ? Math.round(
+                  (metaBuscada.totalEtapasConcluidas / metaBuscada.totalEtapas) * 100
+                )
+                : 0;
 
-              {/* Barra de porcentagem (mantida) */}
-              <div className="progress-container">
-                <label>Progresso... </label>
-                <progress value={calculaProgressValue(plano.parcelasPagas, plano.parcelasTotais)} max="100"></progress>
-                <span>{calculaProgressValue(plano.parcelasPagas, plano.parcelasTotais)}%</span>
+            return (
+              <div className="div-metas" key={metaBuscada.idMeta} >
+                <div className="modalMetaBuscada">
+                  <div className="texto-caixa">
+                    <h2 id="label-meta-map">Descrição Meta:</h2>
+                    <h2>{metaBuscada.descricao}</h2>
+                  </div>
+                  <p>Anotação Meta: {metaBuscada.anotacao}</p>
+
+                  <div className="progress-container">
+                    <div
+                      className="progress-bar"
+                      style={{ width: `${porcentagem}%` }}
+                    />
+                    <img id='img-gokui-barra' src={goku} className="icon" />
+                    <p className="progress-text">{porcentagem}%</p>
+                  </div>
+
+                  {metaBuscada.etapas
+                    .slice()
+                    .sort((a, b) => a.numero - b.numero)
+                    .map((etapa) => (
+                      <div className="etapa-div" key={etapa.idEtapa}>
+                        <p >Etapa {etapa.numero}</p>
+                        <p>Descrição etapa: {etapa.descricao}</p>
+                        <p>Anotação etapa: {etapa.anotacao}</p>
+                        <div className=''>
+                          <p>Status</p>
+                          <select
+                            className="Status-Select"
+                            id="Status-select-lancamento"
+                            style={{ color: statusColors[etapa.status] || "#00cbfd" }}
+                            value={etapa.status}
+                            onChange={(e) => {
+                              const statusString = e.target.value
+                                .replace(/\s/g, "_")
+                                .toUpperCase();
+                              tocarSom(audioPassedGTA5);
+
+                              alteraStatusEtapa(statusString, etapa.idEtapa);
+                            }}
+                            onClick={() => tocarSom(clickGTA)}
+                          >
+                            <option id="Tipo-status-options-PENDENTE" value="PENDENTE">PENDENTE</option>
+                            <option id="Tipo-status-options-EMANDAMENTO" value="EMANDAMENTO">EMANDAMENTO</option>
+                            <option id="Tipo-status-options-IMPEDIDA" value="IMPEDIDA">IMPEDIDA</option>
+                            <option id="Tipo-status-options-CONCLUIDA" value="CONCLUIDA">CONCLUIDA</option>
+                          </select>
+                        </div>
+                      </div>
+                    ))}
+                </div>
               </div>
-
-              <div className="div-botoes">
-                <button
-                  className="botoes"
-                  id="excluir"
-                  onClick={() => deletaPlano(plano.id)}
-                >
-                  Excluir
-                </button>
-              </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       )}
-
     </div>
   );
 }

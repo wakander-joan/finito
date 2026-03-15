@@ -42,7 +42,7 @@
   font-family: 'Jersey 10', sans-serif;
   font-weight: lighter;
   width: 100%;
-  border-radius: 5px;
+  border-radius: 10px;
 }
 
 #botaoFace {
@@ -56,7 +56,7 @@
   font-family: 'Jersey 10', sans-serif;
   font-weight: lighter;
   width: 100%;
-  border-radius: 5px;
+  border-radius: 10px;
 }
 
 
@@ -75,18 +75,18 @@
 }
 
 & .googledivider:hover {
-  background-color: #8b8b8bc2;
+  background-color: #6e6e6ec2;
 
   & #botaoGoogle {
-    background-color: #8b8b8bc2;
+    background-color: #6e6e6ec2;
   }
 }
 
 & .facedivider:hover {
-  background-color: #8b8b8bc2;
+  background-color: #6e6e6ec2;
 
   & #botaoFace {
-    background-color: #8b8b8bc2;
+    background-color: #6e6e6ec2;
   }
 }
 
@@ -256,7 +256,7 @@ h2 {
 
 .form1 {
   width: 400px;
-  margin-top: 20px;
+  margin-top: 2vh;
   margin-bottom: 15px;
   display: flex;
   flex-direction: column;
@@ -288,9 +288,9 @@ h2 {
   }
 
   & button:hover {
-    width: 55%;
-    font-size: 20px;
-  }
+        transform: scale(1.1);
+        transition: transform 0.3s ease;
+    }
 
 
   #logo-principal {
@@ -335,7 +335,6 @@ h2 {
 }
 
 & #botaocadastro:hover {
-  background-color: #4e00bb;
-  width: 12%;
-  font-size: 22px;
-}
+        transform: scale(1.1);
+        transition: transform 0.3s ease;
+    }
