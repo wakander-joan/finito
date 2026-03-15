@@ -99,6 +99,7 @@ function Home() {
         <button type='button' onClick={()=>{login(); tocarSomLoading();}}>Entrar</button>
       </form>
 
+      { /*
       <div className='googledivider'>
         <img id="logo-google" name='google' src={google} />
         <button onClick={() => window.open('https://www.google.com', '_blank', 'noopener,noreferrer')} id='botaoGoogle'>Logar com Google</button>
@@ -108,8 +109,8 @@ function Home() {
         <img id="logo-face" name='google' src={Face} />
         <button onClick={() => window.open('https://www.facebook.com', '_blank', 'noopener,noreferrer')} id='botaoFace'>Logar com Facebook</button>
       </div>
-      <button onClick={()=> navigate('/cadastrar')} id='botaocadastro'>Cadastrar</button>
-
+      <button onClick={()=> navigate('/cadastrar')} id='botaocadastro'>Cadastrar</button> 
+      */}
     </div>
   );
 }
