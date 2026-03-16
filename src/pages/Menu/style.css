@@ -13,47 +13,46 @@
 }
 
 .Cabecalho > div {
-  flex: 1; /* cada div ocupa a mesma largura */
-  text-align: center; /* centraliza o conteúdo dentro de cada div */
+  flex: 1;
+  text-align: center;
 }
 
-.Area1{
-  padding: 0px;
+.Area1 {
   padding: 0px;
   display: flex;
   align-items: center;
 }
 
-.Area2{
+.Area2 {
   display: flex;
   align-items: center;
-  justify-content: center; /* centraliza na horizontal */ 
+  justify-content: center;
 }
 
-.Area3{
+.Area3 {
   display: flex;
-  justify-content: flex-end; /* joga tudo pro lado direito */
+  justify-content: flex-end;
   margin-right: 5px;
 }
 
 .Area1, .Area2, .Area3 {
-  box-sizing: border-box; /* garante que padding e border não aumentem o tamanho total */
-  width: 100%;             /* ocupa o máximo do tamanho da div pai */
-  max-width: 100%;         /* impede que elementos internos ultrapassem o tamanho da div */
-  overflow: hidden;        /* esconde qualquer conteúdo que extrapole a div */
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 100%;
+  overflow: hidden;
 }
 
 .Area1 > *, .Area2 > *, .Area3 > * {
-  max-width: 100%; /* impede que os elementos filhos sejam maiores que a div */
-  overflow: hidden; /* opcional, para garantir que nada "vaze" */
+  max-width: 100%;
+  overflow: hidden;
 }
 
 #logo-finito-cabecalho {
-    width: 4vw;
-    height: 8vh;
-    margin-left: 0.42vw;
-    margin-top: 1vh;
-    margin-bottom: 0.93vh;
+  width: 4vw;
+  height: 8vh;
+  margin-left: 0.42vw;
+  margin-top: 1vh;
+  margin-bottom: 0.93vh;
 }
 
 #logo-edita {
@@ -61,10 +60,11 @@
   height: 5vh;
   margin-top: 1%;
   cursor: pointer;
-  &:hover {
-    transform: scale(1.1);
-    transition: transform 0.3s ease;
-  }
+}
+
+#logo-edita:hover {
+  transform: scale(1.1);
+  transition: transform 0.3s ease;
 }
 
 #logo-exit {
@@ -73,10 +73,11 @@
   margin-top: 1%;
   cursor: pointer;
   padding-right: 5px;
-  &:hover {
-    transform: scale(1.1);
-    transition: transform 0.3s ease;
-  }
+}
+
+#logo-exit:hover {
+  transform: scale(1.1);
+  transition: transform 0.3s ease;
 }
 
 .select-ano {
@@ -84,7 +85,6 @@
   height: 5.9vh;
   width: 9vw;
   font-size: 2.3vw;
-  padding: 0px, 0px, 0px, 0px;
   color: #ffffff;
   border-radius: 5px;
   background-color: #FF8181;
@@ -95,20 +95,16 @@
   padding: 0px;
   padding-left: 2%;
   appearance: none;
-  /* remove a seta padrão */
   -webkit-appearance: none;
   -moz-appearance: none;
-  /* espaço para a seta personalizada */
   background-image: url('../../assets/seta-cima.png');
-  /* sua seta personalizada */
   background-repeat: no-repeat;
   background-position: right 10px center;
   background-size: 25% 65%;
-  /* tamanho da seta */
   cursor: pointer;
 }
 
-#lista-select{
+#lista-select {
   background-color: #414141;
   font-family: 'Jersey 20', sans-serif;
   font-size: 1.5rem;
@@ -117,21 +113,11 @@
   padding: 0px;
 }
 
-#Text-selecao {
-  font-family: 'Rambla', sans-serif;
-  font-size: 1.5rem;
-  color: #ffffff;
-  background-color: #FF8181;
-  font-weight: bold;
-  border-radius: 8px;
-}
-
 #FINITO-TEXT {
   font-size: 3.5vw;
-    color: #000000;
-    padding-top: 0vh;
-    font-weight: lighter;
-    font-family: 'Jersey 20', sans-serif;
+  color: #000000;
+  font-weight: lighter;
+  font-family: 'Jersey 20', sans-serif;
 }
 
 #ANO-TEXT {
@@ -143,11 +129,9 @@
 
 #USUARIO-TEXT {
   font-size: 3.1vw;
-  font-weight: bold;
   color: #000000;
   padding: 1px;
   margin-right: 0px;
-  padding-top: 0px;
   margin-top: 0%;
   font-family: 'Jersey 20', sans-serif;
   font-weight: lighter;
@@ -159,141 +143,33 @@
   margin-top: 0px;
 }
 
+/* ── DESKTOP: calendário com imagem ── */
+.desktop-only {
+  display: block;
+}
+
+.mobile-only {
+  display: none;
+}
+
 #logo-principal {
   width: 100%;
   height: 91vh;
 }
 
-.divider {
-  display: flex;
-  gap: 5px;
-  flex-direction: column;
-}
-
 .image-container {
-  position: relative; /* contêiner relativo */
-  display: inline-block; /* ajusta ao tamanho da imagem */
+  position: relative;
+  display: inline-block;
   width: 45vw;
 }
 
-.JANEIRO {
+.mes-overlay {
   position: absolute;
-  top: 35.5%;
-  left: 22.5%;
-  background-color: #6B63FF;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
 }
-
-.FEVEREIRO {
-  position: absolute;
-  /* posição absoluta dentro do contêiner */
-  top: 35.5%;
-  /* centraliza verticalmente */
-  left: 50.8%;
-  /* centraliza horizontalmente */
-  background-color: #77A0FF;
-}
-
-.MARCO {
-  position: absolute;
-  /* posição absoluta dentro do contêiner */
-  top: 35.5%;
-  /* centraliza verticalmente */
-  left: 78.5%;
-  /* centraliza horizontalmente */
-  background-color: #8EC3FF;
-}
-
-.ABRIL {
-  position: absolute;
-  /* posição absoluta dentro do contêiner */
-  top: 45.5%;
-  /* centraliza verticalmente */
-  left: 22.5%;
-  /* centraliza horizontalmente */
-  background-color: #A3E4FF;
-}
-
-.MAIO {
-  position: absolute;
-  /* posição absoluta dentro do contêiner */
-  top: 45.5%;
-  /* centraliza verticalmente */
-  left: 50.8%;
-  /* centraliza horizontalmente */
-  background-color: #B2FFFA;
-}
-
-.JUNHO {
-  position: absolute;
-  /* posição absoluta dentro do contêiner */
-  top: 45.5%;
-  /* centraliza verticalmente */
-  left: 78.5%;
-  /* centraliza horizontalmente */
-  background-color: #6BFFB8;
-}
-
-.JULHO {
-  position: absolute;
-  /* posição absoluta dentro do contêiner */
-  top: 55.5%;
-  /* centraliza verticalmente */
-  left: 22.5%;
-  /* centraliza horizontalmente */
-  background-color: #6BFF8E;
-}
-
-.AGOSTO {
-  position: absolute;
-  /* posição absoluta dentro do contêiner */
-  top: 55.5%;
-  /* centraliza verticalmente */
-  left: 50.8%;
-  /* centraliza horizontalmente */
-  background-color: #A3FF6B;
-}
-
-.SETEMBRO {
-  position: absolute;
-  /* posição absoluta dentro do contêiner */
-  top: 55.5%;
-  /* centraliza verticalmente */
-  left: 78.5%;
-  /* centraliza horizontalmente */
-  background-color: #FFF76B;
-}
-
-.OUTUBRO {
-  position: absolute;
-  /* posição absoluta dentro do contêiner */
-  top: 65.5%;
-  /* centraliza verticalmente */
-  left: 22.5%;
-  /* centraliza horizontalmente */
-  background-color: #FFC36B;
-}
-
-.NOVEMBRO {
-  position: absolute;
-  /* posição absoluta dentro do contêiner */
-  top: 65.5%;
-  /* centraliza verticalmente */
-  left: 50.8%;
-  /* centraliza horizontalmente */
-  background-color: #FF8E6B;
-}
-
-.DEZEMBRO {
-  position: absolute;
-  /* posição absoluta dentro do contêiner */
-  top: 65.5%;
-  /* centraliza verticalmente */
-  left: 78.5%;
-  /* centraliza horizontalmente */
-  background-color: #FF6B6B;
-}
-
-
 
 h1 {
   text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
@@ -308,82 +184,320 @@ h1 {
   height: 8%;
   font-family: 'Jersey 10', sans-serif;
   font-weight: lighter;
-
-  &:hover {
-    background-color: #FF5733;
-    cursor: pointer;
-  }
+  position: absolute;
 }
 
-#botao-plano{
+h1:hover {
+  background-color: #FF5733;
+  cursor: pointer;
+}
+
+.JANEIRO  { top: 35.5%; left: 22.5%; background-color: #6B63FF; }
+.FEVEREIRO{ top: 35.5%; left: 50.8%; background-color: #77A0FF; }
+.MARCO    { top: 35.5%; left: 78.5%; background-color: #8EC3FF; }
+.ABRIL    { top: 45.5%; left: 22.5%; background-color: #A3E4FF; }
+.MAIO     { top: 45.5%; left: 50.8%; background-color: #B2FFFA; }
+.JUNHO    { top: 45.5%; left: 78.5%; background-color: #6BFFB8; }
+.JULHO    { top: 55.5%; left: 22.5%; background-color: #6BFF8E; }
+.AGOSTO   { top: 55.5%; left: 50.8%; background-color: #A3FF6B; }
+.SETEMBRO { top: 55.5%; left: 78.5%; background-color: #FFF76B; }
+.OUTUBRO  { top: 65.5%; left: 22.5%; background-color: #FFC36B; }
+.NOVEMBRO { top: 65.5%; left: 50.8%; background-color: #FF8E6B; }
+.DEZEMBRO { top: 65.5%; left: 78.5%; background-color: #FF6B6B; }
+
+#botao-plano {
   border: none;
   background-color: #36a39b;
   width: 7vw;
   cursor: pointer;
   height: 5vh;
   font-family: 'Jersey 10', sans-serif;
-  border-radius: 7px; 
+  border-radius: 7px;
   align-items: center;
   justify-content: center;
   display: flex;
   gap: 0px;
-  box-shadow: 
-    /* Borda inferior "escura" */
-    0 4px 0 0 #2a817b, /* Sombra inferior sólida para a "profundidade" */
-    /* Borda esquerda e direita "escuras" (opcional, para um look mais 3D) */
+  box-shadow:
+    0 4px 0 0 #2a817b,
     -2px 0 0 0 #2a817b,
     2px 0 0 0 #2a817b,
-    /* Borda superior "clara" (opcional) */
-    inset 0 2px 0 0 #52c5bc; /* "Luz" no topo para o efeito 3D */
-
-  animation: glow-pulse 2s infinite alternate ease-in-out;
-
-  &:hover{
-    transform: scale(1.1);
-    transition: transform 0.3s ease;
-  }
-  :active {
-  background-color: #2a817b; /* Cor mais escura no click */
-  box-shadow: 
-    0 2px 0 0 #2a817b, /* "Afunda" o botão no click */
     inset 0 2px 0 0 #52c5bc;
-  transform: translateY(2px); /* Efeito de "afundar" */
+  animation: glow-pulse 2s infinite alternate ease-in-out;
 }
+
+#botao-plano:hover {
+  transform: scale(1.1);
+  transition: transform 0.3s ease;
 }
 
+#botao-plano:active {
+  background-color: #2a817b;
+  box-shadow:
+    0 2px 0 0 #2a817b,
+    inset 0 2px 0 0 #52c5bc;
+  transform: translateY(2px);
+}
 
-
-#logo-metas{
+#logo-metas {
   padding-top: 2%;
   width: 2vw;
   height: 1.8vw;
 }
 
-#metas{
+#metas {
   padding-left: 5%;
   color: white;
   font-family: 'Jersey 10', sans-serif;
   font-size: 1.5vw;
 }
 
+.loading-container {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background-color: rgba(194, 194, 194, 0.7);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.loading-container-dash {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+/* ── HAMBURGER (oculto no desktop) ── */
+.hamburger {
+  display: none;
+}
+
 @keyframes glow-pulse {
   0% {
-    box-shadow: 
-      0 4px 0 0 #2a817b, /* Sombra base */
-      inset 0 2px 0 0 #52c5bc, /* Luz base */
-      0 0 5px 0 rgba(255, 255, 0, 0); /* Sem brilho no início */
+    box-shadow:
+      0 4px 0 0 #2a817b,
+      inset 0 2px 0 0 #52c5bc,
+      0 0 5px 0 rgba(255, 255, 0, 0);
   }
   50% {
-    box-shadow: 
-      0 4px 0 0 #2a817b, 
-      inset 0 2px 0 0 #52c5bc, 
-      0 0 15px 5px rgba(255, 255, 0, 0.7), /* Brilho máximo (amarelo semi-transparente) */
-      0 0 25px 10px rgba(255, 255, 0, 0.5); /* Segundo anel de brilho */
+    box-shadow:
+      0 4px 0 0 #2a817b,
+      inset 0 2px 0 0 #52c5bc,
+      0 0 15px 5px rgba(0, 255, 21, 0.432),
+      0 0 25px 10px rgba(0, 255, 0, 0.308);
   }
   100% {
-    box-shadow: 
-      0 4px 0 0 #2a817b, 
-      inset 0 2px 0 0 #52c5bc, 
-      0 0 5px 0 rgba(255, 255, 0, 0); /* Retorna ao estado sem brilho */
+    box-shadow:
+      0 4px 0 0 #2a817b,
+      inset 0 2px 0 0 #52c5bc,
+      0 0 5px 0 rgba(255, 255, 0, 0);
   }
+}
+
+/* ── RESPONSIVIDADE MOBILE ── */
+@media (max-width: 768px) {
+  #ANO-TEXT {
+  display: none;
+}
+
+  .desktop-only {
+    display: none;
+  }
+
+  .mobile-only {
+    display: grid;
+  }
+
+  .Cabecalho {
+    height: auto;
+    max-height: none;
+    flex-wrap: nowrap;
+    padding: 6px 10px;
+    justify-content: space-between;
+    position: relative;
+    gap: 6px;
+  }
+
+  /* Area1: logo + FINITO + METAS, cresce para ocupar espaço disponível */
+  .Area1 {
+    flex: 1;
+    gap: 4px;
+    overflow: visible;
+    display: flex;
+    align-items: center;
+    order: 1;
+  }
+
+  /* Area2: ANO + select, tamanho fixo, sem flex:1 */
+  .Area2 {
+    display: flex;
+    flex: 0 0 auto;
+    justify-content: center;
+    align-items: center;
+    gap: 2px; /* ← espaço mínimo entre "ANO" e o select */
+    order: 2;
+    overflow: visible;
+  }
+
+  /* Hamburger fica por último, colado ao ANO */
+  .hamburger {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 6px;
+    flex-shrink: 0;
+    order: 3;
+  }
+
+  .hamburger span {
+    display: block;
+    width: 26px;
+    height: 3px;
+    background-color: #333;
+    border-radius: 2px;
+    transition: all 0.3s ease;
+  }
+
+  .Cabecalho.menu-aberto .hamburger span:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+  }
+
+  .Cabecalho.menu-aberto .hamburger span:nth-child(2) {
+    opacity: 0;
+  }
+
+  .Cabecalho.menu-aberto .hamburger span:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
+  }
+
+  /* Area3 escondida por padrão, aparece quando menu aberto */
+  .Area3 {
+    display: none;
+    order: 4;
+  }
+
+  .Cabecalho.menu-aberto {
+    flex-wrap: wrap;
+  }
+
+  .Cabecalho.menu-aberto .Area3 {
+    display: flex;
+    flex: 0 0 100%;
+    justify-content: center;
+    gap: 12px;
+    padding: 8px 0;
+    border-top: 1px solid #eee;
+    margin-right: 0;
+  }
+
+  #logo-finito-cabecalho {
+    width: 9vw;
+    height: 9vw;
+  }
+
+  #FINITO-TEXT {
+    font-size: 6vw;
+  }
+
+  #botao-plano {
+    width: auto;
+    height: 8vw;
+    padding: 0 8px;
+  }
+
+  #logo-metas {
+    width: 5vw;
+    height: 5vw;
+  }
+
+  #metas {
+    font-size: 3.5vw;
+  }
+
+  /* "ANO" bem compacto */
+  #ANO-TEXT {
+    font-size: 4.5vw;
+    margin: 0;
+    white-space: nowrap;
+  }
+
+  /* Select menor e sem espaço sobrando */
+  .select-ano {
+    width: 22vw;
+    font-size: 4.5vw;
+    height: 8vw;
+    margin: 0;
+  }
+
+  #USUARIO-TEXT {
+    font-size: 5vw;
+  }
+
+  #PERFIL-EMOGI {
+    font-size: 6vw;
+  }
+
+  #logo-edita {
+    width: 7vw;
+    height: 7vw;
+  }
+
+  #logo-exit {
+    width: 8vw;
+    height: 8vw;
+    padding-right: 0;
+  }
+
+  /* Grid de meses */
+  .meses-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    padding: 20px 16px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .mes-btn {
+    font-family: 'Jersey 10', sans-serif;
+    font-weight: lighter;
+    font-size: 5vw;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 14px 0;
+    cursor: pointer;
+    text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 3px 0 rgba(0, 0, 0, 0.2);
+    transition: transform 0.15s ease;
+  }
+
+  .mes-btn:active {
+    transform: translateY(2px);
+    box-shadow: none;
+  }
+
+  .mes-btn-0  { background-color: #6B63FF; }
+  .mes-btn-1  { background-color: #77A0FF; }
+  .mes-btn-2  { background-color: #8EC3FF; }
+  .mes-btn-3  { background-color: #A3E4FF; color: #333; }
+  .mes-btn-4  { background-color: #B2FFFA; color: #333; }
+  .mes-btn-5  { background-color: #6BFFB8; color: #333; }
+  .mes-btn-6  { background-color: #6BFF8E; color: #333; }
+  .mes-btn-7  { background-color: #A3FF6B; color: #333; }
+  .mes-btn-8  { background-color: #FFF76B; color: #333; }
+  .mes-btn-9  { background-color: #FFC36B; }
+  .mes-btn-10 { background-color: #FF8E6B; }
+  .mes-btn-11 { background-color: #FF6B6B; }
 }
