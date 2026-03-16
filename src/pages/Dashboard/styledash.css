@@ -31,7 +31,6 @@
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    gap: 0px;
 }
 
 .Areadash2 {
@@ -1315,11 +1314,14 @@ h4 {
         flex-wrap: nowrap;
         height: auto;
         padding: 6px 10px;
-        gap: 4px;
-        position: relative;
+        gap: 5vw;
     }
 
-    .Areadash1 { flex: 1; gap: 4px; }
+    .Areadash1 {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+    }
     .Areadash2 { flex: 0 0 auto; order: 2; gap: 4px; }
     .Areadash3 { display: none; order: 4; }
 
@@ -1361,11 +1363,11 @@ h4 {
     .Cabecalho.menu-aberto-dash .hamburger-dash span:nth-child(2) { opacity: 0; }
     .Cabecalho.menu-aberto-dash .hamburger-dash span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
 
-    #logo-finito-cabecalho-dash { width: 8vw; height: 8vw; }
-    #FINITO-TEXT-DASH  { font-size: 5vw; }
-    #ano-cabecalho     { font-size: 4vw; }
-    #de-cabecalho      { font-size: 4vw; }
-    #seta              { width: 6vw; height: 6vw; }
+    #logo-finito-cabecalho-dash { width: 9vw; height: 9vw; }
+    #FINITO-TEXT-DASH  { font-size: 8vw; }
+    #ano-cabecalho     { font-size: 5vw; }
+    #de-cabecalho      { font-size: 5vw; }
+    #seta              { width: 8vw; height: 8vw; }
     #USUARIO-TEXT2     { font-size: 4.5vw; }
     #PERFIL-EMOGI2     { font-size: 5vw; }
     #logo-exit-dash    { width: 8vw; height: 8vw; }
