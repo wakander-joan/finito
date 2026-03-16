@@ -3,15 +3,10 @@
   width: 100%;
   background:
     linear-gradient(180deg, #363467 0%, rgba(0, 0, 0, 0.473) 10%),
-    /* Gradiente */
     url('assets/gif.gif');
-  /* Imagem */
   background-size: cover;
-  /* Faz a imagem cobrir todo o fundo */
   background-position: left;
-  /* Centraliza a imagem */
   background-repeat: no-repeat;
-  /* Evita repetição */
 }
 
 .page-title {
@@ -23,51 +18,14 @@
   color: rgba(255, 196, 70, 1);
 }
 
-.plano-card {
-  background: white;
-  border: 1px solid #e5e7eb;
-  width: 25vw;
-  border-radius: 12px;
-  padding: 16px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-  cursor: pointer;
-}
-
-.plano-card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.12);
-}
-
-.plano-title {
-  font-size: 19px;
-  font-weight: 600;
-  margin-top: 10px;
-  color: #1f2937;
-}
-
-.plano-info {
-  margin: 4px 0;
-  color: #374151;
-}
-
-.plano-info strong {
-  color: #111827;
-}
-
 .cabecalho-planing {
   height: 9vh;
   background-image:
     linear-gradient(180deg, #363467 0%, rgba(0, 0, 0, 0.562) 10%),
-    /* Gradiente */
     url('../../assets/cabe.jpeg');
-  /* ajuste o caminho conforme a pasta */
   background-size: cover;
-  /* cobre toda a área */
   background-position: center;
-  /* centraliza */
   background-repeat: no-repeat;
-  /* não repete */
   display: flex;
   justify-content: space-between;
   padding-left: 2%;
@@ -76,18 +34,9 @@
   margin-bottom: 1%;
 }
 
-#logo-exit-planing {
-  cursor: pointer;
-  margin-top: 0.2%;
-  width: 6vw;
-  height: 8vh;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
 .botoes {
   font-size: 1.9vw;
   padding: 1.3%;
-  margin-right: 0%;
   border-radius: 8px;
   border: 1px solid rgb(255, 255, 255);
   color: rgb(255, 255, 255);
@@ -107,30 +56,21 @@
   background-color: rgb(0, 0, 0);
   width: 9vw;
   height: 6vh;
-
-  &:hover {
-    background-color: rgba(255, 0, 0, 0.801);
-  }
 }
+
+#excluir:hover { background-color: rgba(255, 0, 0, 0.801); }
 
 #editar {
   background-color: dodgerblue;
   width: 7vw;
   height: 6vh;
-
-  &:hover {
-    background-color: deepskyblue;
-  }
 }
 
-#status {
-  background-color: blueviolet;
-}
+#editar:hover { background-color: deepskyblue; }
 
 .overlay {
   position: fixed;
   inset: 0;
-  /* top/right/bottom/left: 0 */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -141,7 +81,6 @@
 .overlay2 {
   position: fixed;
   inset: 0;
-  /* top/right/bottom/left: 0 */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -157,88 +96,6 @@
   min-width: 36vw;
   max-height: 95vh;
   overflow-y: auto;
-  /* habilita scroll vertical */
-}
-
-.modal2 {
-  background: #e0e0e0;
-  padding: 15px;
-  border-radius: 10px;
-  text-align: left;
-  width: 57vw;
-}
-
-.P-fechar {
-  display: flex;
-  justify-content: space-between;
-  padding-bottom: 2%;
-}
-
-#Botao-fechar {
-  font-family: 'JetBrains Mono', monospace;
-  border-radius: 7px;
-  padding: 0.7%;
-  background-color: tomato;
-  color: white;
-  border: none;
-  cursor: pointer;
-
-}
-
-.opcao-card {
-  background-color: white;
-  display: block;
-  margin-bottom: 1.5%;
-  padding: 0.5%;
-  border-radius: 5px;
-  border: #111827 1px solid;
-}
-
-.opcoes-card {
-  display: block;
-  max-height: 75vh;
-  /* Limita a altura do modal */
-  overflow-y: auto;
-  /* Ativa barra de rolagem vertical se necessário */
-}
-
-#selecionar {
-  margin-top: 1%;
-  border-radius: 5px;
-  padding: 0.4%;
-  border: solid 0.5px;
-  background-color: royalblue;
-  color: white;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-.Ceck-div {
-  width: 12vw;
-  height: 6vh;
-  padding-left: 2%;
-  border-radius: 7px;
-  border: 1px solid #b3b3b3;
-  display: flex;
-  align-items: center;
-}
-
-#check-box {
-  width: 1.5vw;
-  cursor: pointer;
-}
-
-#data-plano {
-  font-family: 'jersey 10', sans-serif;
-  font-size: 2.2vw;
-  font-weight: lighter;
-  width: 18vw;
-}
-
-#concluido {
-  font-family: 'JetBrains Mono', monospace;
-  font-weight: bold;
-  font-size: 1.2vw;
 }
 
 #criar {
@@ -256,11 +113,11 @@
   font-weight: bold;
   cursor: pointer;
   background-color: black;
+}
 
-  &:hover {
-    background-color: rgba(255, 196, 70, 1);
-    color: rgba(0, 0, 0, 1);
-  }
+#criar:hover {
+  background-color: rgba(255, 196, 70, 1);
+  color: rgba(0, 0, 0, 1);
 }
 
 #sair {
@@ -278,11 +135,9 @@
   font-weight: bold;
   cursor: pointer;
   background-color: rgba(0, 0, 0, 0.72);
-
-  &:hover {
-    background-color: rgba(255, 196, 70, 1);
-  }
 }
+
+#sair:hover { background-color: rgba(255, 196, 70, 1); }
 
 .Titulo-New {
   text-align: center;
@@ -291,7 +146,6 @@
   font-size: 4vw;
   font-style: normal;
   padding-left: 2%;
-  text-align: center;
 }
 
 .caixinhas {
@@ -302,21 +156,9 @@
   font-size: 170%;
 }
 
-.inputs-new-meta {
-  font-family: "Jersey 10", sans-serif;
-  width: 18vw;
-  font-size: 2.2vw;
-  font-weight: lighter;
-  color: black;
-}
-
 label {
   padding-left: 1%;
   font-family: "Jersey 20", sans-serif;
-}
-
-#descricao {
-  font-size: 140%;
 }
 
 .input-descricao {
@@ -331,13 +173,11 @@ label {
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.712);
-  /* fundo escuro */
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   z-index: 9999;
-  /* fica acima de tudo */
 }
 
 .typing {
@@ -351,65 +191,10 @@ label {
   animation: glow-text 3.5s infinite alternate ease-in-out;
 }
 
-
 @keyframes glow-text {
-  0% {
-    text-shadow:
-      0 0 0px #2a817b,
-      /* sombra inicial sem brilho */
-      0 0 0px #52c5bc,
-      0 0 0px rgba(0, 183, 255, 0);
-  }
-
-  50% {
-    text-shadow:
-      0 0 5px #2a817b,
-      /* primeira camada */
-      0 0 10px #52c5bc,
-      /* segunda camada */
-      0 0 20px rgba(0, 183, 255, 0.7),
-      /* brilho forte */
-      0 0 40px rgba(0, 68, 255, 0.5);
-    /* anel externo */
-  }
-
-  100% {
-    text-shadow:
-      0 0 0px #2a817b,
-      0 0 0px #52c5bc,
-      0 0 0px rgba(0, 183, 255, 0);
-  }
-}
-
-.glow {
-  font-size: 48px;
-  font-weight: bold;
-  color: #fff;
-  animation: glow-text 2s infinite ease-in-out;
-}
-
-
-#img_loading {
-  height: 50%;
-}
-
-
-@keyframes typing {
-  from {
-    width: 0;
-  }
-
-  to {
-    width: 8ch;
-  }
-
-  /* "Entrando" = 8 caracteres */
-}
-
-@keyframes blink {
-  50% {
-    border-color: transparent;
-  }
+  0%   { text-shadow: 0 0 0px #2a817b, 0 0 0px #52c5bc, 0 0 0px rgba(0, 183, 255, 0); }
+  50%  { text-shadow: 0 0 5px #2a817b, 0 0 10px #52c5bc, 0 0 20px rgba(0, 183, 255, 0.7), 0 0 40px rgba(0, 68, 255, 0.5); }
+  100% { text-shadow: 0 0 0px #2a817b, 0 0 0px #52c5bc, 0 0 0px rgba(0, 183, 255, 0); }
 }
 
 .text-center {
@@ -419,35 +204,22 @@ label {
   color: white;
 }
 
-#separador {
-  text-align: center;
-  font-family: 'Jersey 10', sans-serif;
-  font-size: 2.2vw;
-  color: gray;
-}
-
 #anotacao-meta {
   border-radius: 7px;
   height: 10vh;
 }
 
-#label-meta {
-  font-size: 1.9vw;
-}
-
-#descricao-meta {
-  margin-bottom: 2%;
-}
+#label-meta { font-size: 1.9vw; }
+#descricao-meta { margin-bottom: 2%; }
 
 #add {
   width: 3vw;
   cursor: pointer;
+}
 
-  &:hover {
-    transform: scale(1.1);
-    transition: transform 0.3s ease;
-    color: chocolate;
-  }
+#add:hover {
+  transform: scale(1.1);
+  transition: transform 0.3s ease;
 }
 
 .etapa {
@@ -463,22 +235,17 @@ label {
   padding-top: 3%;
   width: 1.5vw;
   cursor: pointer;
+}
 
-  &:hover {
-    transform: scale(1.1);
-    transition: transform 0.3s ease;
-    color: chocolate;
-  }
+#del:hover {
+  transform: scale(1.1);
+  transition: transform 0.3s ease;
 }
 
 #etapa-subdiv {
   display: flex;
   justify-content: space-between;
   margin-bottom: 2.5%;
-}
-
-#div-descricao-etapa {
-  min-width: 90%;
 }
 
 .add-div {
@@ -495,27 +262,26 @@ label {
   font-size: 2.3vw;
 }
 
-
 #descricao-etapa {
   color: #000000d5;
   font-family: 'Jersey 20', sans-serif;
   font-size: 2vw;
 }
 
-#anotacao-etapa{
+#anotacao-etapa {
   color: #3d3d3d;
   font-size: 1.7vw;
 }
 
 #anotacao-textarea {
-  resize: none;      /* impede redimensionamento manual */
-  overflow: auto;  /* remove a barra de rolagem */
-  min-height: 10vh;  /* altura mínima */
+  resize: none;
+  overflow: auto;
+  min-height: 10vh;
   max-height: 30vh;
   width: 100%;
 }
 
-.div-metas{
+.div-metas {
   max-width: 50vw;
   min-width: 46vw;
   padding-left: 2%;
@@ -534,39 +300,24 @@ label {
 .planos-grid {
   background-color: #00000048;
   justify-content: space-around;
-  height: calc(90vh - 1px); /* header + margens */
+  height: calc(90vh - 1px);
   overflow: auto;
   display: grid;
   grid-template-columns: repeat(2, 0fr);
   gap: 2%;
 }
 
-.etapa-div{
+.etapa-div {
   padding: 1%;
   margin: 1%;
   border: 0.1px solid #6e6e6e;
   border-radius: 10px;
 }
 
-#Tipo-status-options-PENDENTE{
-  font-family: 'Jersey 20', sans-serif;
-  color: #949494e7;
-}
-
-#Tipo-status-options-EMANDAMENTO{
-  font-family: 'Jersey 20', sans-serif;
-  color: #7700ff;
-}
-
-#Tipo-status-options-IMPEDIDA{
-  font-family: 'Jersey 20', sans-serif;
-  color: red;
-}
-
-#Tipo-status-options-CONCLUIDA{
-  font-family: 'Jersey 20', sans-serif;
-  color: #00ad2e;
-}
+#Tipo-status-options-PENDENTE   { font-family: 'Jersey 20', sans-serif; color: #949494e7; }
+#Tipo-status-options-EMANDAMENTO{ font-family: 'Jersey 20', sans-serif; color: #7700ff; }
+#Tipo-status-options-IMPEDIDA   { font-family: 'Jersey 20', sans-serif; color: red; }
+#Tipo-status-options-CONCLUIDA  { font-family: 'Jersey 20', sans-serif; color: #00ad2e; }
 
 .progress-container {
   width: 98%;
@@ -574,7 +325,6 @@ label {
   background-color: #e0e0e0;
   border-radius: 8px;
   overflow: hidden;
-  margin: 6px 0;
   display: flex;
   gap: 0px;
   margin: 1%;
@@ -602,15 +352,145 @@ label {
   font-size: 14px;
   font-weight: 600;
   color: #222;
-  box-shadow: inset 0 1px 3px rgba(0,0,0,0.08);
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.08);
   display: flex;
 }
 
-#img-gokui-barra{
-  background-color: #4caf50;
-}
+#img-gokui-barra { background-color: #4caf50; }
+#label-meta-map  { color: #05bb0b; font-weight: 900; }
 
-#label-meta-map{
-  color: #05bb0b;
-  font-weight: 900;
+/* ── RESPONSIVIDADE MOBILE ── */
+@media (max-width: 768px) {
+
+  /* Cabeçalho */
+  .cabecalho-planing {
+    height: auto;
+    padding: 8px 12px;
+    gap: 8px;
+  }
+
+  .page-title { font-size: 6vw; }
+
+  #criar {
+    font-size: 3.5vw;
+    width: auto;
+    height: auto;
+    padding: 6px 10px;
+  }
+
+  #sair {
+    font-size: 4vw;
+    width: auto;
+    height: auto;
+    padding: 6px 10px;
+  }
+
+  /* Grid de metas: 1 coluna no mobile */
+  .planos-grid {
+    grid-template-columns: 1fr;
+    height: auto;
+    min-height: calc(100vh - 80px);
+    padding: 8px;
+    gap: 5vw;
+    box-sizing: border-box;
+  }
+
+  .div-metas {
+    max-width: 100%;
+    min-width: unset;
+    width: 100%;
+    padding-left: 0;
+    padding-right: 0;
+    box-sizing: border-box;
+  }
+
+  .modalMetaBuscada {
+    min-width: unset;
+    width: 100%;
+    max-height: none;
+    box-sizing: border-box;
+  }
+
+  /* Texto das metas */
+  .texto-caixa {
+    background-color: #7bc77b;
+    flex-direction: column;
+    font-size: 3.5vw;
+    gap: 0px;
+  }
+
+  #label-meta-map { 
+    font-size: 4.5vw;
+    color: #ffffff;
+  }
+
+  .progress-container {
+    height: 5vw;
+  }
+
+  .progress-text { font-size: 3.5vw; }
+
+  .etapa-div { padding: 2%; margin: 1.5%; }
+
+  /* Modal de criação — ocupa quase tela toda */
+  .modalMeta {
+    width: 95vw;
+    min-width: unset;
+    max-height: 92vh;
+    box-sizing: border-box;
+    padding: 12px;
+  }
+
+  .Titulo-New { font-size: 7vw; }
+
+  #label-meta { font-size: 4vw; }
+
+  .input-descricao,
+  .modalMeta input[type="text"],
+  .modalMeta input[type="date"] {
+    font-size: 16px; /* evita zoom no iOS */
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  #data-plano {
+    font-size: 4vw;
+    width: 100%;
+  }
+
+  .caixinhas {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+    font-size: 120%;
+  }
+
+  #anotacao-meta { font-size: 4vw; width: 100%; }
+
+  #Label-nova-etapa { font-size: 4.5vw; }
+
+  #add    { width: 7vw; }
+  #del    { width: 5vw; }
+
+  #descricao-etapa { font-size: 4vw; }
+
+  .botoes {
+    font-size: 4vw;
+    padding: 8px 14px;
+  }
+
+  #editar  { width: auto; height: auto; padding: 8px 16px; }
+  #excluir { width: auto; height: auto; padding: 8px 16px; }
+
+  .div-botoes { gap: 10px; }
+
+  .text-center { font-size: 5vw; }
+
+  /* Status select nas etapas */
+  #Status-select-lancamento {
+    width: 100%;
+    font-size: 4vw;
+    height: auto;
+    padding: 6px;
+  }
 }

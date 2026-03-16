@@ -1,196 +1,209 @@
 .container-cadastro {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding-top: 10px;
-    min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 10px;
+  min-height: 100vh;
 }
 
 .Form {
-    display: flex;
-    width: auto;
-    height: 580px;
-    background-color: aliceblue;
-}
-.div-boas-vindas{
-    text-align: center;
-    padding-top: 25%;
-    padding: 0 30px;
-    background-color: #197E31;
-    color: white;
-    width: 500px;
+  display: flex;
+  width: auto;
+  height: 580px;
+  background-color: aliceblue;
 }
 
-#Bem-vindos{
-    margin-top: 50%;
-    font-family: 'Jersey 15', sans-serif;
-}
-#palavras-boas{
-    font-family: 'Pixelify Sans', monospace;
-    font-weight: lighter;
-    font-size: 19px;
+.div-boas-vindas {
+  text-align: center;
+  padding: 0 30px;
+  background-color: #197E31;
+  color: white;
+  width: 500px;
 }
 
-.div-inputs{
-    align-items: center;
-    padding-top: 25%;
-    padding: 0 30px;
+#Bem-vindos {
+  margin-top: 50%;
+  font-family: 'Jersey 15', sans-serif;
 }
 
-.Logo-Text-Finito{
-    display: flex;
-    justify-content: center; /* centraliza horizontalmente */
-    align-items: center;     /* centraliza verticalmente */
-    margin-top: 0%;
-    padding: 0 30px;
-    width: 450px;
+#palavras-boas {
+  font-family: 'Pixelify Sans', monospace;
+  font-weight: lighter;
+  font-size: 19px;
 }
 
-#Logo{
-    width: 80px;
-    height: 80px;
-    margin-bottom: 3px;
+.div-inputs {
+  align-items: center;
+  padding: 0 30px;
 }
 
-#Text-finito{
-    font-family: 'Jersey 10', sans-serif;
-    font-weight: lighter;
-    font-size: 7vw;
+.Logo-Text-Finito {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 0%;
+  padding: 0 30px;
+  width: 450px;
 }
 
-.titulo{
-    margin-top: 0%;
-    font-family: 'Jersey 10', sans-serif;
-    font-weight: lighter;
-    justify-content: center;
-    text-align: center;
-    font-size: 3.5vw;
+#Logo {
+  width: 80px;
+  height: 80px;
+  margin-bottom: 3px;
 }
 
-.inputs{
-    display: flex;
-    flex-direction: column;
+#Text-finito {
+  font-family: 'Jersey 10', sans-serif;
+  font-weight: lighter;
+  font-size: 7vw;
 }
 
-#descricao{
-    font-family: 'Jersey 10', sans-serif;
-    font-weight: lighter;
-    margin-bottom: -3%;
-    margin-left: 1%;
-    color: rgb(41, 41, 41);
+.titulo {
+  margin-top: 0%;
+  font-family: 'Jersey 10', sans-serif;
+  font-weight: lighter;
+  justify-content: center;
+  text-align: center;
+  font-size: 3.5vw;
 }
 
-input{
-    font-family: 'Jersey 20', sans-serif;
-    font-weight: lighter;
-    width: 95%;
-    height: 40px;
-    border-radius: 9px;
-    border: 1px solid #ccc;
-    padding: 10px;
-    font-size: 20px;
-    &:focus {
-    outline: none;
-    border-color: #197E31;
-  }
+.inputs {
+  display: flex;
+  flex-direction: column;
 }
 
-.icon-button{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-top: 5%;
+#descricao {
+  font-family: 'Jersey 10', sans-serif;
+  font-weight: lighter;
+  margin-bottom: -3%;
+  margin-left: 1%;
+  color: rgb(41, 41, 41);
 }
 
-.rounded-lg{
-    border-radius: 10px;
-    width: 60%;
-    height: 50px;
-    font-size: 20px;
-    font-family: Arial, Helvetica, sans-serif;
-    font-weight: bold;
-    cursor: pointer;
-    text-align: center;
+input {
+  font-family: 'Jersey 20', sans-serif;
+  font-weight: lighter;
+  width: 95%;
+  height: 40px;
+  border-radius: 9px;
+  border: 1px solid #ccc;
+  padding: 10px;
+  font-size: 16px;
 }
 
-option{
-    background-color: #ffffff;
+input:focus {
+  outline: none;
+  border-color: #197E31;
 }
 
-#Cadastrar-button{
-    font-family: 'Pixelify Sans', monospace;
-    width: 200px;
-    height: 50px;
-    background-color: #197E31;
-    color: white;
-    font-size: 2.5vw;
-    border: none;
-    border-radius: 12px;
-    cursor: pointer;
-    margin-top: 1%;
+.icon-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 5%;
+}
 
-    &:hover {
-        background-color: #fc7100;
-    }
+.rounded-lg {
+  border-radius: 10px;
+  width: 60%;
+  height: 50px;
+  font-size: 20px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: bold;
+  cursor: pointer;
+  text-align: center;
+}
+
+option {
+  background-color: #ffffff;
+}
+
+#Cadastrar-button {
+  font-family: 'Pixelify Sans', monospace;
+  width: 200px;
+  height: 50px;
+  background-color: #197E31;
+  color: white;
+  font-size: 2.5vw;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  margin-top: 1%;
+}
+
+#Cadastrar-button:hover {
+  background-color: #fc7100;
 }
 
 select {
-  appearance: none;        /* remove a seta padrão */
+  appearance: none;
   -webkit-appearance: none;
   -moz-appearance: none;
-  padding: 8px 30px 8px 10px; /* espaço para a seta personalizada */
+  padding: 8px 30px 8px 10px;
   border: 1px solid #ccc;
   border-radius: 1px;
   background-color: white;
-  background-image: url('../../assets/seta-baixo.png'); /* sua seta personalizada */
+  background-image: url('../../assets/seta-baixo.png');
   background-repeat: no-repeat;
   background-position: right 10px center;
-  background-size: 14% 65%; /* tamanho da seta */
+  background-size: 14% 65%;
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
-    
-  &:hover {
-
-        background-size: 14% 66%; /* tamanho da seta */
-    }
-
-  &:focus {
-    outline: none;
-    border-color: #197E31;
-  }
 }
 
-.linha-horizontal-final{
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    border-radius: 19px;
-    background-color: #ffffff;
-    margin-top: 3%;
-    margin-left: 0%;
+select:hover {
+  background-size: 14% 66%;
 }
 
-.texto-login{
-    font-family: 'Jersey 10', sans-serif;
-    font-weight: lighter;
-    font-size: 1.9vw;
-    color: rgb(49, 49, 49);
-    padding-left: 20px;
+select:focus {
+  outline: none;
+  border-color: #197E31;
 }
 
-#Logar{
-    width: 150px;
-    height: 35px;
-    background-color: #535353c9;
-    color: white;
-    font-size: 25px;
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
-    margin: 5px;
+.linha-horizontal-final {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  border-radius: 19px;
+  background-color: #ffffff;
+  margin-top: 3%;
+}
 
-    &:hover {
-        background-color: #00720f;
-    }
+.texto-login {
+  font-family: 'Jersey 10', sans-serif;
+  font-weight: lighter;
+  font-size: 1.9vw;
+  color: rgb(49, 49, 49);
+  padding-left: 20px;
+}
+
+#Logar {
+  width: 150px;
+  height: 35px;
+  background-color: #535353c9;
+  color: white;
+  font-size: 25px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  margin: 5px;
+}
+
+#Logar:hover {
+  background-color: #00720f;
+}
+
+.loading-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(194, 194, 194, 0.7);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
 }
 
 .loading-containerr {
@@ -199,23 +212,23 @@ select {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.945); /* fundo escuro */
+  background-color: rgba(0, 0, 0, 0.945);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  z-index: 9999; /* fica acima de tudo */
+  z-index: 9999;
 }
 
-#saindo{
-    width: 30vw;
+#saindo {
+  width: 30vw;
 }
 
-#cadastrando{
-    width: 40vw
+#cadastrando {
+  width: 40vw;
 }
 
-.typng{
+.typng {
   color: rgb(255, 255, 255);
   font-size: 40px;
   margin-top: 0px;
@@ -223,7 +236,7 @@ select {
   text-shadow: 2px 2px 4px #000000;
 }
 
-.typn{
+.typn {
   color: rgb(255, 255, 255);
   font-size: 60px;
   font-weight: bold;
@@ -231,54 +244,190 @@ select {
 }
 
 .dotes::after {
-    content: "";
-    display: inline-block;
-    animation: dotes 3s steps(3, end) infinite;
+  content: "";
+  display: inline-block;
+  animation: dotes 3s steps(3, end) infinite;
 }
 
 .doteSave::after {
-    font-family: 'jersey 10', sans-serif;
-    font-weight: lighter;
+  font-family: 'jersey 10', sans-serif;
+  font-weight: lighter;
   content: "";
   display: inline-block;
   animation: doteSave 2s steps(3, end) infinite;
 }
 
-@keyframes typng {
-  from { width: 0; }
-  to { width: 8ch; } /* "Entrando" = 8 caracteres */
-}
-
-@keyframes blink {
-  50% { border-color: transparent; }
-}
-
 @keyframes dotes {
-    0%   { content: ""; }
-    9%   { content: "S"; }
-    18%  { content: "Sa"; }
-    27%  { content: "Sai"; }
-    36%  { content: "Sair"; }
-    45%  { content: "Saind"; }
-    54%  { content: "Saindo"; }
-    63%  { content: "Saindo."; }
-    72%  { content: "Saindo.."; }
-    81%  { content: "Saindo..."; }
-    90%  { content: "Saindo..."; }
-    100% { content: "Saindo..."; }
+  0%   { content: ""; }
+  9%   { content: "S"; }
+  18%  { content: "Sa"; }
+  27%  { content: "Sai"; }
+  36%  { content: "Sair"; }
+  45%  { content: "Saind"; }
+  54%  { content: "Saindo"; }
+  63%  { content: "Saindo."; }
+  72%  { content: "Saindo.."; }
+  81%  { content: "Saindo..."; }
+  90%  { content: "Saindo..."; }
+  100% { content: "Saindo..."; }
 }
 
 @keyframes doteSave {
-    0%   { content: ""; }
-    9%   { content: "C"; }
-    18%  { content: "Ca"; }
-    27%  { content: "Cad"; }
-    36%  { content: "Cada"; }
-    45%  { content: "Cadas"; }
-    54%  { content: "Cadast"; }
-    63%  { content: "Cadastran"; }
-    72%  { content: "Cadastrando"; }
-    81%  { content: "Cadastrando."; }
-    90%  { content: "Cadastrando.."; }
-    100% { content: "Cadastrando..."; }
+  0%   { content: ""; }
+  9%   { content: "C"; }
+  18%  { content: "Ca"; }
+  27%  { content: "Cad"; }
+  36%  { content: "Cada"; }
+  45%  { content: "Cadas"; }
+  54%  { content: "Cadast"; }
+  63%  { content: "Cadastran"; }
+  72%  { content: "Cadastrando"; }
+  81%  { content: "Cadastrando."; }
+  90%  { content: "Cadastrando.."; }
+  100% { content: "Cadastrando..."; }
+}
+
+/* ── RESPONSIVIDADE MOBILE ── */
+@media (max-width: 480px) {
+  .Form {
+    flex-direction: column;
+    height: auto;
+    width: 90%;
+  }
+
+  .div-boas-vindas {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 20px 16px;
+  }
+
+  #Bem-vindos {
+    margin-top: 10px;
+    font-size: 24px;
+  }
+
+  #palavras-boas {
+    font-size: 15px;
+  }
+
+  .div-inputs {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 16px;
+  }
+
+  .Logo-Text-Finito {
+    width: 100%;
+    padding: 0;
+  }
+
+  #Text-finito {
+    font-size: 10vw;
+  }
+
+  .titulo {
+    font-size: 7vw;
+  }
+
+  input {
+    width: 100%;
+    box-sizing: border-box;
+    font-size: 16px; /* evita zoom no iOS */
+  }
+
+  .icon-button {
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 16px;
+  }
+
+  .rounded-lg {
+    width: 100%;
+    font-size: 16px;
+  }
+
+  #Cadastrar-button {
+    width: 100%;
+    font-size: 6vw;
+    margin-top: 0;
+  }
+
+  .linha-horizontal-final {
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 16px;
+    padding: 10px 0;
+  }
+
+  .texto-login {
+    font-size: 4vw;
+    padding-left: 0;
+  }
+
+  #Logar {
+    width: 120px;
+    font-size: 20px;
+  }
+
+  #saindo {
+    width: 70vw;
+  }
+
+  #cadastrando {
+    width: 80vw;
+  }
+
+  .typng {
+    font-size: 24px;
+  }
+
+  .typn {
+    font-size: 32px;
+  }
+}
+
+@media (min-width: 481px) and (max-width: 768px) {
+  .Form {
+    flex-direction: column;
+    height: auto;
+    width: 90%;
+  }
+
+  .div-boas-vindas {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 20px 24px;
+  }
+
+  #Bem-vindos {
+    margin-top: 16px;
+  }
+
+  .div-inputs {
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .Logo-Text-Finito {
+    width: 100%;
+    padding: 0;
+  }
+
+  input {
+    width: 100%;
+    box-sizing: border-box;
+    font-size: 16px;
+  }
+
+  .titulo {
+    font-size: 5vw;
+  }
+
+  .texto-login {
+    font-size: 3vw;
+  }
+
+  #Cadastrar-button {
+    font-size: 3.5vw;
+  }
 }
