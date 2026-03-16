@@ -51,6 +51,7 @@ function Cabecalho() {
         localStorage.setItem('mes-selecionado', mes);
         localStorage.setItem('ano-selecionado', ano);
         navigate('/dashboard');
+        window.location.reload();
     }
 
     function direcaoSetaClicada(direcao) {
