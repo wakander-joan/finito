@@ -4,20 +4,13 @@
     flex-direction: column;
     align-items: center;
     min-height: 100vh;
-    /* Faz a altura mínima ocupar a tela toda */
-    min-height: 100vh;
     width: 100%;
     background:
         linear-gradient(180deg, #363467 0%, rgba(255, 255, 255, 0.774) 10%),
-        /* Gradiente */
         url('assets/gif.gif');
-    /* Imagem */
     background-size: cover;
-    /* Faz a imagem cobrir todo o fundo */
     background-position: left;
-    /* Centraliza a imagem */
     background-repeat: no-repeat;
-    /* Evita repetição */
 }
 
 .loading-container-dash {
@@ -27,13 +20,11 @@
     width: 100%;
     height: 100%;
     background-color: rgba(70, 51, 24, 0.89);
-    /* fundo escuro */
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     z-index: 9999;
-    /* fica acima de tudo */
 }
 
 .Areadash1 {
@@ -48,21 +39,17 @@
     justify-content: center;
     align-items: center;
     gap: 8px;
-    /* um espaço leve entre os itens */
     white-space: nowrap;
-    /* impede quebra de linha */
 }
 
 .Areadash2 h5 {
     margin: 0;
-    /* remove margens padrão do h5 */
 }
 
 .Areadash3 {
     align-items: center;
     display: flex;
     justify-content: flex-end;
-    /* joga tudo pro lado direito */
     margin-right: 5px;
 }
 
@@ -72,11 +59,11 @@
     margin-top: 0%;
     cursor: pointer;
     padding-right: 5px;
+}
 
-    &:hover {
-        transform: scale(1.1);
-        transition: transform 0.3s ease;
-    }
+#logo-exit-dash:hover {
+    transform: scale(1.1);
+    transition: transform 0.3s ease;
 }
 
 #logo-finito-cabecalho-dash {
@@ -106,7 +93,6 @@
     font-size: 3.4vw;
     font-weight: lighter;
     color: #000000;
-
 }
 
 #PERFIL-EMOGI2 {
@@ -120,18 +106,13 @@
     font-size: 2.7vw;
 }
 
-/* Variaveis de width: do Dashboard Geral */
-
 :root {
     --largura-principal: 70vw;
 }
 
-/* Dashboard Pricipal */
-
 .Caixa-dados {
     width: var(--largura-principal);
     height: 85vh;
-
 }
 
 h4 {
@@ -164,7 +145,6 @@ h4 {
     padding-top: 1%;
     width: 20%;
     box-shadow: 3px 3px 6px 0px #000000;
-    /* sombra preta */
 }
 
 #iconseta {
@@ -189,23 +169,10 @@ h4 {
     font-family: 'Jersey 10', sans-serif;
 }
 
-#Valor-receitas {
-    color: #28ca00;
-}
-
-#Valor-depesas {
-    color: crimson;
-}
-
-#Valor-media {
-    color: darkorange;
-}
-
-#Valor-atual {
-    color: dodgerblue;
-}
-
-/* Tela de Inputs */
+#Valor-receitas { color: #28ca00; }
+#Valor-depesas  { color: crimson; }
+#Valor-media    { color: darkorange; }
+#Valor-atual    { color: dodgerblue; }
 
 .Inputs {
     width: 40%;
@@ -250,7 +217,6 @@ h4 {
     color: rgb(49, 49, 49);
     padding-left: 2%;
 }
-
 
 #Tipo-status-select {
     width: 9.5vw;
@@ -324,7 +290,6 @@ h4 {
     cursor: pointer;
     font-family: 'Jersey 10', sans-serif;
     text-shadow: none;
-    border-radius: 10px;
     color: #000000;
     padding: 0px;
     text-align: center;
@@ -339,7 +304,6 @@ h4 {
     cursor: pointer;
     font-family: 'Jersey 10', sans-serif;
     text-shadow: none;
-    border-radius: 10px;
     color: #000000;
     padding: 0px;
     text-align: center;
@@ -351,7 +315,6 @@ h4 {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 0px;
 }
 
 #Botao-cadastra-lancamento {
@@ -361,14 +324,12 @@ h4 {
     color: white;
     cursor: pointer;
     font-size: 4vh;
-    cursor: pointer;
     width: 11vw;
     height: 6vh;
     box-shadow: 2px 2px 5px #494949;
-
 }
 
-& #Botao-cadastra-lancamento:hover {
+#Botao-cadastra-lancamento:hover {
     background-color: #4e00bb;
     width: 11.5vw;
     height: 6.5vh;
@@ -382,19 +343,32 @@ h4 {
     box-shadow: 3px 3px 10px 0px #000000;
 }
 
+/* ── Cabeçalho lancamentos ── */
 .cabecalho-lancamentos {
-    justify-content: space-between;
     display: flex;
+    flex-direction: column;
     border-radius: 8px;
-    align-items: center;
     background-color: #f1f1f1;
+}
+
+.cabecalho-lancamentos-linha1 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     padding-right: 1.5vw;
+    width: 100%;
 }
 
 .caixa-filtro-busca {
     display: flex;
     align-items: center;
+    gap: 4px;
 }
+
+/* ── Sanduíche de ações — desktop oculto ── */
+.hamburger-acoes        { display: none; }
+.acoes-mobile-expandido { display: none; }
+.acoes-desktop          { display: flex; align-items: center; gap: 4px; }
 
 #Lancamentos {
     margin-left: 3px;
@@ -414,11 +388,11 @@ h4 {
     margin-top: 0.7vh;
     background-color: rgb(245, 0, 0);
     color: #ffffff;
+}
 
-    &:hover {
-        transform: scale(1.1);
-        transition: transform 0.3s ease;
-    }
+#botao-dashboard:hover {
+    transform: scale(1.1);
+    transition: transform 0.3s ease;
 }
 
 #botao-replica {
@@ -432,16 +406,10 @@ h4 {
     color: #ffffff;
     font-family: 'Jersey 20', sans-serif;
     border: 1px solid rgb(255, 255, 255);
-
-    &:hover {
-        background-color: rgba(143, 0, 245, 0.651);
-    }
 }
 
-#filtro-img {
-    width: 2vw;
-    height: 4.5vh;
-    cursor: pointer;
+#botao-replica:hover {
+    background-color: rgba(143, 0, 245, 0.651);
 }
 
 .search-box {
@@ -461,31 +429,16 @@ h4 {
     font-family: 'Jersey 10', sans-serif;
 }
 
-.search-box .icon {
-    position: absolute;
-    left: 8px;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 16px;
-    height: 16px;
-    cursor: pointer;
-
-    &:hover {
-        width: 18px;
-        height: 18px;
-    }
-}
-
 .icon-maximizar {
     border-radius: 7px;
     width: 2.3vw;
     height: 5vh;
     cursor: pointer;
+}
 
-    &:hover {
-        transform: scale(1.1);
-        transition: transform 0.3s ease;
-    }
+.icon-maximizar:hover {
+    transform: scale(1.1);
+    transition: transform 0.3s ease;
 }
 
 .Indicador-nomes-lancamentos {
@@ -493,7 +446,6 @@ h4 {
     margin-top: 1vh;
     justify-content: space-between;
     display: flex;
-    gap: 0%;
     background-color: #c2c2c2;
 }
 
@@ -519,24 +471,22 @@ h4 {
     padding-top: 5%;
     width: 1.7vw;
     cursor: pointer;
+}
 
-    &:hover {
-        transform: scale(1.1);
-        transition: transform 0.3s ease;
-        color: chocolate;
-    }
+#edita-img:hover {
+    transform: scale(1.1);
+    transition: transform 0.3s ease;
 }
 
 #exclui-img {
     padding-top: 5%;
     width: 1.5vw;
     cursor: pointer;
+}
 
-    &:hover {
-        transform: scale(1.1);
-        transition: transform 0.3s ease;
-        color: chocolate;
-    }
+#exclui-img:hover {
+    transform: scale(1.1);
+    transition: transform 0.3s ease;
 }
 
 .Grupo-de-Lancamentos {
@@ -549,20 +499,6 @@ h4 {
     overflow-y: auto;
     overflow-x: hidden;
     background-color: #f1f1f1;
-}
-
-.Grupo-de-Lancamentos-overlay {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 10px;
-    height: 95vh;
-    width: 200vh;
-    padding-left: 1%;
-    padding-right: 1%;
-    padding-top: 1.5%;
-    overflow: hidden;
-    overflow-y: auto;
-    background-color: #cacaca;
 }
 
 .lancamento-block {
@@ -582,7 +518,6 @@ h4 {
     display: flex;
     padding-right: 1vw;
     gap: 1%;
-
 }
 
 #descricao-lancamento {
@@ -637,9 +572,8 @@ h4 {
     padding-top: 2%;
     width: 6vw;
     height: 4.5vh;
-    font-size: 1.3vw;
-    color: #ffffff;
     font-size: 1.7vw;
+    color: #ffffff;
     font-family: 'Jersey 10', sans-serif;
 }
 
@@ -691,16 +625,11 @@ h4 {
 .overlay {
     position: fixed;
     inset: 0;
-    /* top/right/bottom/left: 0 */
     display: flex;
     justify-content: center;
     align-items: center;
     background: rgba(36, 36, 36, 0.089);
     z-index: 9999;
-}
-
-#overlay-lancamentos {
-    background: rgba(29, 29, 29, 0.781);
 }
 
 .modal {
@@ -760,7 +689,6 @@ h4 {
     font-family: 'Jersey 10', sans-serif;
 }
 
-
 #Tipo-data-edita {
     display: flex;
     justify-content: space-between;
@@ -775,7 +703,6 @@ h4 {
 
 #Label-data {
     color: #727272;
-    padding-left: 0.5vw;
     font-size: 1.9vw;
     font-family: 'Jersey 10', sans-serif;
     padding-left: 11vw;
@@ -783,7 +710,6 @@ h4 {
 
 #Label-categoria {
     color: #727272;
-    padding-left: 0.5vw;
     font-size: 1.9vw;
     font-family: 'Jersey 10', sans-serif;
     padding-left: 8.4vw;
@@ -796,11 +722,6 @@ h4 {
     cursor: pointer;
     text-shadow: none;
     font-size: 1.8vw;
-}
-
-#opção-edita {
-    background-color: #c2c2c2;
-    font-family: 'Jersey 10', sans-serif;
 }
 
 #data-edita {
@@ -841,11 +762,9 @@ h4 {
     font-family: 'Jersey 10', sans-serif;
     font-size: 1.9vw;
     border: 1px solid rgb(255, 255, 255);
-
-    &:hover {
-        background-color: #5300C8;
-    }
 }
+
+#Botao-atualizar-editar:hover { background-color: #5300C8; }
 
 #Fechar-editar {
     border: 1px solid rgb(255, 255, 255);
@@ -856,15 +775,11 @@ h4 {
     font-size: 1.3vw;
     color: #ffffff;
     background-color: rgb(0, 0, 0);
-
-    &:hover {
-        background-color: rgba(0, 0, 0, 0.527);
-    }
 }
 
-.Botoes-exclui {
-    text-align: center;
-}
+#Fechar-editar:hover { background-color: rgba(0, 0, 0, 0.527); }
+
+.Botoes-exclui { text-align: center; }
 
 #Botao-excluir-sim {
     cursor: pointer;
@@ -876,11 +791,9 @@ h4 {
     font-family: 'Jersey 10', sans-serif;
     font-size: 1.6vw;
     border: 1px solid rgb(255, 255, 255);
-
-    &:hover {
-        background-color: #c82f00;
-    }
 }
+
+#Botao-excluir-sim:hover { background-color: #c82f00; }
 
 #Botao-excluir-nao {
     cursor: pointer;
@@ -892,11 +805,9 @@ h4 {
     font-family: 'Jersey 10', sans-serif;
     font-size: 1.6vw;
     border: 1px solid rgb(255, 255, 255);
-
-    &:hover {
-        background-color: #00c821;
-    }
 }
+
+#Botao-excluir-nao:hover { background-color: #00c821; }
 
 #Descricao-exclui {
     font-size: 1.9vw;
@@ -909,16 +820,9 @@ h4 {
     font-weight: lighter;
 }
 
-#Excui-label {
-    font-size: 3vw;
-    font-family: 'Jersey 10', sans-serif;
-    color: #616161;
-}
-
 .overlayExclui {
     position: fixed;
     inset: 0;
-    /* top/right/bottom/left: 0 */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -937,7 +841,6 @@ h4 {
 .overlayAnotacao {
     position: fixed;
     inset: 0;
-    /* top/right/bottom/left: 0 */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -969,35 +872,9 @@ h4 {
     gap: 10%;
 }
 
-.div-checkbox {
-    margin-left: 8.5vw;
-    width: 11vw;
-    height: 6vh;
-    border-radius: 7px;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    border: 1px solid rgb(197, 197, 197);
-    display: flex;
-    margin-top: 2%;
-    gap: 5px;
-    cursor: pointer;
-}
-
-#caixa-check {
-    width: 1.5vw;
-    height: 1.5vw;
-    cursor: pointer;
-
-    &:hover {
-        border: 2px solid #000000;
-    }
-}
-
 .overlayPDF {
     position: fixed;
     inset: 0;
-    /* top/right/bottom/left: 0 */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -1027,11 +904,9 @@ h4 {
     color: #ffffff;
     cursor: pointer;
     border: none;
-
-    &:hover {
-        background-color: rgba(255, 0, 0, 0.651);
-    }
 }
+
+#fechar:hover { background-color: rgba(255, 0, 0, 0.651); }
 
 #Descricao-PDF {
     text-align: center;
@@ -1077,11 +952,9 @@ h4 {
     font-family: 'Jersey 20', sans-serif;
     font-size: 2.5vw;
     border: 1px solid rgb(255, 255, 255);
-
-    &:hover {
-        background-color: #4e00bb;
-    }
 }
+
+#Botao-PDF-sim:hover { background-color: #4e00bb; }
 
 #Botao-PDF-nao {
     cursor: pointer;
@@ -1093,11 +966,9 @@ h4 {
     font-family: 'Jersey 20', sans-serif;
     font-size: 2.5vw;
     border: 1px solid rgb(255, 255, 255);
-
-    &:hover {
-        background-color: #000000ff;
-    }
 }
+
+#Botao-PDF-nao:hover { background-color: #000000ff; }
 
 #recorrente {
     text-align: center;
@@ -1140,38 +1011,24 @@ h4 {
     margin-bottom: 2%;
 }
 
-#caixa-check-exclui {
-    width: 2vw;
-    height: 2vw;
-    cursor: pointer;
-
-    &:hover {
-        border: 2px solid #000000;
-    }
-}
-
 .todos {
     display: flex;
     justify-content: center;
 }
 
-/* Container */
 .switch {
     position: relative;
-
     display: inline-block;
     width: 40px;
     height: 24px;
 }
 
-/* Esconde o checkbox padrão */
 .switch input {
     opacity: 0;
     width: 0;
     height: 0;
 }
 
-/* Faixa de fundo */
 .slider {
     position: absolute;
     cursor: pointer;
@@ -1184,7 +1041,6 @@ h4 {
     border-radius: 34px;
 }
 
-/* Bolinha */
 .slider:before {
     position: absolute;
     content: "";
@@ -1197,32 +1053,22 @@ h4 {
     border-radius: 50%;
 }
 
-/* Quando marcado (checked) */
-.switch input:checked+.slider {
-    background-color: rgb(60, 0, 201);
-    /* cor ativa */
-}
-
-.switch input:checked+.slider:before {
-    transform: translateX(17px);
-    /* move a bolinha */
-}
+.switch input:checked + .slider { background-color: rgb(60, 0, 201); }
+.switch input:checked + .slider:before { transform: translateX(17px); }
 
 .containerr {
     display: flex;
     padding-left: 3%;
     padding-right: 3%;
     justify-content: space-between;
-    /* joga para a direita */
     margin-top: 2%;
     margin-bottom: 2%;
     margin-right: 4%;
-    gap: 0%;
 }
 
 #Texto-checkbox {
     font-family: 'Jersey 10', sans-serif;
-    font-size: 1.6VW;
+    font-size: 1.6vw;
     color: #000000;
     cursor: pointer;
 }
@@ -1264,7 +1110,6 @@ h4 {
 }
 
 .listagem-replica {
-    overflow: 'scroll';
     height: 40vh;
     border-bottom-left-radius: 7px;
     border-bottom-right-radius: 7px;
@@ -1293,8 +1138,6 @@ h4 {
 
 #Replica-label {
     text-align: center;
-    align-items: center;
-    justify-content: center;
     font-size: 2vw;
     font-family: 'Jersey 20', sans-serif;
     color: #1500d1;
@@ -1317,26 +1160,20 @@ h4 {
     font-weight: lighter;
 }
 
-#input-quantidade-parcelas {
-    font-size: 3vw;
-    width: 7vw;
-    margin-bottom: 2%;
-}
-
 #seta {
     width: 3vw;
     height: 3.7vh;
     margin-top: 0%;
     cursor: pointer;
     padding-right: 5px;
-
-    &:hover {
-        transform: scale(1.1);
-        transition: transform 0.3s ease;
-    }
 }
 
-.cabeca{
+#seta:hover {
+    transform: scale(1.1);
+    transition: transform 0.3s ease;
+}
+
+.cabeca {
     padding-top: 0.5%;
     padding-bottom: 0.5%;
     display: flex;
@@ -1346,34 +1183,14 @@ h4 {
     cursor: pointer;
 }
 
-#exit-lancamentos{
-    font-family: 'Jersey 20', sans-serif;
-    font-size: 2vw;
-    color: red;
-
-    &:hover {
-        transform: scale(1.1);
-        transition: transform 0.3s ease;
-    }
-}
-
-#Label-lancamentos{
-    font-family: 'Jersey 20', sans-serif;
-    font-size: 2vw;
-}
-
-.anotacao-conteudo{
+.anotacao-conteudo {
     height: min-content;
     font-size: 1.2vw;
     padding-left: 0.5vw;
     width: 99.5%;
 }
 
-#area-anotacao{
-    height: min-content;
-}
-
-#fechar-anotacao{
+#fechar-anotacao {
     color: white;
     background-color: #c80000;
     cursor: pointer;
@@ -1383,13 +1200,11 @@ h4 {
     margin-right: 0.5vw;
     padding-left: 0.2vw;
     padding-right: 0.2vw;
-    &:hover {
-        transform: scale(1.1);
-        transition: transform 0.3s ease;
-    }
 }
 
-#editar-anotacao{
+#fechar-anotacao:hover { transform: scale(1.1); transition: transform 0.3s ease; }
+
+#editar-anotacao {
     background-color: #db6300;
     color: white;
     cursor: pointer;
@@ -1400,13 +1215,11 @@ h4 {
     margin-right: 0.5vw;
     padding-left: 0.2vw;
     padding-right: 0.2vw;
-    &:hover {
-        transform: scale(1.1);
-        transition: transform 0.3s ease;
-    }
 }
 
-#salvar-anotacao{
+#editar-anotacao:hover { transform: scale(1.1); transition: transform 0.3s ease; }
+
+#salvar-anotacao {
     background-color: #00c821;
     color: white;
     cursor: pointer;
@@ -1417,13 +1230,11 @@ h4 {
     margin-right: 0.5vw;
     padding-left: 0.2vw;
     padding-right: 0.2vw;
-    &:hover {
-        transform: scale(1.1);
-        transition: transform 0.3s ease;
-    }
 }
 
-.botoes-div-anotacao{
+#salvar-anotacao:hover { transform: scale(1.1); transition: transform 0.3s ease; }
+
+.botoes-div-anotacao {
     margin: 0.5vw;
     text-align: center;
     justify-content: space-between;
@@ -1441,7 +1252,6 @@ h4 {
 .overlay2 {
     position: fixed;
     inset: 0;
-    /* top/right/bottom/left: 0 */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -1449,23 +1259,21 @@ h4 {
     z-index: 9999;
 }
 
-#text-anotacao{
+#text-anotacao {
     border-radius: 7px;
     height: 40vh;
     font-size: 1.5vw;
 }
 
-.Bloquinho-Categoria{
-    width: 100%;
-}
+.Bloquinho-Categoria { width: 100%; }
 
-#Descricao-anotacao{
+#Descricao-anotacao {
     font-family: 'Jersey 20', sans-serif;
     font-weight: lighter;
     font-size: 1.8vw;
 }
 
-#Avancar{
+#Avancar {
     font-size: 1.2vw;
     background-color: rgb(71, 105, 255);
     color: white;
@@ -1475,14 +1283,11 @@ h4 {
     border-width: 0px;
     width: 6vw;
     height: 4vh;
-    
-    &:hover {
-        transform: scale(1.1);
-        transition: transform 0.3s ease;
-    }
 }
 
-#Cancelar{
+#Avancar:hover { transform: scale(1.1); transition: transform 0.3s ease; }
+
+#Cancelar {
     font-size: 1.2vw;
     background-color: rgb(255, 38, 0);
     color: white;
@@ -1492,15 +1297,297 @@ h4 {
     border-width: 0px;
     width: 6vw;
     height: 4vh;
-
-    &:hover {
-        transform: scale(1.1);
-        transition: transform 0.3s ease;
-    }
 }
 
-.anotacao-buttons{
+#Cancelar:hover { transform: scale(1.1); transition: transform 0.3s ease; }
+
+.anotacao-buttons {
     justify-content: center;
     display: flex;
     gap: 5%;
+}
+
+/* ── RESPONSIVIDADE MOBILE — DASHBOARD ── */
+@media (max-width: 768px) {
+
+    /* Cabeçalho */
+    .Cabecalho {
+        flex-wrap: nowrap;
+        height: auto;
+        padding: 6px 10px;
+        gap: 4px;
+        position: relative;
+    }
+
+    .Areadash1 { flex: 1; gap: 4px; }
+    .Areadash2 { flex: 0 0 auto; order: 2; gap: 4px; }
+    .Areadash3 { display: none; order: 4; }
+
+    .hamburger-dash {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 5px;
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 6px;
+        flex-shrink: 0;
+        order: 3;
+    }
+
+    .hamburger-dash span {
+        display: block;
+        width: 26px;
+        height: 3px;
+        background-color: #333;
+        border-radius: 2px;
+        transition: all 0.3s ease;
+    }
+
+    .Cabecalho.menu-aberto-dash { flex-wrap: wrap; }
+
+    .Cabecalho.menu-aberto-dash .Areadash3 {
+        display: flex;
+        flex: 0 0 100%;
+        justify-content: center;
+        gap: 12px;
+        padding: 8px 0;
+        border-top: 1px solid #eee;
+        margin-right: 0;
+    }
+
+    .Cabecalho.menu-aberto-dash .hamburger-dash span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+    .Cabecalho.menu-aberto-dash .hamburger-dash span:nth-child(2) { opacity: 0; }
+    .Cabecalho.menu-aberto-dash .hamburger-dash span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+
+    #logo-finito-cabecalho-dash { width: 8vw; height: 8vw; }
+    #FINITO-TEXT-DASH  { font-size: 5vw; }
+    #ano-cabecalho     { font-size: 4vw; }
+    #de-cabecalho      { font-size: 4vw; }
+    #seta              { width: 6vw; height: 6vw; }
+    #USUARIO-TEXT2     { font-size: 4.5vw; }
+    #PERFIL-EMOGI2     { font-size: 5vw; }
+    #logo-exit-dash    { width: 8vw; height: 8vw; }
+
+    /* Container geral */
+    .container-dash { align-items: stretch; }
+
+    /* Caixa de dados */
+    .Caixa-dados { width: 100%; height: auto; }
+
+    /* Valores: grid 2x2 */
+    .Valores {
+        width: 100%;
+        height: auto;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
+        padding: 8px;
+        box-sizing: border-box;
+        margin-top: 0;
+    }
+
+    #Resultados { width: 100%; padding: 8px; box-sizing: border-box; }
+    .Valores-nomes   { font-size: 4vw; }
+    .Valores-numeros { font-size: 4.5vw; }
+    #iconseta, #icons { width: 7vw; }
+
+    /* Inputs + Lancamentos: empilha verticalmente */
+    .Imputs-Lancamentos {
+        flex-direction: column;
+        width: 100%;
+        height: auto;
+        gap: 12px;
+        padding: 8px;
+        box-sizing: border-box;
+    }
+
+    /* Inputs */
+    .Inputs { width: 100%; box-sizing: border-box; padding: 10px; }
+
+    #Novo-lancamento       { font-size: 5vw; }
+    #Descricao-text-inputs { font-size: 4vw; }
+
+    #Tipo-status-select {
+        width: 100%;
+        height: 10vw;
+        font-size: 4vw;
+    }
+
+    #Descricao-input {
+        width: 100%;
+        font-size: 16px;
+        height: 10vw;
+        box-sizing: border-box;
+    }
+
+    #input-valor, #data {
+        font-size: 16px;
+        width: 100%;
+        height: 10vw;
+        box-sizing: border-box;
+    }
+
+    #Tipo-status-select-categoria-input {
+        font-size: 4vw;
+        height: 10vw;
+        padding-right: 0;
+    }
+
+    #Botao-cadastra-lancamento {
+        width: 60%;
+        height: 12vw;
+        font-size: 5vw;
+    }
+
+    #Texto-checkbox { font-size: 3.5vw; }
+
+    /* Lancamentos */
+    .Lancamentos-grafico-IA { width: 100%; box-sizing: border-box; }
+    #Lancamentos { font-size: 5vw; }
+
+    /* Cabeçalho lancamentos mobile */
+    .cabecalho-lancamentos-linha1 {
+        margin-top: 1%;
+        margin-bottom: 1%;
+        width: 100%;
+        padding-right: 2vw;
+        box-sizing: border-box;
+    }
+
+    .caixa-filtro-busca {
+        display: flex;
+        flex-wrap: nowrap;
+        align-items: center;
+        gap: 4px;
+    }
+
+    /* Sanduíche de ações */
+    .acoes-desktop { display: none; }
+
+    .hamburger-acoes {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #5300C8;
+        color: white;
+        border: none;
+        border-radius: 7px;
+        width: 9vw;
+        height: 8vw;
+        font-size: 5vw;
+        cursor: pointer;
+        flex-shrink: 0;
+    }
+
+    /* Linha expandida — dentro do cabecalho, sem sair da tela */
+    .acoes-mobile-expandido {
+        display: flex;
+        flex-direction: row;
+        gap: 6px;
+        width: 100%;
+        padding: 4px 6px 6px;
+        box-sizing: border-box;
+        border-top: 1px solid #ddd;
+    }
+
+    .acoes-mobile-expandido #botao-replica,
+    .acoes-mobile-expandido #botao-dashboard {
+        flex: 1;
+        height: 10vw;
+        font-size: 3.5vw;
+        padding: 0 4px;
+        margin-top: 0;
+        width: auto;
+    }
+
+    .search-box {
+        flex: 1;
+        width: auto;
+        padding: 0;
+    }
+
+    .search-box input {
+        width: 100%;
+        font-size: 16px;
+        box-sizing: border-box;
+        height: auto;
+        padding: 8px;
+    }
+
+    /* Cada lançamento */
+    .lancamento-block { font-size: 3.5vw; }
+
+    #descricao-lancamento {
+        width: 100%;
+        font-size: 4vw;
+        height: auto;
+        box-sizing: border-box;
+    }
+
+    #Valor-lancamento       { font-size: 4vw; width: auto; }
+    #Vencimento-lancamento  { font-size: 3.5vw; }
+    #Tipo-lancamento        { font-size: 3.5vw; width: auto; height: 2vh; }
+    #Iconseta-tipo          { width: 5vw; height: 5vw; }
+    #Categoria-lancamento   { font-size: 3vw; }
+    #edita-img, #exclui-img { width: 5vw; }
+    #descricao-lancamento-label { font-size: 2.5vw; }
+
+    #Status-select-lancamento {
+        width: 24vw;
+        font-size: 3vw;
+        height: 8vw;
+        padding-left: 1vw;
+    }
+
+    #Div-tipo-lancamento {
+        display: flex;
+        border-radius: 10px;
+        gap: 5%;
+        align-items: center;
+        padding: 3%;
+        width: 115%;
+    }
+
+    #recorrente {
+        font-size: 5vw;
+        height: 3vh;
+        width: 2vh;
+    }
+
+    .Grupo-de-Lancamentos { height: auto; max-height: 60vh; }
+
+    /* Modais */
+    .modal, .modal-edita, .modalExclui, .modalAnotacao {
+        min-width: 90vw;
+        width: 90vw;
+        box-sizing: border-box;
+    }
+
+    .modalPDF { min-width: 95vw; width: 95vw; box-sizing: border-box; }
+
+    #Edita-label            { font-size: 5vw; }
+    #Edita-input-descricao  { font-size: 4vw; }
+    .Tipo-edita             { font-size: 4vw; width: 100%; }
+    #data-edita             { font-size: 4vw; width: 100%; }
+    #Input-valor            { font-size: 4vw; width: 100%; height: 10vw; }
+    #Tipo-status-select-categoria { font-size: 4vw; width: 100%; height: 10vw; padding-right: 0; }
+    #Botao-atualizar-editar { width: 55vw; font-size: 4vw; height: 10vw; }
+    #Fechar-editar          { width: 25vw; font-size: 3.5vw; height: 10vw; }
+    #Label-data             { padding-left: 30vw; }
+    #Label-categoria        { padding-left: 28vw; }
+    #Descricao-PDF          { font-size: 5vw; }
+    #mensagem               { font-size: 4vw; }
+    #Botao-PDF-sim, #Botao-PDF-nao { width: 35vw; font-size: 4vw; height: 10vw; }
+    .modal-anotacao         { min-width: 90vw; }
+    #text-anotacao          { font-size: 4vw; }
+    #fechar                 { width: 8vw; height: 8vw; font-size: 4vw; }
+    #Avancar, #Cancelar     { width: 20vw; height: 8vw; font-size: 3.5vw; }
+    #caixa-anotacao         { min-width: unset; width: 100%; font-size: 4vw; }
+    #Select-replica-ano-mes { width: 30vw; font-size: 4vw; }
+    #Descricao-replica      { font-size: 3.5vw; }
+    #text-replica           { font-size: 3.5vw; }
+    #Replica-label          { font-size: 5vw; }
+    #Botao-excluir-sim, #Botao-excluir-nao { width: 35vw; height: 10vw; font-size: 4vw; }
 }
